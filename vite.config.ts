@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-
+import { resolve } from 'path';
 import react from '@vitejs/plugin-react'
 import viteTsconfigPaths from 'vite-tsconfig-paths'
 
@@ -14,6 +14,11 @@ export default defineConfig({
     port: 3000,
     watch: {
       usePolling: true,
+    }
+  },
+  resolve: {
+    alias: {
+      $fonts: resolve('./static/fonts')
     }
   },
 })

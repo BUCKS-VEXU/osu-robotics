@@ -29,5 +29,5 @@ body {
 @font-face {
   font-family: 'buckeye-sans';
   src: local("BuckeyeSans2-Black"),
-    url('BuckeyeSans2-Black.woff2') format('woff2');
+    url('$fonts/BuckeyeSans2-Black.woff2') format('woff2');
 }
