@@ -1,0 +1,51 @@
+/* Noah Klein */
+
+@import "./themes";
+
+
+.BidSubmissionInterface {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.BidSubmissionInterface .slider-pack {
+    width: 90%;
+    display: flex;
+    margin: 5px;
+    color: var(--text-primary);
+    font-family: "spotify-circular-book";
+}
+
+
+.BidSubmissionInterface .distribution-value-submit {
+    margin: auto;
+}
+
+
+.BidSubmissionInterface .number-input {
+    max-width: 60px;
+    width: 15%;
+}
+
+.BidSubmissionInterface .submit-trick-button {
+    --submit-trick-button-height: 40px;
+    line-height: var(--submit-trick-button-height);
+    height: var(--submit-trick-button-height);
+
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+    color: var(--text-primary);
+    background-color: var(--accent);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "spotify-circular-book";
+}
+
+.BidSubmissionInterface .submit-trick-button:hover {
+    background-color: var(--plot-background);
+}

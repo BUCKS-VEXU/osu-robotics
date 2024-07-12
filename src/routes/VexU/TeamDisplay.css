@@ -1,0 +1,73 @@
+/* Noah Klein */
+
+.TeamDisplay {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    margin: auto;
+
+    border-radius: 12px;
+    background-color: rgba(228, 151, 151, 0.459);
+    padding: 20px;
+}
+
+.TeamDisplay .list {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.TeamDisplay .list-item {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.TeamDisplay .team-name {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.TeamDisplay .awards {
+    display: flex;
+    width: 364px;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+}
+
+.TeamDisplay .award-item {
+    margin-bottom: 5px;
+    font-size: 1.2em;
+}
+
+
+
+@keyframes inAnimation {
+    0% {
+        max-width: 0;
+    }
+
+    100% {
+        max-width: 100%;
+    }
+}
+
+@keyframes outAnimation {
+    0% {
+        max-width: 100%;
+    }
+
+    100% {
+        max-width: 0;
+    }
+}

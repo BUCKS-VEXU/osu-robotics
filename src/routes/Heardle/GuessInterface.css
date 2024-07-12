@@ -1,0 +1,103 @@
+/* Noah Klein */
+
+
+.GuessInterface {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: 75vw;
+    max-width: 750px;
+    padding: 40px;
+
+    margin-top: 50px;
+    background: rgba(0, 0, 0, .5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+
+}
+
+
+.GuessInterface .guess-results-container {
+    position: absolute;
+    /* background-color: rgba(40, 51, 63, 0.75); */
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+.GuessInterface .guess-scrollable-div {
+    /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    /*For IE and Edge*/
+    scrollbar-width: none;
+    /*For Firefox*/
+
+    ::-webkit-scrollbar {
+        display: none;
+        /*For Chrome and Other webkit browsers*/
+    }
+}
+
+.GuessInterface .guess-input {
+    display: inline-flex;
+    align-items: center;
+
+    position: relative;
+    min-width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: 2px solid rgb(56, 104, 181);
+    border-radius: 8px;
+    margin-bottom: 10px;
+
+    align-items: center;
+
+    overflow-x: visible;
+}
+
+.GuessInterface .correct {
+    background-color: darkgreen;
+    color: black;
+}
+
+
+.GuessInterface .guess-input form {
+    width: 100%;
+    height: 100%;
+}
+
+.GuessInterface .guess-input input {
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    font-size: 16px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    /* Include padding and border in the element's total height */
+
+    font-size: 16px;
+    font-family: spotify-circular-book;
+    color: #ffffff;
+
+
+}
+
+
+.GuessInterface .skip-icon {
+    filter: invert(96%) sepia(23%) saturate(2%) hue-rotate(251deg) brightness(113%) contrast(100%);
+
+    right: -40px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.64, 0.57, 0.67, 1.53);
+}
+
+.GuessInterface .skip-icon:hover {
+    transform: translateX(8px);
+}

@@ -1,0 +1,72 @@
+/* Checkbox to narrow results */
+.GaussianOhHell .SettingsBar .narrow-checkbox {
+    /* Hide the default checkbox */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+
+    position: absolute;
+    top: 25px;
+    left: 80px;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+
+    outline: none;
+    /* Remove default outline */
+    border: 2.5px solid var(--text-primary);
+    /* Thick var(--text-primary) border */
+    border-radius: 4px;
+    /* Rounded corners */
+
+    background-color: transparent;
+    /* Transparent background */
+    cursor: pointer;
+    /* Change cursor on hover */
+    transition: transform 0.3s, background-color 0.3s;
+    z-index: 999;
+}
+
+/* Style the checked state */
+.GaussianOhHell .SettingsBar .narrow-checkbox:checked::after {
+    content: '\2713';
+    /* Unicode for checkmark */
+    font-size: 26.5px;
+    font-weight: 900;
+    color: var(--text-primary);
+    /* var(--text-primary) color for checkmark */
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    /* Initially fully transparent */
+    animation: fadeIn 0.2s ease-in-out forwards;
+    /* Apply fade-in animation */
+}
+
+/* Style the unchecked state */
+.GaussianOhHell .SettingsBar .narrow-checkbox:not(:checked)::after {
+    content: '\2713';
+    /* Unicode for checkmark */
+    font-size: 26.5px;
+    font-weight: 900;
+    color: var(--text-primary);
+    /* var(--text-primary) color for checkmark */
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    /* Initially fully opaque */
+    animation: fadeOut 0.2s ease-in-out forwards;
+    /* Apply fade-out animation */
+}
+
+
+/* Style for hover effect */
+.GaussianOhHell .SettingsBar .narrow-checkbox:hover {
+    transform: scale(1.3);
+}

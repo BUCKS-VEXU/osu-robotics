@@ -1,0 +1,161 @@
+/* Noah Klein */
+
+@import './themes.css';
+
+.Heardle .SettingsBar {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    margin: 20px;
+}
+
+.Heardle .SettingsBar>* {
+    margin: 10px;
+}
+
+
+/* Checkbox to narrow results */
+.Heardle .SettingsBar .NarrowSearchResultsToggle {
+    /* Hide the default checkbox */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+
+    display: inline-flex;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+
+    outline: none;
+    /* Remove default outline */
+    border: 2.5px solid var(--icons);
+    /* Thick var(--text-primary) border */
+    border-radius: 4px;
+    /* Rounded corners */
+
+    background-color: transparent;
+    /* Transparent background */
+    cursor: pointer;
+    /* Change cursor on hover */
+    transition: transform 0.3s, background-color 0.3s;
+    z-index: 999;
+}
+
+
+/* Style the unchecked state */
+.Heardle .SettingsBar .NarrowSearchResultsToggle:checked::after {
+    content: '\2713';
+    /* Unicode for check-mark */
+    font-size: 26.5px;
+    font-weight: 900;
+    color: var(--icons);
+
+    position: relative;
+    display: block;
+    text-align: center;
+    width: 100%;
+    opacity: 1;
+}
+
+
+/* Style for hover effect */
+.Heardle .SettingsBar .NarrowSearchResultsToggle:hover {
+    transform: scale(1.3);
+}
+
+.Heardle .SettingsBar .InfoModalToggle {
+
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.11, .59, .46, .74);
+
+
+}
+
+.Heardle .SettingsBar .InfoModalToggle:hover {
+    transform: rotate(-30deg)
+        /* translate(-2px); */
+}
+
+.Heardle .SettingsBar .InfoModalToggle {
+    width: 35px;
+    height: 35px;
+}
+
+
+.Heardle .SettingsBar .NewSongButton {
+    cursor: pointer;
+    transition: transform 0.6s ease;
+
+    width: 35px;
+    height: 35px;
+
+    /* Filter hackish work-around but it works */
+    /* filter: invert(96%) sepia(23%) saturate(2%) hue-rotate(251deg) brightness(113%) contrast(100%); */
+
+    color: var(--icons);
+
+    cursor: pointer;
+}
+
+
+/* THIS DOESNT WORK */
+.Heardle .SettingsBar .NewSongButton svg {
+    color: var(--accent)
+}
+
+.Heardle .SettingsBar .NewSongButton:hover {
+    transform: rotate(90deg) translate(-0px);
+}
+
+/* Search Icon */
+.Heardle .SettingsBar .search-icon {
+    box-sizing: border-box;
+    position: fixed;
+
+    top: 25px;
+    right: 30px;
+
+    display: block;
+    width: 28px;
+    height: 28px;
+
+    border: 2px solid;
+    border-radius: 100%;
+    transition: transform 0.3s, background-color 0.3s;
+
+    border-color: var(--icons);
+
+    cursor: pointer;
+
+}
+
+.Heardle .SettingsBar .search-icon::after {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 3px;
+    width: 3px;
+    /* Increase the width of the line */
+    height: 16px;
+    /* Increase the height of the line */
+    background: currentColor;
+    transform: rotate(-45deg);
+    top: 19px;
+    /* Adjust the vertical position of the line */
+    left: 26px;
+    /* Adjust the horizontal position of the line */
+    background-color: var(--icons);
+}
+
+.Heardle .SettingsBar .search-icon:hover {
+    transform: scale(1.25);
+    /* Scale up the icon on hover */
+}

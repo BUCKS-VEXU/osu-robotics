@@ -1,0 +1,33 @@
+1 = tc
+2 = skills
+3 = exc
+4 = design
+5 = other awards
+
+
+turning point
+
+
+tower takeover
+1152
+
+
+change up
+5
+122
+14
+3
+5
+23
+55
+125
+1
+
+tip
+333333
+1111
+22222
+222222
+555
+
+

@@ -1,0 +1,117 @@
+/* Noah Klein */
+
+.ScrollableSetList {
+    position: absolute;
+
+    /* Position the container below the search box */
+    width: 75vw;
+    max-width: 625px;
+    top: 100%;
+
+    transform: translateY(-20px);
+
+    background-color: rgba(40, 51, 63, 0.75);
+    border-radius: 5px;
+    padding: 10px;
+
+
+    max-height: 400px;
+
+    z-index: 900;
+}
+
+.ScrollableSetList .scrollable-div {
+    overflow: visible;
+    height: 100%;
+    max-height: 400px;
+    /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    /*For IE and Edge*/
+    scrollbar-width: none;
+    /*For Firefox*/
+}
+
+.ScrollableSetList .scrollable-div::-webkit-scrollbar {
+    display: none;
+    /*For Chrome and Other webkit browsers*/
+}
+
+
+.ScrollableSetList .search-info {
+    display: flex;
+    align-items: center;
+
+    /*Stop cursor changing and text highlighting in search bar*/
+    cursor: default;
+    -webkit-user-select: none;
+    /* Safari 3.1+ */
+    -moz-user-select: none;
+    /* Firefox 2+ */
+    -ms-user-select: none;
+    /* IE 10+ */
+    user-select: none;
+    /* Standard syntax */
+}
+
+.ScrollableSetList .search-image img {
+    width: 90px;
+    height: 90px;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.ScrollableSetList .search-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-right: 20px;
+}
+
+.ScrollableSetList .search-name {
+    font-family: spotify-circular-bold;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+    margin: 0;
+}
+
+.ScrollableSetList .search-author {
+    font-family: spotify-circular-book;
+    margin-bottom: 5px;
+    text-align: left;
+    margin: 0;
+}
+
+.ScrollableSetList .search-length {
+    white-space: nowrap;
+    font-family: spotify-circular-book;
+    font-size: 12px;
+    text-align: right;
+    margin-left: auto;
+}
+
+
+.ScrollableSetList .search-info .search-name {
+    font-size: 26px;
+    /* Original font size */
+    transition: font-size 0.2s ease;
+    /* Transition with a duration of 0.2 seconds */
+}
+
+.ScrollableSetList .search-info .search-author {
+    font-size: 16px;
+    /* Original font size */
+    transition: font-size 0.2s ease;
+    /* Transition with a duration of 0.2 seconds */
+}
+
+.ScrollableSetList .search-info:hover .search-name {
+    color: white;
+    font-size: 30px;
+}
+
+.ScrollableSetList .search-info:hover .search-author {
+    color: white;
+    font-size: 18px;
+}

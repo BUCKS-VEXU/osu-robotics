@@ -1,0 +1,42 @@
+/* Noah Klein */
+
+@import './themes.css';
+
+
+.Heardle .GameOverScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+    max-width: 800px;
+    width: 90%;
+    margin-top: 20%;
+    text-align: center;
+}
+
+.Heardle .GameOverScreen h1,
+.Heardle .GameOverScreen h2 {
+    margin: 10px 0;
+    font-family: "spotify-circular-book";
+}
+
+.Heardle .GameOverScreen button {
+    margin: 15px 0;
+    padding: 10px 30px;
+    font-size: 16px;
+    background-color: var(--text-secondary);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "spotify-circular-book";
+    transition: background-color 0.3s ease;
+}
+
+.Heardle .GameOverScreen button:hover {
+    background-color: var(--background);
+}

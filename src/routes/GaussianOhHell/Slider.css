@@ -1,0 +1,41 @@
+/* Noah Klein */
+
+@import "./themes";
+
+.customSlider {
+  /* max width of your slider */
+  display: inline-flex;
+  max-width: 1000px;
+  width: 100%;
+
+  margin: 10px;
+  align-items: center;
+}
+
+.customSlider-track {
+  /* thickness of the track */
+  height: 4px;
+  /* default color of your track */
+  background: var(--text-secondary);
+}
+
+.customSlider-track.customSlider-track-0 {
+  /* color of the track before the thumb */
+  background: var(--accent);
+}
+
+.customSlider-thumb {
+  cursor: pointer;
+  /*color for the thumb */
+  background: #5AB2FF;
+  /* shape of the thumb: circle */
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  /* remove default outline when selected */
+  outline: none;
+}
+
+.customSlider-thumb:hover {
+  box-shadow: 0 0 0 8px var(--main-color-hover);
+}

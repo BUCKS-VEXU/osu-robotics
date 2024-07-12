@@ -1,0 +1,52 @@
+/* Noah Klein */
+
+
+.VexU .Carousel {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    /* Full screen height */
+    display: flex;
+    align-items: center;
+}
+
+.VexU .Carousel .track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.VexU .Carousel .item {
+    min-width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.VexU .Carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.VexU .Carousel .control {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    line-height: 2rem;
+    cursor: pointer;
+    z-index: 11;
+}
+
+.VexU .Carousel .control.prev {
+    left: 10px;
+}
+
+.VexU .Carousel .control.next {
+    right: 10px;
+}
