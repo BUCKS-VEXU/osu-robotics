@@ -27,24 +27,6 @@ body {
 }
 
 @font-face {
-  font-family: 'spotify-circular-black';
-  src: local("CircularSpotify-UI-Latin-OS2v3-Black"),
-    url('$fonts/CircularSpotify-UI-Latin-OS2v3-Black.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'spotify-circular-bold';
-  src: local("CircularSpotify-UI-Latin-OS2v3-Bold"),
-    url('$fonts/CircularSpotify-UI-Latin-OS2v3-Bold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'spotify-circular-book';
-  src: local("CircularSpotify-UI-Latin-OS2v3-Book"),
-    url('$fonts/CircularSpotify-UI-Latin-OS2v3-Book.woff2') format('woff2');
-}
-
-@font-face {
   font-family: 'buckeye-sans';
   src: local("BuckeyeSans2-Black"),
     url('$fonts/BuckeyeSans2-Black.woff2') format('woff2');

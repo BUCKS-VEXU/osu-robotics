@@ -14,9 +14,3 @@
     font-family: buckeye-sans;
     color: var(--buckeye-scarlet);
 }
-
-@font-face {
-    font-family: 'buckeye-sans';
-    src: local("BuckeyeSans2-Black"),
-        url('$fonts/BuckeyeSans2-Black.woff2') format('woff2');
-}
