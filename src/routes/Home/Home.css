@@ -1,100 +1,22 @@
 /* Noah Klein */
 
+@import './themes.css';
+
 .Home {
-  position: absolute;
+    background-color: var(--buckeye-silver);
 
-  width: 100%;
-  height: 100%;
-  margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  padding: 0;
-  font-family: sans-serif;
-  background: linear-gradient(#141e30, #243b55);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+    text-align: center;
+
+    font-family: buckeye-sans;
+    color: var(--buckeye-scarlet);
 }
 
-.Home .browser {
-  position: absolute;
-  display: flex;
-  width: 100%;
-  height: fit-content;
-  margin: 0;
-  padding: 0;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(#141e30, #243b55);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-
-}
-
-
-.Home .info-card {
-  background-color: #29a8ab;
-  color: #dddddd;
-  font-family: Arial, Helvetica, sans-serif;
-  border-radius: 5px;
-}
-
-.Home .info-card p {
-  position: inherit;
-  line-height: 125%;
-  margin: 0em;
-  padding: 0.5vw;
-}
-
-.Home .info-card h1 {
-  font-size: xx-large;
-  padding: 0.5vw 0 0 0.5vw;
-}
-
-.Home .info-card ul {
-  padding-left: 20px;
-  margin: 0px;
-}
-
-.Home .player-wrapper {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-}
-
-.Home h1 {
-  margin-block-start: 0;
-  margin-block-end: 0;
-}
-
-.Home .overlay-with-text>* {
-  width: 100%;
-}
-
-
-.Home .mobile-column {
-  flex: 1;
-  flex-direction: column;
-
-  padding-left: 5px;
-  padding-right: 5px;
-
-  background: linear-gradient(#141e30, #243b55);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-}
-
-.Home .mobile-column>* {
-  margin-bottom: 5px;
-  display: block;
-  width: 100%;
-}
-
-.Home .mobile-column>img {
-  display: block;
-  width: 100%;
-}
-
-.Home .img {
-  display: block;
-  width: 100%;
+@font-face {
+    font-family: 'buckeye-sans';
+    src: local("BuckeyeSans2-Black"),
+        url('$fonts/BuckeyeSans2-Black.woff2') format('woff2');
 }

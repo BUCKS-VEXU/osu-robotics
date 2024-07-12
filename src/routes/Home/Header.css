@@ -2,18 +2,18 @@
 
 @import './themes.css';
 
-.VexU .Header {
+.Home .Header {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.VexU .Header .carousel-container {
+.Home .Header .carousel-container {
     position: relative;
     width: 100%;
 }
 
-.VexU .Header .carousel-container .overlay {
+.Home .Header .carousel-container .overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -24,7 +24,7 @@
     pointer-events: none;
 }
 
-.VexU .Header .title {
+.Home .Header .title {
     position: fixed;
     top: 0;
     z-index: 0;
@@ -40,12 +40,12 @@
     z-index: 13;
 }
 
-.VexU .Header .title img {
+.Home .Header .title img {
     margin-left: 10px;
     height: 3em;
 }
 
-.VexU .Header .matlack {
+.Home .Header .matlack {
     position: relative;
     display: inline-block;
     min-width: 100%;
@@ -56,7 +56,7 @@
 
 }
 
-.VexU .Header .matlack::after {
+.Home .Header .matlack::after {
     content: 'Provided by Matlack Photography';
 
     position: absolute;
@@ -67,6 +67,6 @@
     font-size: 11px;
 }
 
-.VexU .Header .matlack img {
+.Home .Header .matlack img {
     display: block;
 }

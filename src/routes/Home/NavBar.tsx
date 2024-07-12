@@ -48,7 +48,7 @@ const NavBar = ({ }: NavBarProps) => {
 
     return (
         <nav className={`NavBar${isSticky ? ' sticky' : ''}`}>
-            <a style={{ paddingLeft: 'clamp(15px, 5vw, 260px)' }} href="#home" onClick={() => scrollToSection('VexU')}>Home</a>
+            <a style={{ paddingLeft: 'clamp(15px, 5vw, 260px)' }} href="#home" onClick={() => scrollToSection('Home')}>Home</a>
             <a href="#about-us" onClick={() => scrollToSection('AboutUs')}>About Us</a>
             <a href="#contact" onClick={() => scrollToSection('Footer')}>Contact</a>
         </nav>
