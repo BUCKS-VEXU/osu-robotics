@@ -20,9 +20,12 @@ Have a big rolodex that shows random team names
     - [x] Definitely a team list
     - [ ] Use team logos for dougie t-rex pushups faze clan etc.
     - [ ] Show team achievements for each team shown by the rolodex
+    - [ ] isHover does not exist for mobile, fix that
         - [x] Hover over rolodex to expand into full team list
 - [ ] Footer / Contact
     - [x] List email I guess?
 - [x] Make title sticky
-
+- [x] Also the icon for the website is still noah klein
+- [ ] Could also make team members page and their roles
 - [x] Ask Matlack permission to use his photos
+- [ ] White glow on header title
