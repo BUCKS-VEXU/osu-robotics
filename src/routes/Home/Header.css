@@ -35,7 +35,7 @@
     align-items: center;
     justify-content: center;
 
-    text-shadow: 0 0 5px var(--buckeye-scarlet);
+    text-shadow: 1px 1px 3px black;
     color: var(--deep-rose);
     z-index: 13;
 }
