@@ -1,4 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:
-Sitemap: https://noahkleinportfolio.org/sitemap.xml
+Sitemap: https://osurobotics.org/sitemap.xml
