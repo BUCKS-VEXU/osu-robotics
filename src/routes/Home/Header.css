@@ -43,6 +43,7 @@
 .Home .Header .title img {
     margin-left: 10px;
     height: 3em;
+    filter: drop-shadow(1px 1px 2px black);
 }
 
 .Home .Header .matlack {
