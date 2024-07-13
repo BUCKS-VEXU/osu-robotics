@@ -74,6 +74,14 @@ export const TeamMembers = () => {
                                 <td>Builder, Driver</td>
                             </tr>
                             <tr>
+                                <td>Alex Flis</td>
+                                <td>Builder, Drive Team</td>
+                            </tr>
+                            <tr>
+                                <td>Camden Burgess</td>
+                                <td>Notebooker</td>
+                            </tr>
+                            <tr>
                                 <td>Maddux Dasenbrook</td>
                                 <td>Financial Officer</td>
                             </tr>
@@ -82,20 +90,12 @@ export const TeamMembers = () => {
                                 <td>Builder</td>
                             </tr>
                             <tr>
-                                <td>Alex Flis</td>
-                                <td>Builder, Drive Team</td>
+                                <td>Zachary Hutton</td>
+                                <td>Builder</td>
                             </tr>
                             <tr>
                                 <td>Andrew Flis</td>
                                 <td>Head of Filmography</td>
-                            </tr>
-                            <tr>
-                                <td>Camden Burgess</td>
-                                <td>Notebooker</td>
-                            </tr>
-                            <tr>
-                                <td>Zachary Hutton</td>
-                                <td>Builder</td>
                             </tr>
                             <tr>
                                 <td>Drew Phillips</td>
