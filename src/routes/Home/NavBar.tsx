@@ -18,8 +18,14 @@ const NavBar = ({ }: NavBarProps) => {
         if (hash) {
             const sectionId = hash.substring(1); // Remove the '#' character
             switch (sectionId) {
+                case 'home':
+                    scrollToSection('Header')
+                    break;
                 case 'about-us':
                     scrollToSection('AboutUs')
+                    break;
+                case 'the-team':
+                    scrollToSection('TeamMembers')
                     break;
                 case 'contact':
                     scrollToSection('Footer')
@@ -40,6 +46,7 @@ const NavBar = ({ }: NavBarProps) => {
     }, []);
 
     const scrollToSection = (className: string) => {
+        console.log('scrolling to: ' + className)
         const element = document.getElementsByClassName(className)[0];
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -48,8 +55,9 @@ const NavBar = ({ }: NavBarProps) => {
 
     return (
         <nav className={`NavBar${isSticky ? ' sticky' : ''}`}>
-            <a style={{ paddingLeft: 'clamp(15px, 5vw, 260px)' }} href="#home" onClick={() => scrollToSection('Home')}>Home</a>
-            <a href="#about-us" onClick={() => scrollToSection('AboutUs')}>About Us</a>
+            <a style={{ paddingLeft: 'clamp(15px, 5vw, 260px)' }} href="#home" onClick={() => scrollToSection('Header')}>Home</a>
+            <a href="#about-us" onClick={() => scrollToSection('AboutUs')}>About us</a>
+            <a href="#the-team" onClick={() => scrollToSection('TeamMembers')}>The team</a>
             <a href="#contact" onClick={() => scrollToSection('Footer')}>Contact</a>
         </nav>
     );

@@ -6,21 +6,18 @@
     --horizontal-text-padding: clamp(15px, 10vw, 260px);
 }
 
+
+
 .Section {
     width: 100%;
+    height: fit-content;
+
     background-color: var(--buckeye-silver);
     padding-top: 70px;
-
 
     text-align: start;
     text-wrap: pretty;
 }
-
-/* 
-.Section>div {
-    margin: 0;
-    padding: 0 var(--horizontal-text-padding) 0 var(--horizontal-text-padding);
-} */
 
 .Section p {
     margin: 0;
@@ -34,8 +31,9 @@
 }
 
 
-.AboutUs {
-    height: fit-content;
+
+.AboutUs,
+.TeamMembers {
     width: 100%;
     z-index: 15;
 }
@@ -46,30 +44,56 @@
     justify-content: space-around;
 }
 
-.Contact {
-    height: fit-content;
-    width: 100%;
-    z-index: 15;
+.AboutUs .team-display-holder {
+    min-height: 285px;
 }
 
-.Footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--buckeye-silver);
+
+
+
+.table-holder {
+    margin-top: 15px;
+    padding: 0 var(--horizontal-text-padding);
+}
+
+.team-table {
+    width: 75%;
+    max-width: 900px;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.team-table thead {
     background-color: var(--buckeye-scarlet);
-
-    height: fit-content;
-
-    z-index: 15;
-
-    width: 100%;
-    padding-top: 10px;
-    padding-bottom: 35px;
-
-
-    margin-top: 1000px;
+    color: var(--buckeye-silver);
 }
+
+.team-table th,
+.team-table td {
+    padding: 0.75em;
+    border: 1px solid var(--buckeye-silver);
+    text-align: left;
+}
+
+.team-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.team-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 .Footer {
     display: flex;

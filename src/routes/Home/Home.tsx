@@ -2,7 +2,7 @@
 
 import Header from './Header';
 import NavBar from './NavBar';
-import { AboutUs, Footer } from './Sections';
+import { AboutUs, Footer, TeamMembers } from './Sections';
 
 import './Sections.css';
 import './Home.css';
@@ -15,6 +15,7 @@ const Home = () => {
             <Header />
             <NavBar />
             <AboutUs />
+            <TeamMembers />
             <Footer />
         </div>
     );

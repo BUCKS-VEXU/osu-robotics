@@ -28,4 +28,4 @@ Have a big rolodex that shows random team names
 - [x] Also the icon for the website is still noah klein
 - [ ] Could also make team members page and their roles
 - [x] Ask Matlack permission to use his photos
-- [ ] White glow on header title
+- [x] White glow on header title
