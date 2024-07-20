@@ -58,7 +58,7 @@ const TeamDisplay = ({ teams }: TeamDisplayProps) => {
     /* Effect to handle full team display */
     useEffect(() => {
         console.log(hoverOffCountdown)
-        let timer = undefined;
+        let timer: NodeJS.Timeout | undefined = undefined;
 
         if (!isHovered) {
             if (!displayAwards)
