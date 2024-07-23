@@ -18,6 +18,49 @@ const Section = ({ children }: SectionProps) => {
 }
 
 export const AboutUs = () => {
+    const teams = [
+        {
+            name: '2011B',
+            tournamentChampion: 0,
+            excellence: 0,
+            design: 0,
+            skillsChampion: 0,
+            otherAwards: 0
+        },
+        {
+            name: '2011E',
+            tournamentChampion: 3,
+            excellence: 1,
+            design: 2,
+            skillsChampion: 1,
+            otherAwards: 7
+        },
+        {
+            name: '2011F',
+            tournamentChampion: 22,
+            excellence: 2,
+            design: 0,
+            skillsChampion: 5,
+            otherAwards: 9
+        },
+        {
+            name: '11124R',
+            tournamentChampion: 13,
+            excellence: 7,
+            design: 4,
+            skillsChampion: 7,
+            otherAwards: 24
+        },
+        {
+            name: '60883D',
+            tournamentChampion: 10,
+            excellence: 9,
+            design: 1,
+            skillsChampion: 17,
+            otherAwards: 9
+        }
+    ]
+
     return (
         <div className="AboutUs">
             <Section>
@@ -110,6 +153,37 @@ export const TeamMembers = () => {
 }
 
 
+
+export const Sponsors = () => {
+    const sponsors = [
+        { name: 'Eaton', logo: 'public\\media\\sponsors\\eaton-logo-transparent.png' },
+        // Add more sponsors here
+    ];
+
+    return (
+        <div className='Sponsors'>
+            <Section>
+                <h2>Our Sponsors</h2>
+                <section style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '32px 0' }}>
+
+                    <div style={{ display: 'flex', padding: '3rem', backgroundColor: '#f9f9f9', justifyContent: 'center', flexWrap: 'wrap', gap: '1.5rem', textAlign: 'center', width: 'fit-content' }}>
+                        {sponsors.map((sponsor, index) => (
+                            <img
+                                key={index}
+                                src={sponsor.logo}
+                                alt={sponsor.name}
+                                style={{ maxWidth: '250px', maxHeight: '150px', objectFit: 'contain' }}
+                            />
+                        ))}
+                    </div>
+                </section>
+            </Section>
+        </div >
+    )
+}
+
+
+
 export const Footer = () => {
     return (
         <div className="Footer">
@@ -119,46 +193,3 @@ export const Footer = () => {
         </div>
     )
 }
-
-const teams = [
-    {
-        name: '2011B',
-        tournamentChampion: 0,
-        excellence: 0,
-        design: 0,
-        skillsChampion: 0,
-        otherAwards: 0
-    },
-    {
-        name: '2011E',
-        tournamentChampion: 3,
-        excellence: 1,
-        design: 2,
-        skillsChampion: 1,
-        otherAwards: 7
-    },
-    {
-        name: '2011F',
-        tournamentChampion: 22,
-        excellence: 2,
-        design: 0,
-        skillsChampion: 5,
-        otherAwards: 9
-    },
-    {
-        name: '11124R',
-        tournamentChampion: 13,
-        excellence: 7,
-        design: 4,
-        skillsChampion: 7,
-        otherAwards: 24
-    },
-    {
-        name: '60883D',
-        tournamentChampion: 10,
-        excellence: 9,
-        design: 1,
-        skillsChampion: 17,
-        otherAwards: 9
-    }
-]

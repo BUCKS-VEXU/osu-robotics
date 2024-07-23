@@ -26,6 +26,7 @@ Have a big rolodex that shows random team names
     - [x] List email I guess?
 - [x] Make title sticky
 - [x] Also the icon for the website is still noah klein
-- [ ] Could also make team members page and their roles
+- [x] Could also make team members page and their roles
 - [x] Ask Matlack permission to use his photos
 - [x] White glow on header title
+- [ ] Sponsor section

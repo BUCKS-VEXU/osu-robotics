@@ -33,7 +33,8 @@
 
 
 .AboutUs,
-.TeamMembers {
+.TeamMembers,
+.Sponsors {
     width: 100%;
     z-index: 15;
 }
@@ -52,7 +53,7 @@
 
 
 .table-holder {
-    margin-top: 15px;
+    margin: 32px 0;
     padding: 0 var(--horizontal-text-padding);
 }
 
@@ -111,7 +112,7 @@
     padding-bottom: 35px;
 
 
-    margin-top: 500px;
+    margin-top: 350px;
 }
 
 .Footer a {

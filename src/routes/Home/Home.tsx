@@ -2,7 +2,7 @@
 
 import Header from './Header';
 import NavBar from './NavBar';
-import { AboutUs, Footer, TeamMembers } from './Sections';
+import { AboutUs, Footer, Sponsors, TeamMembers } from './Sections';
 
 import './Sections.css';
 import './Home.css';
@@ -16,6 +16,7 @@ const Home = () => {
             <NavBar />
             <AboutUs />
             <TeamMembers />
+            <Sponsors />
             <Footer />
         </div>
     );

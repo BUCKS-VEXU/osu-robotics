@@ -27,6 +27,9 @@ const NavBar = ({ }: NavBarProps) => {
                 case 'the-team':
                     scrollToSection('TeamMembers')
                     break;
+                case 'sponsors':
+                    scrollToSection('Sponsors')
+                    break;
                 case 'contact':
                     scrollToSection('Footer')
                     break;
@@ -58,6 +61,7 @@ const NavBar = ({ }: NavBarProps) => {
             <a style={{ paddingLeft: 'clamp(15px, 5vw, 260px)' }} href="#home" onClick={() => scrollToSection('Header')}>Home</a>
             <a href="#about-us" onClick={() => scrollToSection('AboutUs')}>About us</a>
             <a href="#the-team" onClick={() => scrollToSection('TeamMembers')}>The team</a>
+            <a href="#sponsors" onClick={() => scrollToSection('Sponsors')}>Sponsors</a>
             <a href="#contact" onClick={() => scrollToSection('Footer')}>Contact</a>
         </nav>
     );
