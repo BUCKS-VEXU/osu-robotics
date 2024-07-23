@@ -156,7 +156,7 @@ export const TeamMembers = () => {
 
 export const Sponsors = () => {
     const sponsors = [
-        { name: 'Eaton', logo: 'public\\media\\sponsors\\eaton-logo-transparent.png' },
+        { name: 'Eaton', logo: 'media/sponsors/eaton-logo-transparent.png' },
         // Add more sponsors here
     ];
 
