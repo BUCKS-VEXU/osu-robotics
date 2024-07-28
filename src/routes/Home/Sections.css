@@ -53,8 +53,7 @@
 
 
 .table-holder {
-    margin: 32px 0;
-    padding: 0 var(--horizontal-text-padding);
+    padding: 32px var(--horizontal-text-padding);
 }
 
 .team-table {
