@@ -39,6 +39,7 @@
     text-shadow: 1px 1px 3px black;
     color: var(--deep-rose);
     z-index: 13;
+    padding: 0 32px;
 }
 
 .Home .Header .title img {
