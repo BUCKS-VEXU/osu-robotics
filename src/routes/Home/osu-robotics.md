@@ -29,4 +29,4 @@ Have a big rolodex that shows random team names
 - [x] Could also make team members page and their roles
 - [x] Ask Matlack permission to use his photos
 - [x] White glow on header title
-- [ ] Sponsor section
+- [x] Sponsor section

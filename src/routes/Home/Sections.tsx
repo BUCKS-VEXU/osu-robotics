@@ -156,7 +156,7 @@ export const TeamMembers = () => {
 
 export const Sponsors = () => {
     const sponsors = [
-        { name: 'Eaton', logo: 'media/sponsors/eaton-logo-transparent.png' },
+        { name: 'Eaton', logo: 'media/sponsors/eaton-logo-transparent.png', href: 'https://www.eaton.com/us/en-us.html' },
         // Add more sponsors here
     ];
 
@@ -168,12 +168,15 @@ export const Sponsors = () => {
 
                     <div style={{ display: 'flex', padding: '3rem', backgroundColor: '#f9f9f9', justifyContent: 'center', flexWrap: 'wrap', gap: '1.5rem', textAlign: 'center', width: 'fit-content' }}>
                         {sponsors.map((sponsor, index) => (
-                            <img
-                                key={index}
-                                src={sponsor.logo}
-                                alt={sponsor.name}
-                                style={{ maxWidth: '250px', maxHeight: '150px', objectFit: 'contain' }}
-                            />
+                            <a href={sponsor.href} target="_blank">
+                                <img
+                                    key={index}
+                                    src={sponsor.logo}
+                                    alt={sponsor.name}
+
+                                    style={{ maxWidth: '250px', maxHeight: '150px', objectFit: 'contain' }}
+                                />
+                            </a>
                         ))}
                     </div>
                 </section>
