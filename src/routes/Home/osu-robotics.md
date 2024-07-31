@@ -30,6 +30,7 @@ Have a big rolodex that shows random team names
 - [x] Ask Matlack permission to use his photos
 - [x] White glow on header title
 - [x] Sponsor section
-- [ ] Make team display more reactive for mobile
+- [x] Make team roller more reactive for mobile
 - [x] Sections.tsx is a mess, just make it a subdirectory
 - [x] Factor CSS out of Sponsors.tsx
+- [ ] Add touch support for team roller on mobile

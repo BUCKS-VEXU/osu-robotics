@@ -3,11 +3,11 @@
 .TeamRoller {
     display: flex;
     flex-direction: column;
-    width: fit-content;
+
     align-items: center;
     justify-content: center;
     position: relative;
-
+    width: clamp(250px, 65vw, 364px);
     margin: auto;
 
     border-radius: 12px;
@@ -20,8 +20,9 @@
     flex-direction: row;
     overflow: hidden;
     white-space: nowrap;
-}
+    font-size: calc(clamp(250px, 65vw, 364px)/25);
 
+}
 
 .TeamRoller .list-item {
     padding: 5px 10px;
@@ -29,7 +30,7 @@
 }
 
 .TeamRoller .team-name {
-    font-size: 2rem;
+    font-size: 200%;
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
@@ -37,7 +38,6 @@
 
 .TeamRoller .awards {
     display: flex;
-    width: 364px;
     align-items: center;
     overflow: hidden;
     white-space: nowrap;
@@ -47,7 +47,7 @@
 
 .TeamRoller .award-item {
     margin-bottom: 5px;
-    font-size: 1.2em;
+    font-size: 100%;
 }
 
 
