@@ -107,8 +107,9 @@ const TeamRoller = ({ teams }: TeamRollerProps) => {
             className="TeamRoller"
             style={hoverOffCountdown ? hoverOffCountdownStyle : { backgroundColor: 'rgba(228, 151, 151, 0.459)', }}
             onMouseEnter={() => setIsHovered(true)}
-            onClick={() => setIsHovered(true)}
-            onMouseLeave={() => { console.log('left'); setIsHovered(false) }}
+            onMouseLeave={() => setIsHovered(false)}
+            onTouchStart={() => setIsHovered(true)}
+            onTouchEnd={() => setIsHovered(false)}
         >
             <div className="team-name">
                 <SlotCounter
