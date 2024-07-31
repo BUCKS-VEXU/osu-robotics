@@ -30,3 +30,4 @@ Have a big rolodex that shows random team names
 - [x] Ask Matlack permission to use his photos
 - [x] White glow on header title
 - [x] Sponsor section
+- [ ] Make team display more reactive for mobile
