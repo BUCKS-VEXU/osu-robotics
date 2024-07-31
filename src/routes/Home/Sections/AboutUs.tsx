@@ -5,50 +5,50 @@ import TeamRoller from "./TeamRoller"
 import './AboutUs.css';
 
 
-const AboutUs = () => {
-    const teams = [
-        {
-            name: '2011B',
-            tournamentChampion: 0,
-            excellence: 0,
-            design: 0,
-            skillsChampion: 0,
-            otherAwards: 0
-        },
-        {
-            name: '2011E',
-            tournamentChampion: 3,
-            excellence: 1,
-            design: 2,
-            skillsChampion: 1,
-            otherAwards: 7
-        },
-        {
-            name: '2011F',
-            tournamentChampion: 22,
-            excellence: 2,
-            design: 0,
-            skillsChampion: 5,
-            otherAwards: 9
-        },
-        {
-            name: '11124R',
-            tournamentChampion: 13,
-            excellence: 7,
-            design: 4,
-            skillsChampion: 7,
-            otherAwards: 24
-        },
-        {
-            name: '60883D',
-            tournamentChampion: 10,
-            excellence: 9,
-            design: 1,
-            skillsChampion: 17,
-            otherAwards: 9
-        }
-    ]
+const teams = [
+    {
+        name: '2011B',
+        tournamentChampion: 0,
+        excellence: 0,
+        design: 0,
+        skillsChampion: 0,
+        otherAwards: 0
+    },
+    {
+        name: '2011E',
+        tournamentChampion: 3,
+        excellence: 1,
+        design: 2,
+        skillsChampion: 1,
+        otherAwards: 7
+    },
+    {
+        name: '2011F',
+        tournamentChampion: 22,
+        excellence: 2,
+        design: 0,
+        skillsChampion: 5,
+        otherAwards: 9
+    },
+    {
+        name: '11124R',
+        tournamentChampion: 13,
+        excellence: 7,
+        design: 4,
+        skillsChampion: 7,
+        otherAwards: 24
+    },
+    {
+        name: '60883D',
+        tournamentChampion: 10,
+        excellence: 9,
+        design: 1,
+        skillsChampion: 17,
+        otherAwards: 9
+    }
+]
 
+const AboutUs = () => {
     return (
         <div className="AboutUs">
             <h2>About us</h2>
