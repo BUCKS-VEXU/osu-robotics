@@ -1,6 +1,6 @@
 /* Noah Klein */
 
-import TeamDisplay from "./TeamDisplay"
+import TeamRoller from "./TeamRoller"
 
 import './AboutUs.css';
 
@@ -61,7 +61,7 @@ const AboutUs = () => {
             </p>
 
             <div className='team-display-holder'>
-                <TeamDisplay teams={teams} />
+                <TeamRoller teams={teams} />
             </div>
 
 

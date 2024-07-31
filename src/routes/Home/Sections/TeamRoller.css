@@ -1,6 +1,6 @@
 /* Noah Klein */
 
-.TeamDisplay {
+.TeamRoller {
     display: flex;
     flex-direction: column;
     width: fit-content;
@@ -15,7 +15,7 @@
     padding: 20px;
 }
 
-.TeamDisplay .list {
+.TeamRoller .list {
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -23,19 +23,19 @@
 }
 
 
-.TeamDisplay .list-item {
+.TeamRoller .list-item {
     padding: 5px 10px;
     cursor: pointer;
 }
 
-.TeamDisplay .team-name {
+.TeamRoller .team-name {
     font-size: 2rem;
     font-weight: bold;
     margin-bottom: 10px;
     text-align: center;
 }
 
-.TeamDisplay .awards {
+.TeamRoller .awards {
     display: flex;
     width: 364px;
     align-items: center;
@@ -45,7 +45,7 @@
     flex-direction: column;
 }
 
-.TeamDisplay .award-item {
+.TeamRoller .award-item {
     margin-bottom: 5px;
     font-size: 1.2em;
 }

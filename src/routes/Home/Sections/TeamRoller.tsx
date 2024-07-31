@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import SlotCounter from 'react-slot-counter';
 
-import './TeamDisplay.css';
+import './TeamRoller.css';
 
 
 interface Team {
@@ -15,11 +15,11 @@ interface Team {
     otherAwards: number;
 }
 
-interface TeamDisplayProps {
+interface TeamRollerProps {
     teams: Team[];
 }
 
-const TeamDisplay = ({ teams }: TeamDisplayProps) => {
+const TeamRoller = ({ teams }: TeamRollerProps) => {
     const [displayedTeam, setDisplayedTeam] = useState<Team>(teams[2]);
     const [lastOrg, setLastOrg] = useState<string>(' ');
 
@@ -104,7 +104,7 @@ const TeamDisplay = ({ teams }: TeamDisplayProps) => {
 
     return (
         <div
-            className="TeamDisplay"
+            className="TeamRoller"
             style={hoverOffCountdown ? hoverOffCountdownStyle : { backgroundColor: 'rgba(228, 151, 151, 0.459)', }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => { console.log('left'); setIsHovered(false) }}
@@ -160,4 +160,4 @@ const useDelayUnmount = (isMounted: boolean, delayTime: number) => {
 }
 
 
-export default TeamDisplay;
+export default TeamRoller;
