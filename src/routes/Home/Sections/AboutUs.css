@@ -1,0 +1,13 @@
+/* Noah Klein */
+
+@import './Section.css';
+
+.AboutUs .team-names {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.AboutUs .team-display-holder {
+    min-height: 285px;
+}

@@ -2,13 +2,13 @@
 
 import Header from './Header';
 import NavBar from './NavBar';
-import { AboutUs, Footer, Sponsors, TeamMembers } from './Sections';
+import AboutUs from './Sections/AboutUs';
+import TeamMembers from './Sections/TeamMembers';
+import Sponsors from './Sections/Sponsors';
+import Footer from './Sections/Footer';
 
-import './Sections.css';
 import './Home.css';
 
-
-/* React Component */
 const Home = () => {
     return (
         <div className="Home">
