@@ -3,6 +3,25 @@
 import './TeamMembers.css';
 
 
+interface Member {
+    name: string;
+    roles: string;
+}
+
+const teamMembers: Member[] = [
+    { name: "Noah Klein", roles: "President, Programmer, Builder, Drive Team" },
+    { name: "Ryan Joseph", roles: "Vice-President, Builder, Driver" },
+    { name: "Sage Waehler", roles: "Treasurer, Notebooker" },
+    { name: "Nathan Trybus", roles: "Builder, Driver" },
+    { name: "Alex Flis", roles: "Builder, Drive Team" },
+    { name: "Camden Burgess", roles: "Notebooker" },
+    { name: "Maddux Dasenbrook", roles: "Financial Officer" },
+    { name: "Nikolai Radonjich", roles: "Builder" },
+    { name: "Zachary Hutton", roles: "Builder" },
+    { name: "Andrew Flis", roles: "Head of Filmography" },
+    { name: "Drew Phillips", roles: "Advisor" },
+];
+
 const TeamMembers = () => {
     return (
         <div className="TeamMembers">
@@ -16,50 +35,12 @@ const TeamMembers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Noah Klein</td>
-                            <td>President, Programmer, Builder, Drive Team</td>
-                        </tr>
-                        <tr>
-                            <td>Ryan Joseph</td>
-                            <td>Vice-President, Builder, Driver</td>
-                        </tr>
-                        <tr>
-                            <td>Sage Waehler</td>
-                            <td>Treasurer, Notebooker</td>
-                        </tr>
-                        <tr>
-                            <td>Nathan Trybus</td>
-                            <td>Builder, Driver</td>
-                        </tr>
-                        <tr>
-                            <td>Alex Flis</td>
-                            <td>Builder, Drive Team</td>
-                        </tr>
-                        <tr>
-                            <td>Camden Burgess</td>
-                            <td>Notebooker</td>
-                        </tr>
-                        <tr>
-                            <td>Maddux Dasenbrook</td>
-                            <td>Financial Officer</td>
-                        </tr>
-                        <tr>
-                            <td>Nikolai Radonjich</td>
-                            <td>Builder</td>
-                        </tr>
-                        <tr>
-                            <td>Zachary Hutton</td>
-                            <td>Builder</td>
-                        </tr>
-                        <tr>
-                            <td>Andrew Flis</td>
-                            <td>Head of Filmography</td>
-                        </tr>
-                        <tr>
-                            <td>Drew Phillips</td>
-                            <td>Advisor</td>
-                        </tr>
+                        {teamMembers.map((member, index) => (
+                            <tr key={index}>
+                                <td>{member.name}</td>
+                                <td>{member.roles}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
