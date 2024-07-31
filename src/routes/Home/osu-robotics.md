@@ -32,3 +32,4 @@ Have a big rolodex that shows random team names
 - [x] Sponsor section
 - [ ] Make team display more reactive for mobile
 - [x] Sections.tsx is a mess, just make it a subdirectory
+- [ ] Factor CSS out of Sponsors.tsx

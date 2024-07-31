@@ -1,6 +1,6 @@
 /* Noah Klein */
 
-import './Section.css';
+import './Sponsors.css';
 
 
 const Sponsors = () => {
