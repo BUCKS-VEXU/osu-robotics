@@ -1,55 +1,42 @@
 /* Noah Klein */
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import './NavBar.css';
 
 interface NavBarProps {
 
 }
 
+interface NavBarItem {
+    className: string;
+    navText: string;
+}
+
+const navBarMap: Map<string, NavBarItem> = new Map([
+    ['home', { className: 'Header', navText: 'Home' }],
+    ['about-us', { className: 'AboutUs', navText: 'About us' }],
+    ['the-team', { className: 'TeamMembers', navText: 'The team' }],
+    ['sponsors', { className: 'Sponsors', navText: 'Sponsors' }],
+    ['contact', { className: 'Footer', navText: 'Contact' }],
+]);
+
+
 const NavBar = ({ }: NavBarProps) => {
-    const [isSticky, setSticky] = useState(false);
 
     useEffect(() => {
-
-        /* Scroll to the proper location on page load*/
+        /* Scroll to the proper location on page load */
         const hash = window.location.hash;
 
         if (hash) {
             const sectionId = hash.substring(1); // Remove the '#' character
-            switch (sectionId) {
-                case 'home':
-                    scrollToSection('Header')
-                    break;
-                case 'about-us':
-                    scrollToSection('AboutUs')
-                    break;
-                case 'the-team':
-                    scrollToSection('TeamMembers')
-                    break;
-                case 'sponsors':
-                    scrollToSection('Sponsors')
-                    break;
-                case 'contact':
-                    scrollToSection('Footer')
-                    break;
+            const section = navBarMap.get(sectionId);
+            if (section) {
+                scrollToSection(section.className);
             }
         }
-
-        const handleScroll = () => {
-            const offset = window.scrollY / window.innerHeight;
-            setSticky(offset > 1);
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
     }, []);
 
     const scrollToSection = (className: string) => {
-        console.log('scrolling to: ' + className)
         const element = document.getElementsByClassName(className)[0];
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -57,12 +44,12 @@ const NavBar = ({ }: NavBarProps) => {
     };
 
     return (
-        <nav className={`NavBar${isSticky ? ' sticky' : ''}`}>
-            <a href="#home" onClick={() => scrollToSection('Header')}>Home</a>
-            <a href="#about-us" onClick={() => scrollToSection('AboutUs')}>About us</a>
-            <a href="#the-team" onClick={() => scrollToSection('TeamMembers')}>The team</a>
-            <a href="#sponsors" onClick={() => scrollToSection('Sponsors')}>Sponsors</a>
-            <a href="#contact" onClick={() => scrollToSection('Footer')}>Contact</a>
+        <nav className={'NavBar'}>
+            {Array.from(navBarMap.entries()).map(([key, value]) => (
+                <a key={key} href={`#${key}`} onClick={() => scrollToSection(value.className)}>
+                    {value.navText}
+                </a>
+            ))}
         </nav>
     );
 };

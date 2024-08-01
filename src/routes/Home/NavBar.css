@@ -4,6 +4,7 @@
 
 .NavBar {
     position: sticky;
+    top: 0;
 
     display: flex;
     align-items: center;
@@ -13,17 +14,11 @@
 
     background-color: var(--buckeye-scarlet);
 
-    padding: 0 clamp(0px, 5vw, 260px);
+    padding: 0 clamp(0px, 5vw, 75px);
     /* Ensure padding is included in total width */
     box-sizing: border-box;
 
     z-index: 20;
-}
-
-
-
-.sticky {
-    top: 0;
 }
 
 .NavBar a {
