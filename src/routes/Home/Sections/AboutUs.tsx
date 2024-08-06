@@ -68,7 +68,7 @@ const AboutUs = () => {
 
             <h3>What is V5RC?</h3>
             <p>
-                V5RC is a high-school level robotics competition, also operated by the <a href="https://recf.org/" target="_blank">RECF</a>.
+                <a href="https://www.vexrobotics.com/v5/competition/vrc-current-game" target="_blank">V5RC</a> is a high-school level robotics competition, also operated by the <a href="https://recf.org/" target="_blank">RECF</a>.
                 Competitors participate in the same game as VURC students, but are limited to strictly products provided for V5RC competition by the RECF.
             </p>
             <p>
