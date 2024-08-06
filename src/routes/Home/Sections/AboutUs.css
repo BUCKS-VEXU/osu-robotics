@@ -2,6 +2,12 @@
 
 @import './Section.css';
 
+.AboutUs {}
+
+.AboutUs .no-wrap {
+    white-space: nowrap;
+}
+
 .AboutUs .team-names {
     display: flex;
     align-items: center;

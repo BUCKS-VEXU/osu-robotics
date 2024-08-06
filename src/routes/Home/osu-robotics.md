@@ -35,3 +35,6 @@ Have a big rolodex that shows random team names
 - [x] Factor CSS out of Sponsors.tsx
 - [x] Add touch support for team roller on mobile
     - [ ] Make selecting a team on mobile not cause the background color to shift
+- [ ] Make about us link to important things and be more descriptive about what VURC is
+    - list some of the blrs wiki information
+    

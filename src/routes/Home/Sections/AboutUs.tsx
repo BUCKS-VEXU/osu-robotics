@@ -51,12 +51,27 @@ const teams = [
 const AboutUs = () => {
     return (
         <div className="AboutUs">
+
             <h2>About us</h2>
             <p>
-                The VEX U Robotics Organization at Ohio State, or BUCKS, is comprised primarily of past V5RC competitors in the state of Ohio.
-                Our teams have collectively won the Ohio State Competition 10 times.
-                <br />
-                <br />
+                The VEX U Robotics Organization at The Ohio State University (or BUCKS) facilitates student creation and competition in the
+                <a href="https://vurc-kb.recf.org/hc/en-us/articles/9831327507095-Welcome-VEX-U-Robotics-Competition-Teams" target="_blank"> VURC </a>
+                (VEX University Robotics Competition). Our V5RC teams collectively won the Ohio State Competition 10 times.
+            </p>
+
+            <h3>What is VURC?</h3>
+            <p>
+                VURC is a university-level robotics competition operated by the <a href="https://recf.org/" target="_blank">RECF</a>.
+                Teams design, build, and program robots to compete in a new game each year, created by the RECF.
+                VURC competitors are encouraged to manufacture parts for their robots, as well as use third party electronics
+            </p>
+
+            <h3>What is V5RC?</h3>
+            <p>
+                V5RC is a high-school level robotics competition, also operated by the <a href="https://recf.org/" target="_blank">RECF</a>.
+                Competitors participate in the same game as VURC students, but are limited to strictly products provided for V5RC competition by the RECF.
+            </p>
+            <p>
                 BUCKS is comprised of members from V5RC teams:
             </p>
 
