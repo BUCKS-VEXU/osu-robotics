@@ -1,6 +1,7 @@
 /* Noah Klein */
 
 @import './themes.css';
+@import './Sections/Section.css';
 
 .Home {
     background-color: var(--buckeye-silver);

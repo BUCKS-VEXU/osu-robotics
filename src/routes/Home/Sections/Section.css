@@ -1,15 +1,10 @@
 /* Noah Klein */
 
-@import '../themes.css';
-
 :root {
     --horizontal-text-padding: clamp(15px, 10vw, 260px);
 }
 
-
-.TeamMembers,
-.AboutUs,
-.Sponsors {
+:is(.TeamMembers, .AboutUs, .Sponsors) {
     width: 100%;
     height: fit-content;
 
@@ -21,17 +16,22 @@
     z-index: 15;
 }
 
-.TeamMembers p,
-.AboutUs p,
-.Sponsors p {
+:is(.TeamMembers, .AboutUs, .Sponsors) p {
     margin: 0;
-    padding: 2em var(--horizontal-text-padding) 2em var(--horizontal-text-padding);
+    padding: 1em var(--horizontal-text-padding);
 }
 
-.TeamMembers h2,
-.AboutUs h2,
-.Sponsors h2 {
-    margin: 0;
-    padding: 0;
+:is(.TeamMembers, .AboutUs, .Sponsors) :is(h2, h3) {
     padding-left: var(--horizontal-text-padding);
+}
+
+
+:is(.TeamMembers, .AboutUs, .Sponsors) a:hover {
+    color: var(--buckeye-scarlet);
+}
+
+:is(.TeamMembers, .AboutUs, .Sponsors) a {
+    text-decoration: none;
+    color: var(--anchor-orange);
+    transition: color 0.15s ease-in-out;
 }

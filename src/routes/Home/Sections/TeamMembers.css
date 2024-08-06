@@ -1,7 +1,5 @@
 /* Noah Klein */
 
-@import './Section.css';
-
 .TeamMembers .table-holder {
     padding: 32px var(--horizontal-text-padding);
 }

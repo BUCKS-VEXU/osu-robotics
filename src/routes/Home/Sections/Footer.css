@@ -1,7 +1,5 @@
 /* Noah Klein */
 
-@import './Section.css';
-
 .Footer {
     display: flex;
     flex-direction: column;
