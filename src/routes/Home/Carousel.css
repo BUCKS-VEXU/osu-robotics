@@ -32,15 +32,31 @@
 .Carousel .control {
     position: absolute;
     text-align: center;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    height: fit-content;
+
+    background-color: transparent;
+    color: rgba(255, 0, 0, 0.548);
+    mix-blend-mode: add;
+
     border: none;
-    color: white;
-    font-size: 2rem;
-    line-height: 2rem;
+
+    font-size: 3rem;
+    line-height: 3rem;
     cursor: pointer;
-    z-index: 11;
+    z-index: 13;
+
+    transition: transform 0.3s ease-in-out;
+    transform: scale(100%);
+}
+
+.Carousel .control:hover {
+    transform: scale(125%);
 }
 
 .Carousel .control.prev {
