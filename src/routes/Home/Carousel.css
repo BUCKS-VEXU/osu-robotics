@@ -41,8 +41,7 @@
     height: fit-content;
 
     background-color: transparent;
-    color: rgba(255, 0, 0, 0.548);
-    mix-blend-mode: add;
+    color: rgba(255, 0, 0, 0.6);
 
     border: none;
 
@@ -52,7 +51,6 @@
     z-index: 13;
 
     transition: transform 0.3s ease-in-out;
-    transform: scale(100%);
 }
 
 .Carousel .control:hover {
