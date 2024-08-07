@@ -1,7 +1,5 @@
 /* Noah Klein */
 
-@import './themes.css';
-
 .Home .Header {
     display: flex;
     flex-direction: column;
