@@ -16,7 +16,7 @@ const teamMembers: Member[] = [
     { name: "Alex Flis", roles: "Builder, Drive Team" },
     { name: "Vig Prabhu", roles: "Sponsorship Lead" },
     { name: "Camden Burgess", roles: "Notebooker" },
-    { name: "Jayhue ", roles: "Programmer" },
+    { name: "Jayhue Gabriel", roles: "Programmer" },
     { name: "Maddux Dasenbrook", roles: "Financial Officer" },
     { name: "Nikolai Radonjich", roles: "Builder" },
     { name: "Zachary Hutton", roles: "Builder" },
