@@ -14,7 +14,7 @@ const teamMembers: Member[] = [
     { name: "Sage Waehler", roles: "Treasurer, Notebooker" },
     { name: "Nathan Trybus", roles: "Builder, Driver" },
     { name: "Alex Flis", roles: "Builder, Drive Team" },
-    { name: "Vig Prabhu", roles: "Sponsorship Lead" },
+    { name: "Vighnesh Prabhu", roles: "Sponsorship Lead" },
     { name: "Camden Burgess", roles: "Notebooker" },
     { name: "Jayhue Gabriel", roles: "Programmer" },
     { name: "Maddux Dasenbrook", roles: "Financial Officer" },
