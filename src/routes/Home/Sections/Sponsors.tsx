@@ -8,8 +8,9 @@ const Sponsors = () => {
         { name: 'Eaton', logo: 'media/sponsors/eaton-logo-transparent.png', href: 'https://www.eaton.com/us/en-us.html' },
         { name: 'Polymaker', logo: 'media/sponsors/Polymaker-logo.png', href: 'https://polymaker.com/' },
         { name: 'Joseph and Joseph', logo: 'media/sponsors/joseph-joseph-logo-transparent.png', href: 'https://josephcpas.com/' },
-        { name: 'GK Properties', logo: 'media/sponsors/GK-Properties-logo.png', href: '' },
-        { name: 'KHM Travel Group', logo: 'media/sponsors/KHM-logo.png', href: '' },
+        { name: 'GK Properties', logo: 'media/sponsors/GK-Properties-logo.png', href: 'https://www.gkpropertieslv.com/' },
+        { name: 'KHM Travel Group', logo: 'media/sponsors/KHM-logo.png', href: 'https://khmtravel.com/' },
+        { name: 'Digital Sports Solutions', logo: 'media/sponsors/DSS_CombinationMark_FullColor.svg', href: 'https://www.digitalsportssolutions.com/' },
     ];
 
     return (
