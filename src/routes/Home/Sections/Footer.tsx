@@ -20,8 +20,9 @@ const Footer = () => {
 
                 <div className="footer-section centered icons">
                     <h4>Connect</h4>
-                    <a href="https://www.instagram.com/osurobotics/" target='_blank'><FaInstagram size={iconSize} /></a><a href="https://www.linkedin.com/company/osu-vexu-robotics/" target='_blank'> <FaLinkedin size={iconSize} /></a>
-                    <a href="https://www.robotevents.com/teams/VURC/BUCKS" target='_blank'> <img src="media/recf-logo.png" className="custom-icon" /> </a>
+                    <a href="https://www.instagram.com/osurobotics/" target='_blank'><FaInstagram size={iconSize} /></a>
+                    <a href="https://www.linkedin.com/company/osu-vexu-robotics/" target='_blank'> <FaLinkedin size={iconSize} /></a>
+                    <a href="https://www.robotevents.com/teams/VURC/BUCKS" target='_blank'> <img src="media/recf-logo.png" className="custom-icon" draggable="false" /> </a>
                     <a href="https://www.youtube.com/channel/UC_v4uNdYZ03CyYOaO2Ea3gQ" target='_blank'> <FaYoutube size={iconSize} /> </a>
                 </div>
 

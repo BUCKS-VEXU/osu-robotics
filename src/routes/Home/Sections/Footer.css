@@ -37,6 +37,7 @@
 .Footer .footer-section .custom-icon {
     height: 2rem;
     filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(102%) contrast(103%);
+    user-select: none;
 }
 
 .Footer .footer-section .custom-icon:hover {
