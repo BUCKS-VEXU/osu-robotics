@@ -9,16 +9,16 @@ interface Member {
 }
 
 const teamMembers: Member[] = [
-    { name: "Noah Klein", roles: "President, Programmer, Builder, Drive Team" },
-    { name: "Ryan Joseph", roles: "Vice-President, Builder, Driver" },
-    { name: "Sage Waehler", roles: "Treasurer, Notebooker" },
+    { name: "Noah Klein", roles: "Co-President, Lead Programmer, Builder, Drive Team" },
+    { name: "Ryan Joseph", roles: "Co-President, Builder, Driver" },
     { name: "Nathan Trybus", roles: "Builder, Driver" },
+    { name: "Sage Waehler", roles: "Treasurer, Notebooker" },
     { name: "Alex Flis", roles: "Builder, Drive Team" },
-    { name: "Vighnesh Prabhu", roles: "Sponsorship Lead" },
+    { name: "Cameron Molina", roles: "Builder" },
     { name: "Camden Burgess", roles: "Notebooker" },
+    { name: "Vighnesh Prabhu", roles: "Sponsorship Lead" },
     { name: "Jayhue Gabriel", roles: "Programmer" },
     { name: "Maddux Dasenbrook", roles: "Financial Officer" },
-    { name: "Nikolai Radonjich", roles: "Builder" },
     { name: "Zachary Hutton", roles: "Builder" },
     { name: "Andrew Flis", roles: "Head of Filmography" },
     { name: "Drew Phillips", roles: "Advisor" },

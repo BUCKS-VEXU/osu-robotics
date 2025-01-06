@@ -150,7 +150,7 @@ const TeamRoller = ({ teams }: TeamRollerProps) => {
 const useDelayUnmount = (isMounted: boolean, delayTime: number) => {
     const [showDiv, setShowDiv] = useState(false);
     useEffect(() => {
-        let timeoutId: any;
+        let timeoutId: NodeJS.Timeout;
         if (isMounted && !showDiv) {
             setShowDiv(true);
         } else if (!isMounted && showDiv) {

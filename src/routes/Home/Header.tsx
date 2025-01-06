@@ -39,17 +39,17 @@ const Header = () => {
                     autoSlide={{ play: windowFocused, intervalSeconds: 5 }}
                     slideOptions={{ durationSeconds: 1.5 }}
                 >
-                    <img src="media/Fundraiser-team-pic.jpg" alt="Team picture at first fundraiser" />
-                    <img src="media/elyria-states-2022.png" alt="11124R States 2022 Amaze Award" />
-                    <img src="media/noah-working-on-robot.jpg" alt="Noah working on robot at States 2022" />
+                    <img src="media/riverbots/Team-picture.jpg" alt="Team picture at first fundraiser" />
+                    <img src="media/riverbots/DKFNX-Wallstakes.jpg" alt="11124R States 2022 Amaze Award" />
+                    <img src="media/riverbots/Bots-lined-up.jpg" alt="BUCKS Drive team at RiverBots" />
+
+                    <img src="media/riverbots/Noah-Adjusting-Bot.jpg" alt="60883D 2011F State Champions" />
+
+
+                    <img src="media/riverbots/Sportsmanship.jpg" alt="2011 Kalahari 2023 Innovate Award" />
+
                     <div className='matlack'>
-                        <img src="media/states-champs-2022.JPG" alt="60883D 2011F State Champions" />
-                    </div>
-                    <div className='matlack'>
-                        <img src="media/Kala2011E.JPG" alt="2011 Kalahari 2023 Innovate Award" />
-                    </div>
-                    <div className='matlack'>
-                        <img src="media/states-2022-elims.JPEG" alt="States 2022 Finals" />
+                        <img src="media/riverbots/Pit.jpg" alt="States 2022 Finals" />
                     </div>
 
                 </Carousel>
