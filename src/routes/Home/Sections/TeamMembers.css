@@ -5,7 +5,7 @@
 }
 
 .TeamMembers table {
-    width: 75%;
+    width: 100%;
     max-width: 900px;
     border-collapse: collapse;
     margin: 0 auto;
@@ -30,4 +30,8 @@
 
 .TeamMembers tbody tr:hover {
     background-color: #ddd;
+}
+
+.TeamMembers .team-table a {
+    color: var(--buckeye-scarlet);
 }

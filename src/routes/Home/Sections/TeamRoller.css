@@ -7,7 +7,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    width: clamp(250px, 65vw, 364px);
+    width: clamp(275px, 65vw, 400px);
     margin: auto;
 
     border-radius: 12px;
@@ -20,7 +20,7 @@
     flex-direction: row;
     overflow: hidden;
     white-space: nowrap;
-    font-size: calc(clamp(250px, 65vw, 364px)/25);
+    font-size: calc(clamp(275px, 65vw, 400px)/25);
 
 }
 

@@ -1,35 +1,119 @@
 /* Noah Klein */
 
 .Footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--buckeye-silver);
-    background-color: var(--buckeye-scarlet);
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
-    height: fit-content;
+    background: linear-gradient(to bottom, var(--deep-rose), var(--buckeye-scarlet));
 
-    z-index: 15;
-
+    color: white;
+    padding: 40px 20px;
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 35px;
 
-
-    margin-top: 150px;
+    box-sizing: border-box;
+    margin-top: 4rem;
 }
 
 .Footer a {
     color: var(--buckeye-silver);
-    text-decoration: none;
-    /* Remove underline */
-    transition: color 0.3s ease;
-    /* Smooth color transition */
 }
 
-.Footer a:hover,
-.Footer a:focus {
-    color: white;
-    text-decoration: underline;
-    /* Add underline on hover/focus */
+.Footer a:hover {
+    color: var(--deep-black);
+}
+
+.Footer .icons a {
+    text-decoration: none;
+}
+
+.Footer .logo {
+    position: relative;
+    height: 3rem;
+    user-select: none;
+}
+
+.Footer .footer-section .custom-icon {
+    height: 2rem;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(102%) contrast(103%);
+}
+
+.Footer .footer-section .custom-icon:hover {
+    filter: brightness(0) saturate(100%) invert(0%) sepia(3%) saturate(217%) hue-rotate(318deg) brightness(108%) contrast(84%);
+}
+
+
+.Footer span {
+    margin: 0 5px;
+}
+
+.Footer .footer-content {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+    justify-content: space-between;
+}
+
+.Footer .footer-section {
+    flex: 1;
+    max-width: none;
+}
+
+.Footer.Footer .footer-section.right {
+    display: inline-flex;
+    justify-content: right;
+}
+
+
+.Footer .footer-section h4 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.Footer .footer-section.centered {
+    text-align: center;
+}
+
+.Footer .footer-section p {
+    margin: 6px 0;
+    line-height: 1.6;
+}
+
+.Footer .footer-section.right a {
+    height: fit-content;
+    margin-top: 1.3em;
+}
+
+.Footer .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid black;
+    padding-top: 20px;
+    margin-top: 40px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Footer .footer-bottom p {
+    margin: 0;
+    font-size: 13px;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+    .Footer .footer-content {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .Footer .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
 }

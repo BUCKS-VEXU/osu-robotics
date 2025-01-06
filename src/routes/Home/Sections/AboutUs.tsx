@@ -4,15 +4,16 @@ import TeamRoller from "./TeamRoller"
 
 import './AboutUs.css';
 
+// TODO get 6008C 2011A awards
 
 const teams = [
     {
         name: '2011B',
-        tournamentChampion: 0,
+        tournamentChampion: 1,
         excellence: 0,
-        design: 0,
+        design: 1,
         skillsChampion: 0,
-        otherAwards: 0
+        otherAwards: 3
     },
     {
         name: '2011E',
@@ -29,6 +30,14 @@ const teams = [
         design: 0,
         skillsChampion: 5,
         otherAwards: 9
+    },
+    {
+        name: '6008C',
+        tournamentChampion: 1,
+        excellence: 0,
+        design: 0,
+        skillsChampion: 0,
+        otherAwards: 0
     },
     {
         name: '11124R',
@@ -56,7 +65,7 @@ const AboutUs = () => {
             <p>
                 The VEX U Robotics Organization at The Ohio State University (or BUCKS) facilitates student creation and competition in the
                 <a href="https://vurc-kb.recf.org/hc/en-us/articles/9831327507095-Welcome-VEX-U-Robotics-Competition-Teams" target="_blank"> VURC </a>
-                (VEX University Robotics Competition). Our V5RC teams collectively won the Ohio State Competition 10 times.
+                (VEX University Robotics Competition). Our V5RC teams collectively won the Ohio State Competition 11 times.
             </p>
 
             <h3>What is VURC?</h3>
