@@ -14,8 +14,8 @@ interface NavBarItem {
 
 const navBarMap: Map<string, NavBarItem> = new Map([
     ['home', { className: 'Header', navText: 'Home' }],
-    ['about-us', { className: 'AboutUs', navText: 'About us' }],
-    ['the-team', { className: 'TeamMembers', navText: 'The team' }],
+    ['about-us', { className: 'AboutUs', navText: 'About Us' }],
+    ['the-team', { className: 'TeamMembers', navText: 'The Team' }],
     ['sponsors', { className: 'Sponsors', navText: 'Sponsors' }],
     ['contact', { className: 'Footer', navText: 'Contact' }],
 ]);

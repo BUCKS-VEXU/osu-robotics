@@ -1,5 +1,13 @@
 /* Noah Klein */
 
+:root {
+  --deep-black: #151515;
+  --buckeye-scarlet: #BA0C2F;
+  --anchor-orange: #da621d;
+  --deep-rose: #C73659;
+  --buckeye-silver: #EEEEEE;
+}
+
 body {
   position: absolute;
   -webkit-font-smoothing: antialiased;
@@ -8,7 +16,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: sans-serif;
+  font-family: buckeye-sans;
 }
 
 #error-page {

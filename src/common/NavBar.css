@@ -19,7 +19,7 @@
     z-index: 20;
 }
 
-.NavBar a {
+.NavBar.NavBar a {
     padding: 17px clamp(5px, 2vw, 15px);
     color: var(--buckeye-silver);
     text-decoration: none;

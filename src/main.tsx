@@ -2,19 +2,42 @@
 
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, } from "react-router-dom";
+import { createBrowserRouter, RouterProvider,Outlet } from "react-router-dom";
 
 import ErrorPage from "./ErrorPage";
+import Footer from './common/Footer';
 
-import './index.css';
 import Home from './routes/Home/Home';
 
+import './index.css';
+
+const App = () => {
+    return (
+        <>
+            {/* <NavBar /> */}
+            <div id="content" >
+                <Outlet />
+            </div >
+            <Footer />
+        </>
+    );
+};
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: <App />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      }
+      // {
+      //   path: "/about",
+      //   element: <About />,
+      // }
+    ],
   },
 ]);
 

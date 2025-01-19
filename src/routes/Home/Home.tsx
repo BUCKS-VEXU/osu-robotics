@@ -1,11 +1,10 @@
 /* Noah Klein */
 
 import Header from './Header';
-import NavBar from './NavBar';
-import AboutUs from './Sections/AboutUs';
-import TeamMembers from './Sections/TeamMembers';
-import Sponsors from './Sections/Sponsors';
-import Footer from './Sections/Footer';
+import NavBar from '../../common/NavBar';
+import AboutUs from './AboutUs';
+import TeamMembers from './TeamMembers';
+import Sponsors from './Sponsors';
 
 import './Home.css';
 
@@ -17,7 +16,6 @@ const Home = () => {
             <AboutUs />
             <TeamMembers />
             <Sponsors />
-            <Footer />
         </div>
     );
 };

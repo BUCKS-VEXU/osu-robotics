@@ -8,12 +8,12 @@ import './AboutUs.css';
 
 const teams = [
     {
-        name: '2011B',
-        tournamentChampion: 1,
-        excellence: 0,
-        design: 1,
-        skillsChampion: 0,
-        otherAwards: 3
+        name: '2011A',
+        tournamentChampion: 12,
+        excellence: 6,
+        design: 3,
+        skillsChampion: 4,
+        otherAwards: 18
     },
     {
         name: '2011E',
@@ -33,11 +33,11 @@ const teams = [
     },
     {
         name: '6008C',
-        tournamentChampion: 1,
-        excellence: 0,
+        tournamentChampion: 6,
+        excellence: 4,
         design: 0,
-        skillsChampion: 0,
-        otherAwards: 0
+        skillsChampion: 6,
+        otherAwards: 9
     },
     {
         name: '11124R',
