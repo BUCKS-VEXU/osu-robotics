@@ -30,8 +30,7 @@ const Header = () => {
         <div className="Header">
 
             <div className={`title${isSticky ? '' : ' sticky'}`}>
-                <h1>VEXU Robotics Organization at Ohio State</h1>
-                <img src="media/Ohio-State-Logo.png" alt="Ohio State University Logo" />
+                <img src="media/FilledLogoWithText.png" alt="BUCKS Logo with text" />
             </div>
 
             <div className="carousel-container">

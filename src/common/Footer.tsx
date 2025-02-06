@@ -27,7 +27,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer-section right">
-                    <a href="/"><img src="media/BUCKS-logo.png" className="logo" draggable="false" /></a>
+                    <a href="/"><img src="media/FilledLogoWithText.png" className="logo" draggable="false" /></a>
                 </div>
             </div>
 
