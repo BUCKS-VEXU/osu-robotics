@@ -13,7 +13,6 @@ interface NavBarItem {
 }
 
 const navBarMap: Map<string, NavBarItem> = new Map([
-    ['home', { className: 'Header', navText: 'Home' }],
     ['about-us', { className: 'AboutUs', navText: 'About Us' }],
     ['the-team', { className: 'TeamMembers', navText: 'The Team' }],
     ['sponsors', { className: 'Sponsors', navText: 'Sponsors' }],
@@ -45,6 +44,7 @@ const NavBar = ({ }: NavBarProps) => {
 
     return (
         <nav className={'NavBar'}>
+            <img src="assets/logos/BUCKS.png" />
             {Array.from(navBarMap.entries()).map(([key, value]) => (
                 <a key={key} href={`#${key}`} onClick={() => scrollToSection(value.className)}>
                     {value.navText}

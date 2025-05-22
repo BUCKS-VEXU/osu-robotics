@@ -26,6 +26,12 @@
     transition: color 0.3s;
 }
 
+.NavBar img {
+    height: 40px;
+    filter: drop-shadow(0px 0px 1rem var(--deep-rose));
+    padding-right: 1rem;
+}
+
 .NavBar a:hover {
     color: white;
 }

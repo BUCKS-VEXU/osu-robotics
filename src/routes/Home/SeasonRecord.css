@@ -1,0 +1,54 @@
+/* Noah Klein */
+
+/* Container */
+.season-record {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: var(--color-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    color: var(--color-text);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Title */
+.season-record .title {
+    width: 100%;
+    padding: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--color-white);
+}
+
+/* Each metric group */
+.season-record .group {
+    margin-bottom: 1rem;
+}
+
+/* Labels row */
+.season-record .labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+/* The grey track */
+.season-record .bar {
+    width: 100%;
+    height: 12px;
+    background: var(--buckeye-gray);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* The colored fill */
+.season-record .fill {
+    height: 100%;
+    width: 0;
+    border-radius: 6px 0 0 6px;
+    background: var(--buckeye-scarlet);
+    /* ← new: */
+    transition: width 1s ease-out;
+}

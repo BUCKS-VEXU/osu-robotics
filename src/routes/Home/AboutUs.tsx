@@ -3,6 +3,7 @@
 import TeamRoller from "./TeamRoller"
 
 import './AboutUs.css';
+import SeasonRecord from "./SeasonRecord";
 
 // TODO get 6008C 2011A awards
 
@@ -60,6 +61,8 @@ const teams = [
 const AboutUs = () => {
     return (
         <div className="AboutUs">
+
+            <SeasonRecord season="High Stakes" wins={21} losses={3} />
 
             <h2>About us</h2>
             <p>

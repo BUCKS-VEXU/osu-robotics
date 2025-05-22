@@ -22,12 +22,12 @@ const Footer = () => {
                     <h4>Connect</h4>
                     <a href="https://www.instagram.com/osurobotics/" target='_blank'><FaInstagram size={iconSize} /></a>
                     <a href="https://www.linkedin.com/company/osu-vexu-robotics/" target='_blank'> <FaLinkedin size={iconSize} /></a>
-                    <a href="https://www.robotevents.com/teams/VURC/BUCKS" target='_blank'> <img src="media/recf-logo.png" className="custom-icon" draggable="false" /> </a>
+                    <a href="https://www.robotevents.com/teams/VURC/BUCKS" target='_blank'> <img src="assets/recf-logo.png" className="custom-icon" draggable="false" /> </a>
                     <a href="https://www.youtube.com/channel/UC_v4uNdYZ03CyYOaO2Ea3gQ" target='_blank'> <FaYoutube size={iconSize} /> </a>
                 </div>
 
                 <div className="footer-section right">
-                    <a href="/"><img src="media/FilledLogoWithText.png" className="logo" draggable="false" /></a>
+                    <a href="/"><img src="assets/logos/BUCKSText.png" className="logo" draggable="false" /></a>
                 </div>
             </div>
 
