@@ -1,6 +1,6 @@
 /* Noah Klein */
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './SeasonRecord.css';
 
 interface SeasonRecordProps {
