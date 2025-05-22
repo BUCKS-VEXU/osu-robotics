@@ -94,6 +94,8 @@ const AboutUs = () => {
 
             <p>Our members have consistently been some of the best in the world, and we're excited to compete again.</p>
 
+            <p>Check out our <a href="/docs/custom-omnis.pdf">custom omni-wheel documentation</a>.</p>
+
         </div>
     )
 }
