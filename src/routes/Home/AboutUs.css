@@ -1,6 +1,11 @@
 /* Noah Klein */
 
-.AboutUs {}
+.AboutUs.AboutUs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+}
 
 .AboutUs .no-wrap {
     white-space: nowrap;

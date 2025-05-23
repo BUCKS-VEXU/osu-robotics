@@ -29,10 +29,10 @@ const teamMembers: Member[] = [
 
 const TeamMembers = () => {
     return (
-        <div className="TeamMembers">
+        <section className="TeamMembers">
             <h2>The team</h2>
             <div className='table-holder'>
-                <table className="team-table">
+                <table>
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -54,7 +54,7 @@ const TeamMembers = () => {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </section>
     )
 }
 

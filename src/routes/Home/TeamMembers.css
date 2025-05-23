@@ -1,14 +1,21 @@
 /* Noah Klein */
 
+.TeamMembers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .TeamMembers .table-holder {
-    padding: 32px var(--horizontal-text-padding);
+    width: 100%;
+    max-width: 50rem;
+    padding: 0 2rem;
+    box-sizing: border-box;
 }
 
 .TeamMembers table {
     width: 100%;
-    max-width: 900px;
     border-collapse: collapse;
-    margin: 0 auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -32,6 +39,6 @@
     background-color: #ddd;
 }
 
-.TeamMembers .team-table a {
+.TeamMembers table a {
     color: var(--buckeye-scarlet);
 }

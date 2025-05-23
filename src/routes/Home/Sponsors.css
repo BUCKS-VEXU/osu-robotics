@@ -1,23 +1,26 @@
 /* Noah Klein */
 
-.Sponsors section {
-    width: 100%;
+.Sponsors {
     display: flex;
-    justify-content: center;
-    margin: 32px 0;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-.Sponsors div {
-    display: flex;
+.Sponsors .container {
     padding: 3rem;
-    background-color: #f9f9f9;
-    justify-content: center;
+
     flex-wrap: wrap;
-    gap: 3.5rem;
-    text-align: center;
+
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+    gap: 2.5rem;
     width: fit-content;
-    max-width: 60rem;
+    max-width: 65rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
 .Sponsors a {

@@ -60,11 +60,11 @@ const teams = [
 
 const AboutUs = () => {
     return (
-        <div className="AboutUs">
+        <section className="AboutUs">
 
             <SeasonRecord season="High Stakes" wins={21} losses={3} />
 
-            <h2>About us</h2>
+            <h2>About Us</h2>
             <p>
                 The VEX U Robotics Organization at The Ohio State University (or BUCKS) facilitates student creation and competition in the
                 <a href="https://vurc-kb.recf.org/hc/en-us/articles/9831327507095-Welcome-VEX-U-Robotics-Competition-Teams" target="_blank"> VURC </a>
@@ -96,7 +96,7 @@ const AboutUs = () => {
 
             <p>Check out our <a href="/docs/custom-omnis.pdf">custom omni-wheel documentation</a>.</p>
 
-        </div>
+        </section>
     )
 }
 

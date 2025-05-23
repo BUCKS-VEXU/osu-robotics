@@ -14,22 +14,20 @@ const Sponsors = () => {
     ];
 
     return (
-        <div className='Sponsors'>
+        <section className='Sponsors'>
             <h2>Our Sponsors</h2>
-            <section>
-                <div>
-                    {sponsors.map((sponsor, index) => (
-                        <a href={sponsor.href} target="_blank">
-                            <img
-                                key={index}
-                                src={sponsor.logo}
-                                alt={sponsor.name}
-                            />
-                        </a>
-                    ))}
-                </div>
-            </section>
-        </div >
+            <div className='container'>
+                {sponsors.map((sponsor, index) => (
+                    <a href={sponsor.href} target="_blank">
+                        <img
+                            key={index}
+                            src={sponsor.logo}
+                            alt={sponsor.name}
+                        />
+                    </a>
+                ))}
+            </div>
+        </section >
     )
 }
 

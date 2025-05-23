@@ -14,16 +14,7 @@
 
 }
 
-.Home a {
-    color: var(--anchor-orange);
-    text-decoration: none;
-}
-
-:root {
-    --horizontal-text-padding: clamp(15px, 10vw, 260px);
-}
-
-:is(.TeamMembers, .AboutUs, .Sponsors) {
+.Home>section {
     width: 100%;
     height: fit-content;
 
@@ -35,18 +26,24 @@
     z-index: 15;
 }
 
+.Home a {
+    color: var(--anchor-orange);
+    text-decoration: none;
+}
+
+:root {
+    --horizontal-text-padding: clamp(15px, 10vw, 260px);
+}
+
+
 :is(.TeamMembers, .AboutUs, .Sponsors) p {
     margin: 0;
     padding: 1em var(--horizontal-text-padding);
 }
 
-:is(.TeamMembers, .AboutUs, .Sponsors) :is(h2, h3) {
-    padding-left: var(--horizontal-text-padding);
-}
-
 
 :is(.TeamMembers, .AboutUs, .Sponsors) a:hover {
-    color: var(--buckeye-scarlet);
+    color: var(--deep-rose);
 }
 
 :is(.TeamMembers, .AboutUs, .Sponsors) a {
