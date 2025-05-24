@@ -23,6 +23,14 @@
     /* don’t let it grow or shrink */
 }
 
+.TeamMembers .custom-legend {
+    font-size: 0.9rem;
+    color: var(--buckeye-scarlet);
+    /* SVG text color */
+    font-family: buckeye-sans, Montserrat, sans-serif;
+    /* any other properties… */
+}
+
 .TeamMembers .table-holder {
     flex: 1 1 auto;
     width: 100%;

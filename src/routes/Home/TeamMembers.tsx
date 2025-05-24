@@ -46,7 +46,7 @@ const seriesData = [
     { value: 3, color: 'orange', label: 'Mechanical Engineering' },
     { value: 4, color: 'red', label: 'Computer Science Engineering' },
     { value: 2, color: 'blue', label: 'Electrical & Computer Engineering' },
-    { value: 1, color: 'green', label: 'Math and English' },
+    { value: 1, color: 'green', label: 'Math & English' },
     { value: 1, color: 'purple', label: 'Psychology' },
 ];
 
@@ -80,8 +80,6 @@ const TeamMembers = () => {
             <h2>The team</h2>
 
             <div className="display">
-
-                {/* TODO make this buckeye font */}
                 <div className="chart-holder">
                     <PieChart
                         series={series}
@@ -89,8 +87,10 @@ const TeamMembers = () => {
                         width={210}
                         highlightedItem={highlightedItem!}
                         onHighlightChange={(h) => setHighlightedItem(h)}
+                        slotProps={{ legend: { className: 'custom-legend', } }}
                     />
                 </div>
+
                 <div className="table-holder">
                     <table>
                         <thead>
