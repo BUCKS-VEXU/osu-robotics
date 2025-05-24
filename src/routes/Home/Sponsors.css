@@ -35,4 +35,9 @@
     max-width: 275px;
     max-height: 150px;
     object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.Sponsors img:hover {
+    transform: scale(1.05);
 }
