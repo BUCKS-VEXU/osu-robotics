@@ -1,82 +1,120 @@
 /* Noah Klein */
 
+import { useState } from 'react';
 import './TeamMembers.css';
 
-import { PieChart } from '@mui/x-charts/PieChart';
+// TODO Clean this whole thing up
+
+import {
+    PieChart,
+    type PieSeriesType,
+    type PieValueType,
+    type HighlightItemData,
+} from '@mui/x-charts';
+
+enum Major {
+    MechEng = 0,
+    CSE,
+    ECE,
+    MathEng,
+    Psych,
+}
 
 interface Member {
     name: string;
     href?: string;
     roles: string;
+    majorIndex?: Major;
 }
 
 const teamMembers: Member[] = [
-    { name: "Noah Klein", href: "https://www.noahkleinportfolio.org/", roles: "Co-President, Programmer, Builder, Drive Team" },
-    { name: "Ryan Joseph", href: "https://www.linkedin.com/in/ryanjoseph1/", roles: "Co-President, Builder, Driver" },
-    { name: "Sage Waehler", href: "https://www.linkedin.com/in/sage-waehler-9413582aa/", roles: "Treasurer, Notebooker, Drive Team" },
-    { name: "Nathan Trybus", href: "https://www.linkedin.com/in/nathan-trybus-981819243/", roles: "Builder, Driver" },
-    { name: "Alex Flis", href: "https://www.linkedin.com/in/alexander-flis-0a8225327/", roles: "Builder, Drive Team" },
-    { name: "Camden Burgess", href: "https://www.linkedin.com/in/camden-burgess-203b94290/", roles: "Notebooker, Drive Team" },
-    { name: "Andrew Flis", href: "https://www.linkedin.com/in/andrew-flis-12b665159/", roles: "Designer, Head of Filmography" },
-    { name: "Robert Ashley", href: "https://www.linkedin.com/in/robert-ashley-71b482327/", roles: "Builder" },
-    { name: "Matthew Allen", href: "https://www.linkedin.com/in/matthew-luis-allen/", roles: "Designer, 3D Printing Wizard" },
-    { name: "Vighnesh Prabhu", href: "https://www.linkedin.com/in/vighnesh-prabhu-profile/", roles: "Programmer, Sponsorship Lead" },
-    { name: "Jayhue Gabriel", href: "https://www.linkedin.com/in/jayhue-gabriel-8a765333a/", roles: "Programmer" },
+    { name: "Noah Klein", majorIndex: Major.CSE, href: "https://www.noahkleinportfolio.org/", roles: "Co-President, Programmer, Builder, Drive Team" },
+    { name: "Ryan Joseph", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/ryanjoseph1/", roles: "Co-President, Builder, Driver" },
+    { name: "Sage Waehler", majorIndex: Major.MathEng, href: "https://www.linkedin.com/in/sage-waehler-9413582aa/", roles: "Treasurer, Notebooker, Drive Team" },
+    { name: "Nathan Trybus", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/nathan-trybus-981819243/", roles: "Builder, Driver" },
+    { name: "Alex Flis", majorIndex: Major.Psych, href: "https://www.linkedin.com/in/alexander-flis-0a8225327/", roles: "Builder, Drive Team" },
+    { name: "Camden Burgess", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/camden-burgess-203b94290/", roles: "Notebooker, Drive Team" },
+    { name: "Andrew Flis", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/andrew-flis-12b665159/", roles: "Designer, Head of Filmography" },
+    { name: "Robert Ashley", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/robert-ashley-71b482327/", roles: "Builder" },
+    { name: "Matthew Allen", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/matthew-luis-allen/", roles: "Designer, 3D Printing Wizard" },
+    { name: "Vighnesh Prabhu", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/vighnesh-prabhu-profile/", roles: "Programmer, Sponsorship Lead" },
+    { name: "Jayhue Gabriel", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/jayhue-gabriel-8a765333a/", roles: "Programmer" },
     { name: "Drew Phillips", href: "https://engineering.osu.edu/people/phillips.1166", roles: "Advisor" },
 ];
 
+const seriesData = [
+    { value: 3, color: 'orange', label: 'Mechanical Engineering' },
+    { value: 4, color: 'red', label: 'Computer Science Engineering' },
+    { value: 2, color: 'blue', label: 'Electrical & Computer Engineering' },
+    { value: 1, color: 'green', label: 'Math and English' },
+    { value: 1, color: 'purple', label: 'Psychology' },
+];
+
+
+const series: PieSeriesType<PieValueType>[] = [
+    {
+        type: 'pie',
+        id: 'majors',
+        data: seriesData,
+        highlightScope: {
+            fade: 'global',
+            highlight: 'item',
+        } as const,
+        faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+        innerRadius: 25,
+        outerRadius: 100,
+        paddingAngle: 5,
+        cornerRadius: 10,
+        startAngle: -45,
+        endAngle: 260,
+        cx: 100,
+        cy: 100,
+    },
+];
+
 const TeamMembers = () => {
+    const [highlightedItem, setHighlightedItem] = useState<HighlightItemData | null>(null);
+
     return (
         <section className="TeamMembers">
             <h2>The team</h2>
 
             <div className="display">
 
+                {/* TODO make this buckeye font */}
                 <div className="chart-holder">
                     <PieChart
-                        series={[
-                            {
-                                data: [
-                                    { value: 3, color: 'orange', label: 'Mechanical Engineering' },
-                                    { value: 4, color: 'red', label: 'Computer Science Engineering' },
-                                    { value: 2, color: 'blue', label: 'Electrical & Computer Engineering' },
-                                    { value: 1, color: 'green', label: 'Math and English' },
-                                    { value: 1, color: 'purple', label: 'Psychology' },
-                                ],
-                                highlightScope: { fade: 'global', highlight: 'item' },
-                                faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                                innerRadius: 25,
-                                outerRadius: 100,
-                                paddingAngle: 5,
-                                cornerRadius: 10,
-                                startAngle: -45,
-                                endAngle: 260,
-                                cx: 100,
-                                cy: 100,
-                            }
-                        ]}
+                        series={series}
                         height={210}
                         width={210}
+                        highlightedItem={highlightedItem!}
+                        onHighlightChange={(h) => setHighlightedItem(h)}
                     />
                 </div>
-                <div className='table-holder'>
+                <div className="table-holder">
                     <table>
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Role</th>
-                            </tr>
+                            <tr><th>Name</th><th>Role</th></tr>
                         </thead>
                         <tbody>
-                            {teamMembers.map((member, index) => (
-                                <tr key={index}>
+                            {teamMembers.map((member, i) => (
+                                <tr
+                                    key={i}
+                                    onMouseEnter={() => {
+                                        if (member.majorIndex == null) return;
+                                        setHighlightedItem({
+                                            seriesId: 'majors',
+                                            dataIndex: member.majorIndex,
+                                        });
+                                    }}
+                                    onMouseLeave={() => setHighlightedItem(null)}
+                                >
                                     <td>
-                                        <a href={member.href} target='_blank'>
+                                        <a href={member.href} target="_blank">
                                             {member.name}
-                                        </a></td>
-                                    <td>
-                                        {member.roles}
+                                        </a>
                                     </td>
+                                    <td>{member.roles}</td>
                                 </tr>
                             ))}
                         </tbody>
