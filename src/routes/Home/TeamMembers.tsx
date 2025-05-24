@@ -36,6 +36,7 @@ const teamMembers: Member[] = [
     { name: "Camden Burgess", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/camden-burgess-203b94290/", roles: "Notebooker, Drive Team" },
     { name: "Andrew Flis", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/andrew-flis-12b665159/", roles: "Designer, Head of Filmography" },
     { name: "Robert Ashley", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/robert-ashley-71b482327/", roles: "Builder" },
+    { name: "John Cruz", majorIndex: Major.MechEng, roles: "Builder" },
     { name: "Matthew Allen", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/matthew-luis-allen/", roles: "Designer, 3D Printing Wizard" },
     { name: "Vighnesh Prabhu", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/vighnesh-prabhu-profile/", roles: "Programmer, Sponsorship Lead" },
     { name: "Jayhue Gabriel", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/jayhue-gabriel-8a765333a/", roles: "Programmer" },
@@ -43,7 +44,7 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-    { value: 3, color: ' #048BA8', label: 'Mechanical Engineering' },
+    { value: 4, color: ' #048BA8', label: 'Mechanical Engineering' },
     { value: 4, color: ' #16DB93', label: 'Computer Science Engineering' },
     { value: 2, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
     { value: 1, color: ' #F29E4C', label: 'Math & English' },
