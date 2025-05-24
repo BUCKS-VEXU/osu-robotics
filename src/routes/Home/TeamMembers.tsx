@@ -86,7 +86,7 @@ const TeamMembers = () => {
 
     return (
         <section className="TeamMembers">
-            <h2>The team</h2>
+            <h2>The Team</h2>
 
             <div className="display">
                 <div className="chart-holder">
