@@ -4,8 +4,6 @@ import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 
 import './Footer.css';
 
-// TODO make footer stretch scroll
-
 const Footer = () => {
     const iconSize = '2rem';
 

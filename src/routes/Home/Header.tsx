@@ -39,12 +39,12 @@ const Header = () => {
                     slideOptions={{ durationSeconds: 1.5 }}
                 >
                     {/* TODO update this alt text */}
-                    <img src="assets/riverbots/Team-picture.jpg" alt="Team picture at first fundraiser" />
-                    <img src="assets/riverbots/DKFNX-Wallstakes.jpg" alt="11124R States 2022 Amaze Award" />
-                    <img src="assets/riverbots/Bots-lined-up.jpg" alt="BUCKS Drive team at RiverBots" />
-                    <img src="assets/riverbots/Noah-Adjusting-Bot.jpg" alt="60883D 2011F State Champions" />
-                    <img src="assets/riverbots/Sportsmanship.jpg" alt="2011 Kalahari 2023 Innovate Award" />
-                    <img src="assets/riverbots/Pit.jpg" alt="States 2022 Finals" />
+                    <img src="assets/worlds/Worlds-Pit.jpg" alt="Team picture at 2025 Worlds with Eaton reps" />
+                    <img src="assets/riverbots/DKFNX-Wallstakes.jpg" alt="DKFNX Getting boxed in wallstakes at riverbots" />
+                    <img src="assets/worlds/Rush.jpg" alt="High Stakes autonomous goal rush" />
+                    <img src="assets/worlds/15-With-Goal.jpg" alt='15" Robot at 2025 Worlds' />
+                    <img src="assets/worlds/24-At-Pit.jpg" alt='24" Robot at 2025 Worlds' />
+                    <img src="assets/worlds/15-Drive-Pit.jpg" alt="Drive team at 2025 Worlds" />
                 </Carousel>
                 <div className="overlay"></div>
             </div>

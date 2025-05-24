@@ -6,7 +6,25 @@
     align-items: center;
 }
 
+.TeamMembers .display {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    /* give yourself some horizontal breathing room */
+    padding: 1rem;
+}
+
+.TeamMembers .chart-holder {
+    position: sticky;
+    top: 6rem;
+    /* adjust to the height of your navbar + any spacing */
+    align-self: flex-start;
+    flex: 0 0 auto;
+    /* don’t let it grow or shrink */
+}
+
 .TeamMembers .table-holder {
+    flex: 1 1 auto;
     width: 100%;
     max-width: 50rem;
     padding: 0 2rem;
@@ -41,4 +59,18 @@
 
 .TeamMembers table a {
     color: var(--buckeye-scarlet);
+}
+
+/* on narrow viewports, stack them */
+@media (max-width: 768px) {
+    .TeamMembers .display {
+        flex-direction: column;
+    }
+
+    .TeamMembers .chart-holder {
+        position: relative;
+        /* no sticky when stacked */
+        top: auto;
+        margin: 0 auto;
+    }
 }

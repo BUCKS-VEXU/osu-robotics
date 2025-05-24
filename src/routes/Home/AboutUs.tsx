@@ -5,8 +5,6 @@ import TeamRoller from "./TeamRoller"
 import './AboutUs.css';
 import SeasonRecord from "./SeasonRecord";
 
-// TODO get 6008C 2011A awards
-
 const teams = [
     {
         name: '2011A',
