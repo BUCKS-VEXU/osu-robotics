@@ -1,100 +1,35 @@
 /* Noah Klein */
 
-import TeamRoller from "./TeamRoller"
-
 import './AboutUs.css';
 import SeasonRecord from "./SeasonRecord";
-
-const teams = [
-    {
-        name: '2011A',
-        tournamentChampion: 12,
-        excellence: 6,
-        design: 3,
-        skillsChampion: 4,
-        otherAwards: 18
-    },
-    {
-        name: '2011E',
-        tournamentChampion: 3,
-        excellence: 1,
-        design: 2,
-        skillsChampion: 1,
-        otherAwards: 7
-    },
-    {
-        name: '2011F',
-        tournamentChampion: 22,
-        excellence: 2,
-        design: 0,
-        skillsChampion: 5,
-        otherAwards: 9
-    },
-    {
-        name: '6008C',
-        tournamentChampion: 6,
-        excellence: 4,
-        design: 0,
-        skillsChampion: 6,
-        otherAwards: 9
-    },
-    {
-        name: '11124R',
-        tournamentChampion: 13,
-        excellence: 7,
-        design: 4,
-        skillsChampion: 7,
-        otherAwards: 24
-    },
-    {
-        name: '60883D',
-        tournamentChampion: 10,
-        excellence: 9,
-        design: 1,
-        skillsChampion: 17,
-        otherAwards: 9
-    }
-]
 
 const AboutUs = () => {
     return (
         <section className="AboutUs">
 
+
+            <h2>About BUCKS Robotics</h2>
+            <p>
+                BUCKS Robotics represents The Ohio State University in the VEX U Robotics Competition
+                <a href="https://vurc-kb.recf.org/hc/en-us/articles/9831327507095-Welcome-VEX-U-Robotics-Competition-Teams" target="_blank"> (VURC) </a>
+                — a collegiate-level engineering challenge where student teams design, build, and program custom robots to compete on a global stage.
+                We are a student-run organization dedicated to hands-on innovation, collaboration, and technical excellence in the world of competitive robotics.
+            </p>
             <SeasonRecord season="High Stakes" wins={21} losses={3} />
 
-            <h2>About Us</h2>
+            <h2>Competitive Success</h2>
             <p>
-                The VEX U Robotics Organization at The Ohio State University (or BUCKS) facilitates student creation and competition in the
-                <a href="https://vurc-kb.recf.org/hc/en-us/articles/9831327507095-Welcome-VEX-U-Robotics-Competition-Teams" target="_blank"> VURC </a>
-                (VEX University Robotics Competition). Our V5RC teams collectively won the Ohio State Competition 11 times.
+                In our debut season, BUCKS made an immediate impact at the 2024 VEX U World Championship.
+                We went undefeated in qualification matches and earned the #2 seed in our division.
+                Our run ended in the semifinals against <a target='_blank' href='https://tntnvex.com/'>TNTN</a>, the eventual triple crown winner
+                (World Champion, Skills Champion, and Excellence Award recipient).
+                <br /><br />
+                After the tournament, a TNTN team member said:
+                <blockquote>
+                    “We didn't even scout after semis — we thought you would win.”
+                </blockquote>
             </p>
-
-            <h3>What is VURC?</h3>
-            <p>
-                VURC is a university-level robotics competition operated by the <a href="https://recf.org/" target="_blank">RECF</a>.
-                Teams design, build, and program robots to compete in a new game each year, created by the RECF.
-                VURC competitors are encouraged to manufacture parts for their robots, as well as use third party electronics
-            </p>
-
-            <h3>What is V5RC?</h3>
-            <p>
-                <a href="https://www.vexrobotics.com/v5/competition/vrc-current-game" target="_blank">V5RC</a> is a high-school level robotics competition, also operated by the <a href="https://recf.org/" target="_blank">RECF</a>.
-                Competitors participate in the same game as VURC students, but are limited to strictly products provided for V5RC competition by the RECF.
-            </p>
-            <p>
-                BUCKS is comprised of members from V5RC teams:
-            </p>
-
-            <div className='team-display-holder'>
-                <TeamRoller teams={teams} />
-            </div>
-
-
-            <p>Our members have consistently been some of the best in the world, and we're excited to compete again.</p>
-
-            <p>Check out our <a href="/docs/custom-omnis.pdf">custom omni-wheel documentation</a>.</p>
-
-        </section>
+        </section >
     )
 }
 

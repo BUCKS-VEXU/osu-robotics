@@ -32,7 +32,9 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  color: white;
+  height: 100%;
+  color: var(--deep-black);
+  background-color: var(--buckeye-gray);
 }
 
 @font-face {

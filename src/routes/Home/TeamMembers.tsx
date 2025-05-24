@@ -43,13 +43,18 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-    { value: 3, color: ' #BA0C2F', label: 'Mechanical Engineering' },
-    { value: 4, color: ' #C32A49', label: 'Computer Science Engineering' },
-    { value: 2, color: ' #CB4963', label: 'Electrical & Computer Engineering' },
-    { value: 1, color: ' #D4647B', label: 'Math & English' },
-    { value: 1, color: ' #DD8697', label: 'Psychology' },
+    { value: 3, color: ' #048BA8', label: 'Mechanical Engineering' },
+    { value: 4, color: ' #16DB93', label: 'Computer Science Engineering' },
+    { value: 2, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
+    { value: 1, color: ' #F29E4C', label: 'Math & English' },
+    { value: 1, color: ' #C1666B', label: 'Psychology' },
 ];
 
+// '#BA0C2F',
+// '#C32A49',
+// '#CB4963',
+// '#D4647B',
+// '#DD8697',
 // '#E5A2B1',
 // '#EEC2CB',
 // '#F6E1E5',

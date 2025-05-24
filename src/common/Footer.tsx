@@ -13,7 +13,7 @@ const Footer = () => {
 
                 <div className="footer-section">
                     <h4>Get in touch</h4>
-                    <p><a href="mailto:bucks.robotics.osu@gmail.com" target='_blank'>bucks.robotics.osu@gmail.com</a></p>
+                    <p><a href="mailto:bucks@osurobotics.org" target='_blank'>bucks@osurobotics.org</a></p>
                 </div>
 
                 <div className="footer-section centered icons">

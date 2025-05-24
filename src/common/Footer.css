@@ -17,6 +17,7 @@
 
 .Footer a {
     color: var(--buckeye-silver);
+    transition: color 0.25s ease-out;
 }
 
 .Footer a:hover {
