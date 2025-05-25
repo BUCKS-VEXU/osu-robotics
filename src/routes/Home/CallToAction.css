@@ -83,12 +83,11 @@
 
 @media (max-width: 768px) {
     .CallToAction .row {
-        flex-direction: column;
-        text-align: center;
+        gap: 1rem;
     }
 
-    .CallToAction img {
-        width: 60%;
-        max-width: 16rem;
+    .CallToAction .row {
+        flex-direction: column;
+        text-align: center;
     }
 }
