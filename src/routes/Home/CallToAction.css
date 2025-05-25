@@ -6,3 +6,89 @@
     align-items: center;
     margin-bottom: 4rem;
 }
+
+.CallToAction .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.CallToAction .writeup {
+    max-width: 40rem;
+}
+
+.CallToAction .writeup p {
+    padding: 1rem;
+}
+
+.CallToAction img {
+    display: block;
+    width: 100%;
+    max-width: 20rem;
+    object-fit: contain;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.CallToAction img:hover {
+    transform: scale(1.05);
+}
+
+/* Apply different animation delays */
+.CallToAction .cta-button {
+    font-size: 1.5rem;
+    background: linear-gradient(to right, var(--buckeye-scarlet) 0%, var(--buckeye-gray) 25%, var(--buckeye-scarlet) 50%, var(--deep-black) 75%, var(--buckeye-scarlet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    animation: shine 5s infinite linear;
+    transition: all 0.3s ease;
+}
+
+.CallToAction .cta-button:hover {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 0.75rem var(--deep-rose));
+}
+
+.cta-button::after {
+    content: "→";
+    display: inline-block;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease;
+    background: inherit;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.cta-button:hover::after {
+    transform: translateX(1rem);
+}
+
+@keyframes shine {
+    0% {
+        background-position: 150% 0%;
+    }
+
+    100% {
+        background-position: -50% 0%;
+    }
+}
+
+@media (max-width: 768px) {
+    .CallToAction .row {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .CallToAction img {
+        width: 60%;
+        max-width: 16rem;
+    }
+}
