@@ -28,8 +28,8 @@ interface Member {
 }
 
 const teamMembers: Member[] = [
-    { name: "Noah Klein", majorIndex: Major.CSE, href: "https://www.noahkleinportfolio.org/", roles: "Co-President, Programmer, Builder, Drive Team" },
-    { name: "Ryan Joseph", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/ryanjoseph1/", roles: "Co-President, Builder, Driver" },
+    { name: "Noah Klein", majorIndex: Major.CSE, href: "https://www.noahkleinportfolio.org/", roles: "Co-President, Programmer, Builder, Driver" },
+    { name: "Ryan Joseph", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/ryanjoseph1/", roles: "Co-President, Builder, Drive Team" },
     { name: "Sage Waehler", majorIndex: Major.MathEng, href: "https://www.linkedin.com/in/sage-waehler-9413582aa/", roles: "Treasurer, Notebooker, Drive Team" },
     { name: "Nathan Trybus", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/nathan-trybus-981819243/", roles: "Builder, Driver" },
     { name: "Alex Flis", majorIndex: Major.Psych, href: "https://www.linkedin.com/in/alexander-flis-0a8225327/", roles: "Builder, Drive Team" },
