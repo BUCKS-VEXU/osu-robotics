@@ -34,9 +34,11 @@ const teamMembers: Member[] = [
     { name: "Nathan Trybus", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/nathan-trybus-981819243/", roles: "Builder, Driver" },
     { name: "Alex Flis", majorIndex: Major.Psych, href: "https://www.linkedin.com/in/alexander-flis-0a8225327/", roles: "Builder, Drive Team" },
     { name: "Camden Burgess", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/camden-burgess-203b94290/", roles: "Notebooker, Drive Team" },
+    { name: "Cassidy Klodnick", majorIndex: Major.Psych, href: "https://www.linkedin.com/in/cassidy-klodnick/", roles: "Strategist, Drive Team" },
     { name: "Andrew Flis", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/andrew-flis-12b665159/", roles: "Designer, Head of Filmography" },
     { name: "Robert Ashley", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/robert-ashley-71b482327/", roles: "Builder" },
     { name: "John Cruz", majorIndex: Major.MechEng, roles: "Builder" },
+    { name: "Christopher Hawthorne", roles: "Designer" },
     { name: "Matthew Allen", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/matthew-luis-allen/", roles: "Designer, 3D Printing Wizard" },
     { name: "Vighnesh Prabhu", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/vighnesh-prabhu-profile/", roles: "Programmer, Sponsorship Lead" },
     { name: "Jayhue Gabriel", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/jayhue-gabriel-8a765333a/", roles: "Programmer" },
@@ -48,7 +50,7 @@ const seriesData = [
     { value: 4, color: ' #16DB93', label: 'Computer Science Engineering' },
     { value: 2, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
     { value: 1, color: ' #F29E4C', label: 'Math & English' },
-    { value: 1, color: ' #C1666B', label: 'Psychology' },
+    { value: 2, color: ' #C1666B', label: 'Psychology' },
 ];
 
 // '#BA0C2F',
