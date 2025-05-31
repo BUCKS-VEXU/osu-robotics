@@ -16,6 +16,7 @@ enum Major {
     MechEng = 0,
     CSE,
     ECE,
+    EngPhysics,
     MathEng,
     Psych,
 }
@@ -37,8 +38,9 @@ const teamMembers: Member[] = [
     { name: "Cassidy Klodnick", majorIndex: Major.Psych, href: "https://www.linkedin.com/in/cassidy-klodnick/", roles: "Strategist, Drive Team" },
     { name: "Andrew Flis", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/andrew-flis-12b665159/", roles: "Designer, Head of Filmography" },
     { name: "Robert Ashley", majorIndex: Major.ECE, href: "https://www.linkedin.com/in/robert-ashley-71b482327/", roles: "Builder" },
+    { name: "Zach Nehez", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/zach-nehez/", roles: "Designer" },
     { name: "John Cruz", majorIndex: Major.MechEng, roles: "Builder" },
-    { name: "Christopher Hawthorne", roles: "Designer" },
+    { name: "Christopher Hawthorne", majorIndex: Major.EngPhysics, roles: "Designer" },
     { name: "Matthew Allen", majorIndex: Major.MechEng, href: "https://www.linkedin.com/in/matthew-luis-allen/", roles: "Designer, 3D Printing Wizard" },
     { name: "Vighnesh Prabhu", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/vighnesh-prabhu-profile/", roles: "Programmer, Sponsorship Lead" },
     { name: "Jayhue Gabriel", majorIndex: Major.CSE, href: "https://www.linkedin.com/in/jayhue-gabriel-8a765333a/", roles: "Programmer" },
@@ -46,22 +48,13 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-    { value: 4, color: ' #048BA8', label: 'Mechanical Engineering' },
+    { value: 5, color: ' #048BA8', label: 'Mechanical Engineering' },
     { value: 4, color: ' #16DB93', label: 'Computer Science Engineering' },
     { value: 2, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
-    { value: 1, color: ' #F29E4C', label: 'Math & English' },
-    { value: 2, color: ' #C1666B', label: 'Psychology' },
+    { value: 1, color: ' #F29E4C', label: 'Engineering Physics' },
+    { value: 1, color: ' #C1666B', label: 'Math & English' },
+    { value: 2, color: ' #8E7DBE', label: 'Psychology' },
 ];
-
-// '#BA0C2F',
-// '#C32A49',
-// '#CB4963',
-// '#D4647B',
-// '#DD8697',
-// '#E5A2B1',
-// '#EEC2CB',
-// '#F6E1E5',
-
 
 const series: PieSeriesType<PieValueType>[] = [
     {
