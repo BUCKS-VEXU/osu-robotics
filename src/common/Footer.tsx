@@ -21,7 +21,7 @@ const Footer = () => {
                     <a href="https://www.instagram.com/osurobotics/" target='_blank'><FaInstagram size={iconSize} /></a>
                     <a href="https://www.linkedin.com/company/osu-vexu-robotics/" target='_blank'> <FaLinkedin size={iconSize} /></a>
                     <a href="https://www.robotevents.com/teams/VURC/BUCKS" target='_blank'> <img src="assets/logos/recf.png" className="custom-icon" draggable="false" /> </a>
-                    <a href="https://www.youtube.com/channel/UC_v4uNdYZ03CyYOaO2Ea3gQ" target='_blank'> <FaYoutube size={iconSize} /> </a>
+                    <a href="https://www.youtube.com/@BUCKSRoboticsVex" target='_blank'> <FaYoutube size={iconSize} /> </a>
                 </div>
 
                 <div className="footer-section right">
