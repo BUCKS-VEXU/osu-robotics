@@ -8,6 +8,7 @@ import ErrorPage from "./ErrorPage";
 import Footer from './common/Footer';
 
 import Home from './routes/Home/Home';
+import History from './routes/History/History';
 
 import './index.css';
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "history/",
+        element: <History />,
       }
       // {
       //   path: "/about",

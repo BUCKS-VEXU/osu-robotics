@@ -19,8 +19,12 @@ const AboutUs = () => {
 
             <h2>Competitive Success</h2>
             <p>
-                In our debut season, BUCKS made an immediate impact at the 2024 VEX U World Championship.
-                We went undefeated in qualification matches and earned the #2 seed in our division.
+                BUCKS had a remarkable first season in VEXU, growing steadily with each competition. We kicked things off at the Riverbots Signature Event,
+                finished 6-2, placing 5th, finishing in the quarterfinals, and earning the Sportsmanship Award. At NUKEtown, we built on that momentum with a 6-1 record,
+                a 3rd place finish, a 96-point skills score, and the Judges Award.
+            </p>
+            <p>
+                BUCKS ended our season at the VEXU World Championship with an undefeated 9-0 qualification run, finishing 2nd in the Technology Division.
                 Our run ended in the semifinals against <a target='_blank' href='https://tntnvex.com/'>TNTN</a>, the eventual triple crown winner
                 (World Champion, Skills Champion, and Excellence Award recipient).
                 <br /><br />
@@ -28,6 +32,7 @@ const AboutUs = () => {
                 <blockquote>
                     “We didn't even scout after semis — we thought you would win.”
                 </blockquote>
+                Though our run ended in the semifinals, we're proud of our growth, teamwork, and accomplishments. We are excited for what comes next for BUCKS.
             </p>
         </section >
     )
