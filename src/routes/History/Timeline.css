@@ -1,0 +1,240 @@
+/* Noah Klein */
+
+.Timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10rem;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2rem;
+    box-sizing: border-box;
+
+}
+
+.Timeline .entry {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+    list-style: none;
+    margin: 0;
+    color: var(--deep-black);
+}
+
+/* Event */
+
+.Timeline .event-rails {
+    display: flex;
+    align-items: center;
+    width: 45%;
+    order: 3;
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.Timeline .entry.even .event-rails {
+    order: 1;
+    justify-content: flex-end;
+    transform: translateX(-50px);
+}
+
+.Timeline .event {
+    width: 100%;
+    max-width: 40rem;
+    background-color: var(--buckeye-scarlet);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: filter 0.5s linear;
+}
+
+.Timeline .entry h3 {
+    color: var(--orange-web);
+}
+
+.Timeline .entry.selected h3 {
+    /* color: var(--buckeye-scarlet); */
+}
+
+.Timeline .selected .event {
+    filter: drop-shadow(0 0 0.75rem var(--buckeye-scarlet));
+    overflow: visible;
+}
+
+/* Date */
+
+.Timeline .date-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 1rem;
+    width: 45%;
+    order: 1;
+    color: var(--buckeye-scarlet);
+    box-sizing: border-box;
+}
+
+.Timeline .entry.even .date-box {
+    order: 3;
+    justify-content: flex-start;
+}
+
+/* Indicator and line */
+
+.Timeline .indicator {
+    width: 5rem;
+    height: 5rem;
+    margin: 0 0.5rem;
+    order: 2;
+    z-index: 2;
+    transition: transform 0.5s ease-in-out, filter 1s ease-in-out;
+    user-select: none;
+}
+
+.Timeline .selected .indicator {
+    transform: scale(120%);
+    filter: brightness(0) invert(1);
+}
+
+.Timeline .line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 0.75rem;
+    background: linear-gradient(to bottom, var(--buckeye-scarlet), var(--buckeye-silver));
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 1) 10rem);
+    background-size: 100% 200%;
+    animation: timeline-shine 5s infinite linear;
+}
+
+.Timeline .cap {
+    position: relative;
+    margin-top: 2rem;
+    width: 227px;
+    overflow: hidden;
+    z-index: 1;
+    transform: translateY(10px);
+    user-select: none;
+
+    transition: transform 0.5s ease-in-out;
+}
+
+.Timeline .cap:hover {
+    transform: rotate(180deg) translateY(-10px);
+}
+
+.Timeline .debut {
+    padding-top: 1rem;
+}
+
+/* Embed stylings */
+
+.Timeline .embed-container-youtube,
+.Timeline .embed-container-insta {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+}
+
+.Timeline .embed-container-youtube {
+    padding-bottom: 56.25%;
+}
+
+.Timeline .embed-container-insta {
+    padding-bottom: 120%;
+}
+
+.Timeline .entry iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Animations */
+
+.Timeline .even .slide-in,
+.Timeline .odd .slide-in {
+    animation: slideIn 1s forwards;
+}
+
+@keyframes timeline-shine {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 0% -200%;
+    }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        display: inherit;
+        transform: translateX(0);
+    }
+}
+
+
+/* Stylings for mobile */
+
+.mobile-date {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    /* This looks dumb but it's to increase specificity */
+    .Timeline.Timeline {
+        padding: 0;
+        margin: 0;
+        margin-bottom: 10rem;
+    }
+
+
+    /* Hide the date-box on smaller screens */
+    .Timeline .date-box {
+        display: none;
+    }
+
+    /* Show the date inside the event-rails */
+    .Timeline .mobile-date {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Remove alternating layout on smaller screens */
+    .Timeline .entry {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    /* Ensure event-rails takes full width */
+    .Timeline .event-rails {
+        width: 100%;
+        order: initial;
+        justify-content: center;
+        z-index: 2;
+    }
+
+    .Timeline .entry.even .event-rails {
+        justify-content: center;
+    }
+
+    /* Center the indicator */
+    .Timeline .indicator {
+        margin: 1rem auto;
+    }
+
+    /* Adjust line if needed */
+    .Timeline .line {
+        z-index: 0;
+    }
+}
