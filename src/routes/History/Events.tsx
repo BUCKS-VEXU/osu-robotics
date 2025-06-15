@@ -15,10 +15,7 @@ export const events: Array<Event> = [
         date: 'Dec 14th-15th 2024',
         title: 'RiverBots III VEX U Robotics Competition',
         description: 'At our first VEXU tournament, the Riverbots Signature Event, finishing with a strong 6-2 record and placing 5th overall. BUCKS were proud to make it to the quarterfinals and honored to receive the Sportsmanship Award. The event gave us new ideas for building and showed us where we can improve. We were motivated to practice and prepare even more for future competitions.',
-        // embed:
-        //     <div className="embed-container-insta">
-        //         <InstagramEmbed url="https://www.instagram.com/p/DDn6b_ntzo6/" />  {/*width={"75%"}*/}
-        //     </div>,
+        embed: <img src="public\assets\riverbots\Team-picture.jpg" />,
     },
     {
         date: 'Jan 26th 2025',
@@ -33,9 +30,6 @@ export const events: Array<Event> = [
         date: 'May 9th 2025',
         title: '2025 VEX Robotics World Championship',
         description: 'BUCKS wrapped up the first season at the VEXU World Championship with an incredible run, going 9-0 in qualification and finished 2nd in the Technology Division. Although we were eliminated in the division semifinals by TNTN, we had an amazing experience and are proud of BUCKS\'s first year.',
-        // embed:
-        //     <div className="embed-container-insta">
-        //         <InstagramEmbed url="https://www.instagram.com/p/C5qUbMcgfZ2/" />
-        //     </div>,
+        embed: <img src=" public\assets\worlds\Team-Pic.jpg" />,
     },
 ];

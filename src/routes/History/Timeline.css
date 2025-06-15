@@ -48,6 +48,13 @@
     border-radius: 8px;
     padding: 1rem;
     transition: filter 0.5s linear;
+    filter: drop-shadow(0 0 0.75rem black);
+}
+
+.Timeline .event img {
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
 }
 
 .Timeline .entry h3 {
