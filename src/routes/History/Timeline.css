@@ -54,10 +54,6 @@
     color: var(--orange-web);
 }
 
-.Timeline .entry.selected h3 {
-    /* color: var(--buckeye-scarlet); */
-}
-
 .Timeline .selected .event {
     filter: drop-shadow(0 0 0.75rem var(--buckeye-scarlet));
     overflow: visible;

@@ -7,6 +7,23 @@
     padding-top: 2rem;
 }
 
+.AboutUs .row {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.AboutUs .introText {
+    flex: 1;
+    padding: 0 20px;
+    max-width: 50%;
+}
+
 .AboutUs .no-wrap {
     white-space: nowrap;
 }
@@ -19,4 +36,36 @@
 
 .AboutUs .team-display-holder {
     min-height: 285px;
+}
+
+.AboutUs .video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 870px;
+    aspect-ratio: 16 / 9;
+    box-sizing: border-box;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0px -0.4rem 1rem var(--deep-rose));
+}
+
+.AboutUs .video-wrapper .youtube-iframe {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .AboutUs .row {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .AboutUs .introText {
+        padding: 1em var(--horizontal-text-padding);
+        max-width: 100%;
+    }
 }

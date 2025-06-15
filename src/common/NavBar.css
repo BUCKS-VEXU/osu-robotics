@@ -26,6 +26,34 @@
     transition: color 0.3s ease-in-out;
 }
 
+.NavBar a.selected.selected {
+    color: var(--deep-black);
+    animation: none;
+}
+
+.NavBar a.flashing {
+    color: inherit;
+    animation: flash 5s infinite ease-in-out;
+}
+
+@keyframes flash {
+    0% {
+        color: var(--orange-web);
+    }
+
+    20% {
+        color: inherit;
+    }
+
+    40% {
+        color: var(--orange-web);
+    }
+
+    100% {
+        color: var(--orange-web);
+    }
+}
+
 .NavBar img {
     height: 40px;
     filter: drop-shadow(0px 0px 1rem var(--deep-rose));
@@ -33,5 +61,10 @@
 }
 
 .NavBar a:hover {
+    color: var(--deep-black);
+}
+
+.NavBar a.flashing:hover {
+    animation: none;
     color: var(--deep-black);
 }

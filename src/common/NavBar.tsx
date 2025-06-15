@@ -1,61 +1,130 @@
 /* Noah Klein */
+/* NavBar.tsx */
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './NavBar.css';
 
 interface NavBarItem {
     className?: string;
     href?: string;
     navText: string;
+    flashing?: boolean;
 }
 
 const navBarMap: Map<string, NavBarItem> = new Map([
-    ['about-us', { className: 'AboutUs', navText: 'About Us' }],
+    ['home', { className: 'AboutUs', navText: 'Home' }],
     ['the-team', { className: 'TeamMembers', navText: 'The Team' }],
     ['sponsors', { className: 'Sponsors', navText: 'Sponsors' }],
-    ['history', { href: 'history', navText: 'History' }],
-    ['contact', { className: 'Footer', navText: 'Contact' }],
+    ['join', { className: 'CallToAction', navText: 'Join' }],
+    ['history', { href: 'history', navText: 'History', flashing: true }],
 ]);
 
-
-const NavBar = () => {
-
-    useEffect(() => {
-        /* Scroll to the proper location on page load */
-        const hash = window.location.hash;
-
-        if (hash) {
-            const sectionId = hash.substring(1); // Remove the '#' character
-            const section = navBarMap.get(sectionId);
-            if (section && section.className) {
-                scrollToSection(section.className);
-            }
-        }
-    }, []);
+export default function NavBar() {
+    const [selected, setSelected] = useState<string>('');
+    // precompute only the entries that have className
+    const scrollItems = Array.from(navBarMap.entries())
+        .filter(([, v]) => v.className)
+        .map(([key, v]) => ({ key, cls: v.className! }));
 
     const scrollToSection = (className: string) => {
-        const element = document.getElementsByClassName(className)[0];
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        const el = document.getElementsByClassName(className)[0];
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            let closestKey: string | null = null;
+            let minDistance = Infinity;
+            // you can set offset if your nav is sticky
+            const offset = 0;
+
+            scrollItems.forEach(({ key, cls }) => {
+                const el = document.getElementsByClassName(cls)[0];
+                if (!el) return;
+                const rect = el.getBoundingClientRect();
+                // only consider sections that are at least partly on screen
+                if (rect.bottom > offset && rect.top < window.innerHeight) {
+                    const distance = Math.abs(rect.top - offset);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestKey = key;
+                    }
+                }
+            });
+
+            if (closestKey && closestKey !== selected) {
+                setSelected(closestKey);
+            }
+        };
+
+        // listen and also trigger once on mount
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [scrollItems, selected]);
+
+    // also highlight when user navigates via hash or link
+    useEffect(() => {
+        const onLocationChange = () => {
+            const { hash, pathname } = window.location;
+            if (hash) {
+                setSelected(hash.substring(1));
+            } else {
+                for (const [key, v] of navBarMap.entries()) {
+                    if (v.href && pathname.endsWith(`/${v.href}`)) {
+                        setSelected(key);
+                        return;
+                    }
+                }
+            }
+        };
+        window.addEventListener('popstate', onLocationChange);
+        onLocationChange();
+        return () => window.removeEventListener('popstate', onLocationChange);
+    }, []);
+
     return (
-        <nav className={'NavBar'}>
-            <img src="assets/logos/BUCKS.png" />
-            {Array.from(navBarMap.entries()).map(([key, value]) =>
-                value.className ? (
-                    <a key={key} href={`/#${key}`} onClick={() => scrollToSection(value.className!)}>
-                        {value.navText}
-                    </a>
-                ) : value.href ? (
-                    <a key={key} href={value.href}>
-                        {value.navText}
-                    </a>
-                ) : null
-            )}
+        <nav className="NavBar">
+            <img src="assets/logos/BUCKS.png" alt="Logo" />
+
+            {Array.from(navBarMap.entries()).map(([key, v]) => {
+                const isActive = selected === key ? ' selected' : '';
+                const isFlashing = v.flashing ? ' flashing' : '';
+                const className = isActive + isFlashing;
+
+                if (v.className) {
+                    return (
+                        <a
+                            key={key}
+                            href={`/#${key}`}
+                            className={className}
+                            onClick={() => {
+                                scrollToSection(v.className!);
+                                setSelected(key);
+                            }}
+                        >
+                            {v.navText}
+                        </a>
+                    );
+                }
+
+                if (v.href) {
+                    return (
+                        <a
+                            key={key}
+                            href={`/${v.href}`}
+                            className={className}
+                        >
+                            {v.navText}
+                        </a>
+                    );
+                }
+
+                return null;
+            })}
         </nav>
     );
-};
-
-export default NavBar;
+}

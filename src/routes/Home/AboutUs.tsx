@@ -2,20 +2,27 @@
 
 import './AboutUs.css';
 import SeasonRecord from "./SeasonRecord";
+import GoFundMeEmbed from '../../common/GoFundMeEmbed';
+import { YouTubeEmbed } from 'react-social-media-embed';
 
 const AboutUs = () => {
     return (
         <section className="AboutUs">
 
-
-            <h2>About BUCKS Robotics</h2>
-            <p>
-                BUCKS Robotics represents The Ohio State University in the VEX U Robotics Competition
-                <a href="https://vurc-kb.recf.org/hc/en-us/articles/9831327507095-Welcome-VEX-U-Robotics-Competition-Teams" target="_blank"> (VURC) </a>
-                — a collegiate-level engineering challenge where student teams design, build, and program custom robots to compete on a global stage.
-                We are a student-run organization dedicated to hands-on innovation, collaboration, and technical excellence in the world of competitive robotics.
-            </p>
+            <div className="row">
+                <div className="introText">
+                    <h2>About BUCKS Robotics</h2>
+                    <p style={{ padding: '0' }}>
+                        BUCKS Robotics represents The Ohio State University in the VEX U Robotics Competition
+                        <a href="https://vurc-kb.recf.org/hc/en-us/articles/9831327507095-Welcome-VEX-U-Robotics-Competition-Teams" target="_blank"> (VURC) </a>
+                        — a collegiate-level engineering challenge where student teams design, build, and program custom robots to compete on a global stage.
+                        We are a student-run organization dedicated to hands-on innovation, collaboration, and technical excellence in the world of competitive robotics.
+                    </p>
+                </div>
+                <GoFundMeEmbed />
+            </div>
             <SeasonRecord season="High Stakes" wins={21} losses={3} />
+
 
             <h2>Competitive Success</h2>
             <p>
@@ -34,6 +41,18 @@ const AboutUs = () => {
                 </blockquote>
                 Though our run ended in the semifinals, we're proud of our growth, teamwork, and accomplishments. We are excited for what comes next for BUCKS.
             </p>
+
+
+            <h2>Worlds Recap!</h2>
+            <div className="video-wrapper">
+                <YouTubeEmbed
+                    url="https://www.youtube.com/embed/YreDxcPKVq4?si=SVTML77ccOCmk1E0"
+                    width="100%"
+                    height="100%"
+                    className="youtube-iframe"
+                    title="BUCKS Robotics 2023-2024 Season Recap"
+                />
+            </div>
         </section >
     )
 }
