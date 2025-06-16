@@ -12,10 +12,22 @@ interface Event {
 
 export const events: Array<Event> = [
     {
+        date: 'Nov 16th 2024',
+        title: 'First Build Meeting',
+        description: 'In leu of an On-Campus space to work, BUCKS held it\'s first build meeting in Sage\'s basement. Here we started work on the pair of robots that we would take the Riverbots only a month later.',
+        embed: < img src="assets\misc\Sage-Basememt.jpg" />,
+    },
+    {
         date: 'Dec 14th-15th 2024',
         title: 'RiverBots III VEX U Robotics Competition',
-        description: 'At our first VEXU tournament, the Riverbots Signature Event, finishing with a strong 6-2 record and placing 5th overall. BUCKS were proud to make it to the quarterfinals and honored to receive the Sportsmanship Award. The event gave us new ideas for building and showed us where we can improve. We were motivated to practice and prepare even more for future competitions.',
+        description: 'At our first VEXU tournament, the Riverbots Signature Event, we finished with a strong 6-2 record and placed 5th overall. BUCKS were proud to make it to the quarterfinals and honored to receive the Sportsmanship Award. The event gave us new ideas for building and showed us where we can improve. We were motivated to practice and prepare even more for future competitions.',
         embed: <img src="assets\riverbots\Team-picture.jpg" />,
+    },
+    {
+        date: 'Nov 16th 2024',
+        title: 'On Campus Space Acquired',
+        description: 'After months of searching, BUCKS was granted a space on the fifth floor of the Smith Laboratory at The Ohio State University.',
+        embed: <img src="assets\misc\Smith-Room.jpg" />,
     },
     {
         date: 'Jan 26th 2025',
