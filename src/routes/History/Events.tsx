@@ -24,9 +24,9 @@ export const events: Array<Event> = [
         embed: <img src="assets\riverbots\Team-picture.jpg" />,
     },
     {
-        date: 'Nov 16th 2024',
+        date: 'Jan 8th 2025',
         title: 'On Campus Space Acquired',
-        description: 'After months of searching, BUCKS was granted a space on the fifth floor of the Smith Laboratory at The Ohio State University.',
+        description: 'After months of searching, BUCKS was granted a space on the fifth floor of the Smith Laboratory at The Ohio State University. We immediately took our things from the dungeon and relocated to our new home.',
         embed: <img src="assets\misc\Smith-Room.jpg" />,
     },
     {
