@@ -3,6 +3,7 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Redirect from './common/Redirect';
 
 import ErrorPage from "./ErrorPage";
 import Footer from './common/Footer';
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
       {
         path: "history/",
         element: <History />,
-      }
+      },
+      {
+        path: "merch",
+        element: <Redirect href="https://5uhjqe-vm.myshopify.com/collections/all" />,
+      },
       // {
       //   path: "/about",
       //   element: <About />,
