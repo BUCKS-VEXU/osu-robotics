@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "merch",
-        element: <Redirect href="https://5uhjqe-vm.myshopify.com/collections/all" />,
+        element: <Redirect href="https://bucksrobotics.myshopify.com/collections/all" />,
       },
       // {
       //   path: "/about",
