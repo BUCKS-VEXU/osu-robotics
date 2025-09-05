@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "public"."Session" ALTER COLUMN "checkInAt" SET DEFAULT CURRENT_TIMESTAMP;

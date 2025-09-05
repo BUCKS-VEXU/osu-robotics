@@ -3,8 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
-
-// import routes from './routes.js'; // when you add API
+import routes from './routes.js';
 
 dotenv.config();
 
@@ -14,14 +13,15 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 
-// app.use('/api', routes); // mount API first
+// Use router for api calls
+app.use('/api', routes);
 
 // Serve built client
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // Sends index.html for any GET that doesn't start with /api
 app.get(/^\/(?!api\/).*/, (_req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;

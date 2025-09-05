@@ -10,6 +10,7 @@ import Footer from './common/Footer';
 
 import Home from './routes/Home/Home';
 import History from './routes/History/History';
+import PresencePage from './routes/presence/Presence'
 
 import './index.css';
 
@@ -36,17 +37,17 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/presence",
+        element: <PresencePage />,
+      },
+      {
         path: "history/",
         element: <History />,
       },
       {
         path: "merch",
         element: <Redirect href="https://bucksrobotics.myshopify.com/collections/all" />,
-      },
-      // {
-      //   path: "/about",
-      //   element: <About />,
-      // }
+      }
     ],
   },
 ]);

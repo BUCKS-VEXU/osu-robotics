@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -34,9 +33,8 @@ model Session {
   id          String   @id @default(cuid())
   memberId    String
   locationId  String
-  checkInAt   DateTime
+  checkInAt   DateTime @default(now())
   checkOutAt  DateTime?
-  source      String   // "qr", "kiosk", "manual"
   notes       String?
   member      Member   @relation(fields: [memberId], references: [id])
   location    Location @relation(fields: [locationId], references: [id])
