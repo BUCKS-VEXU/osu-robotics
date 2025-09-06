@@ -5,6 +5,14 @@ import { requireAuth } from "./auth.js";
 
 const router = Router();
 
+router.get("/locations", async (_req, res) => {
+  const locations = await prisma.location.findMany({
+    where: { active: true },     // ← only actives
+    orderBy: { name: "asc" },
+  });
+  res.json({ locations });
+});
+
 // Everything below requires a logged-in Discord user
 router.use(requireAuth);
 
@@ -14,9 +22,7 @@ router.post("/checkin", async (req, res) => {
 
   let loc = await prisma.location.findUnique({ where: { id: locationId } });
   if (!loc) {
-    loc = await prisma.location.create({
-      data: { id: locationId, name: locationId },
-    });
+    return res.status(404).json({ error: "Location not found", locationId: locationId })
   }
 
   const open = await prisma.session.findFirst({

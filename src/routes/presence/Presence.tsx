@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { Banner, Button, Card } from "./ui";
 
 type Status = {
@@ -8,6 +8,8 @@ type Status = {
     since: string | null;
     user?: { id: string; handle?: string };
 };
+
+type LocationRow = { id: string; name: string; active: boolean };
 
 function useQuery() {
     const { search } = useLocation();
@@ -34,9 +36,22 @@ export default function PresencePage() {
     const [err, setErr] = useState<string | null>(null);
     const [tick, setTick] = useState(0);
 
+    const [locationsList, setLocationsList] = useState<LocationRow[]>([]);
+    const navigate = useNavigate();
+    function selectLocation(id: string) {
+        navigate(`/presence?loc=${encodeURIComponent(id)}`, { replace: true });
+    }
+
     useEffect(() => {
-      fetch("/auth/me").then(r => r.json()).then(setMe).catch(() => setMe({ authed: false }));
-  }, []);
+        fetch("/api/locations")
+            .then(r => r.json())
+            .then(j => setLocationsList(j.locations ?? []))
+            .catch(() => setLocationsList([]));
+    }, []);
+
+    useEffect(() => {
+        fetch("/auth/me").then(r => r.json()).then(setMe).catch(() => setMe({ authed: false }));
+    }, []);
     useEffect(() => { const id = setInterval(() => setTick(x => x + 1), 30_000); return () => clearInterval(id); }, []);
     async function refresh() { const r = await fetch("/api/status"); setStatus(await r.json()); }
 
@@ -44,24 +59,24 @@ export default function PresencePage() {
 
     async function checkIn() {
         if (!loc) return setErr("Missing location.");
-      setLoading(true); setErr(null);
-      try {
-          const r = await fetch("/api/checkin", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ locationId: loc }) });
-          if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || `Check-in failed (${r.status})`);
-          await refresh();
-      } catch (e: any) { setErr(e?.message || "Check-in failed"); }
-      finally { setLoading(false); }
-  }
+        setLoading(true); setErr(null);
+        try {
+            const r = await fetch("/api/checkin", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ locationId: loc }) });
+            if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || `Check-in failed (${r.status})`);
+            await refresh();
+        } catch (e: any) { setErr(e?.message || "Check-in failed"); }
+        finally { setLoading(false); }
+    }
 
     async function checkOut() {
-      setLoading(true); setErr(null);
-      try {
-          const r = await fetch("/api/checkout", { method: "POST" });
-          if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || `Check-out failed (${r.status})`);
-          await refresh();
-      } catch (e: any) { setErr(e?.message || "Check-out failed"); }
-      finally { setLoading(false); }
-  }
+        setLoading(true); setErr(null);
+        try {
+            const r = await fetch("/api/checkout", { method: "POST" });
+            if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || `Check-out failed (${r.status})`);
+            await refresh();
+        } catch (e: any) { setErr(e?.message || "Check-out failed"); }
+        finally { setLoading(false); }
+    }
 
     // unauthenticated view
     if (!me) return null;
@@ -77,65 +92,100 @@ export default function PresencePage() {
                 </Card>
             </div>
         );
-  }
+    }
 
     // authenticated view
     const title = `Check In${loc ? ` · ${loc}` : ""}`;
 
     return (
-      <div style={{ minHeight: "100%", display: "grid", placeItems: "center", padding: "24px" }}>
-          <Card>
-              <header style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <h1 style={{ fontSize: 28, margin: 0 }}>{title}</h1>
-                  {me.user?.handle && <span style={{ fontSize: 14, color: "var(--muted)" }}>Signed in as <strong>{me.user.handle}</strong></span>}
-              </header>
+        <div style={{ minHeight: "100%", display: "grid", placeItems: "center", padding: "24px" }}>
+            <Card>
+                <header style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                    <h1 style={{ fontSize: 28, margin: 0 }}>{title}</h1>
+                    {me.user?.handle && <span style={{ fontSize: 14, color: "var(--muted)" }}>Signed in as <strong>{me.user.handle}</strong></span>}
+                </header>
 
-              <p style={{ color: "var(--muted)", margin: "8px 0 16px" }}>
+                <p style={{ color: "var(--muted)", margin: "8px 0 16px" }}>
                     Auth is live; reminders coming soon.
-              </p>
+                </p>
 
-              {err && <div style={{ marginBottom: 12 }}><Banner tone="err">{err}</Banner></div>}
+                {err && <div style={{ marginBottom: 12 }}><Banner tone="err">{err}</Banner></div>}
 
-              {!status ? (
-                  <div style={{ color: "var(--muted)" }}>Loading…</div>
-              ) : status.isIn ? (
-                      <div style={{ display: "grid", gap: 12 }}>
-                          <Banner tone="ok">
-                              You’re checked in{status.location ? ` at ${status.location}` : ""}.&nbsp;
-                              On site: <strong>{fmtSince(status.since)}{tick ? "" : ""}</strong>
-                          </Banner>
-                          <Button variant="danger" onClick={checkOut} busy={loading}>Check Out</Button>
-                          <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>
-                              Leaving soon? Don’t forget to check out so your hours are accurate.
-                          </p>
-                      </div>
-                  ) : (
-                          <div style={{ display: "grid", gap: 12 }}>
-                              <Banner tone="info">
-                                  You’re currently not checked in.
-                                  {!loc && <> Add <code>?loc=workshop</code> or use <code>/p/workshop</code>.</>}
-                              </Banner>
-                              <Button onClick={checkIn} busy={loading} disabled={!loc}>
-                                  {loc ? `Check In to ${loc}` : "Select a location"}
-                                </Button>
-                  </div>
-              )}
+                {!status ? (
+                    <div style={{ color: "var(--muted)" }}>Loading…</div>
+                ) : status.isIn ? (
+                    <div style={{ display: "grid", gap: 12 }}>
+                        <Banner tone="ok">
+                            You’re checked in{status.location ? ` at ${status.location}` : ""}.&nbsp;
+                            On site: <strong>{fmtSince(status.since)}{tick ? "" : ""}</strong>
+                        </Banner>
+                        <Button variant="danger" onClick={checkOut} busy={loading}>Check Out</Button>
+                        <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>
+                            Leaving soon? Don’t forget to check out so your hours are accurate.
+                        </p>
+                    </div>
+                ) : (
+                    <div style={{ display: "grid", gap: 12 }}>
+                        <Banner tone="info">
+                            You’re currently not checked in.
+                            {!loc && (
+                                <div style={{ display: "grid", gap: 10 }}>
+                                    <p style={{ margin: "6px 0 2px", color: "var(--muted)" }}>
+                                        Choose a location:
+                                    </p>
 
-              <hr style={{ margin: "20px 0", border: "none", borderTop: "1px solid rgba(0,0,0,.06)" }} />
-              <footer style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <a href="/auth/logout" onClick={(e) => { e.preventDefault(); fetch("/auth/logout", { method: "POST" }).then(() => location.reload()); }}
-                      style={{ fontSize: 13, color: "var(--muted)", textDecoration: "underline" }}>
-                      Log out
-                  </a>
-                  <a href="/" style={{
-                      display: "inline-flex", alignItems: "center", gap: 8,
-                      color: "#fff", background: "linear-gradient(135deg, var(--scarlet), var(--scarlet-700))",
-                      padding: "10px 12px", borderRadius: 12, textDecoration: "none", fontWeight: 700
-                  }}>
-                      <span>BUCKS</span>
-                  </a>
-              </footer>
-          </Card>
-      </div>
-  );
+                                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: 10 }}>
+                                        {locationsList.length === 0 ? (
+                                            <div style={{ color: "var(--muted)" }}>Loading locations…</div>
+                                        ) : (
+                                            locationsList.map(l => (
+                                                <button
+                                                    key={l.id}
+                                                    onClick={() => selectLocation(l.id)}
+                                                    style={{
+                                                        padding: "12px 10px",
+                                                        borderRadius: 12,
+                                                        border: "1px solid rgba(0,0,0,.08)",
+                                                        background: "#fff",
+                                                        boxShadow: "0 1px 2px rgba(0,0,0,.04)",
+                                                        textAlign: "left",
+                                                        fontWeight: 600
+                                                    }}
+                                                    aria-label={`Select ${l.name}`}
+                                                >
+                                                    <div style={{ fontSize: 14 }}>{l.name || l.id}</div>
+                                                </button>
+                                            ))
+                                        )}
+                                    </div>
+
+                                    <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>
+                                        Tip: you can also use <code>/presence?loc=&lt;id&gt;</code>.
+                                    </p>
+                                </div>
+                            )}
+                        </Banner>
+                        <Button onClick={checkIn} busy={loading} disabled={!loc}>
+                            {loc ? `Check In to ${loc}` : "Select a location"}
+                        </Button>
+                    </div>
+                )}
+
+                <hr style={{ margin: "20px 0", border: "none", borderTop: "1px solid rgba(0,0,0,.06)" }} />
+                <footer style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <a href="/auth/logout" onClick={(e) => { e.preventDefault(); fetch("/auth/logout", { method: "POST" }).then(() => location.reload()); }}
+                        style={{ fontSize: 13, color: "var(--muted)", textDecoration: "underline" }}>
+                        Log out
+                    </a>
+                    <a href="/" style={{
+                        display: "inline-flex", alignItems: "center", gap: 8,
+                        color: "#fff", background: "linear-gradient(135deg, var(--scarlet), var(--scarlet-700))",
+                        padding: "10px 12px", borderRadius: 12, textDecoration: "none", fontWeight: 700
+                    }}>
+                        <span>BUCKS</span>
+                    </a>
+                </footer>
+            </Card>
+        </div>
+    );
 }
