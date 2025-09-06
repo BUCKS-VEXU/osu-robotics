@@ -27,8 +27,6 @@ function fmtSince(iso?: string | null) {
 
 export default function PresencePage() {
     const q = useQuery();
-    const { loc: locParam } = useParams<{ loc: string }>();
-    const loc = (q.get("loc") || locParam || "").trim().toLowerCase();
 
     const [me, setMe] = useState<{ authed: boolean; user?: { handle?: string } } | null>(null);
     const [status, setStatus] = useState<Status | null>(null);
@@ -36,11 +34,20 @@ export default function PresencePage() {
     const [err, setErr] = useState<string | null>(null);
     const [tick, setTick] = useState(0);
 
+    const { loc: locParam } = useParams<{ loc: string }>();
+    const locId = (q.get("loc") || locParam || "").trim();
+
+    const currentLocationId = useMemo(() => {
+        const s = status?.location?.trim();
+        return status?.isIn && s ? s : locId;
+    }, [status?.isIn, status?.location, locId]);
+
     const [locationsList, setLocationsList] = useState<LocationRow[]>([]);
-    const navigate = useNavigate();
-    function selectLocation(id: string) {
-        navigate(`/presence?loc=${encodeURIComponent(id)}`, { replace: true });
-    }
+    const selectedLocation = useMemo(
+        () => locationsList.find(l => l.id === currentLocationId),
+        [locationsList, currentLocationId]
+    );
+    const displayName = selectedLocation?.name ?? selectedLocation?.id ?? "";
 
     useEffect(() => {
         fetch("/api/locations")
@@ -53,19 +60,31 @@ export default function PresencePage() {
         fetch("/auth/me").then(r => r.json()).then(setMe).catch(() => setMe({ authed: false }));
     }, []);
     useEffect(() => { const id = setInterval(() => setTick(x => x + 1), 30_000); return () => clearInterval(id); }, []);
-    async function refresh() { const r = await fetch("/api/status"); setStatus(await r.json()); }
 
-    useEffect(() => { refresh().catch(() => setErr("Failed to load status.")); }, [loc]);
+    async function refresh() { const r = await fetch("/api/status"); setStatus(await r.json()); }
+    useEffect(() => { refresh().catch(() => setErr("Failed to load status.")); }, [selectedLocation]);
+
+    const navigate = useNavigate();
+    function selectLocation(id: string) {
+        navigate(`/presence?loc=${encodeURIComponent(id)}`, { replace: true });
+    }
 
     async function checkIn() {
-        if (!loc) return setErr("Missing location.");
+        if (!selectedLocation) return setErr("Missing location.");
         setLoading(true); setErr(null);
         try {
-            const r = await fetch("/api/checkin", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ locationId: loc }) });
+            const r = await fetch("/api/checkin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ locationId: selectedLocation.id })
+            });
             if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || `Check-in failed (${r.status})`);
             await refresh();
-        } catch (e: any) { setErr(e?.message || "Check-in failed"); }
-        finally { setLoading(false); }
+        } catch (e: any) {
+            setErr(e?.message || "Check-in failed");
+        } finally {
+            setLoading(false);
+        }
     }
 
     async function checkOut() {
@@ -84,7 +103,7 @@ export default function PresencePage() {
         return (
             <div style={{ minHeight: "100%", display: "grid", placeItems: "center", padding: "24px" }}>
                 <Card>
-                    <h1 style={{ fontSize: 28, margin: "0 0 6px" }}>Check In{loc ? ` · ${loc}` : ""}</h1>
+                    <h1 style={{ fontSize: 28, margin: "0 0 6px" }}>Check In{selectedLocation ? ` · ${displayName}` : ""}</h1>
                     <p style={{ color: "var(--muted)", margin: "0 0 16px" }}>Sign in with Discord to continue.</p>
                     <a href="/auth/discord">
                         <Button>Continue with Discord</Button>
@@ -95,7 +114,9 @@ export default function PresencePage() {
     }
 
     // authenticated view
-    const title = `Check In${loc ? ` · ${loc}` : ""}`;
+    const title = status?.isIn
+        ? `Check Out · ${displayName}`
+        : `Check In${selectedLocation ? ` · ${displayName}` : ""}`;
 
     return (
         <div style={{ minHeight: "100%", display: "grid", placeItems: "center", padding: "24px" }}>
@@ -105,10 +126,6 @@ export default function PresencePage() {
                     {me.user?.handle && <span style={{ fontSize: 14, color: "var(--muted)" }}>Signed in as <strong>{me.user.handle}</strong></span>}
                 </header>
 
-                <p style={{ color: "var(--muted)", margin: "8px 0 16px" }}>
-                    Auth is live; reminders coming soon.
-                </p>
-
                 {err && <div style={{ marginBottom: 12 }}><Banner tone="err">{err}</Banner></div>}
 
                 {!status ? (
@@ -116,57 +133,53 @@ export default function PresencePage() {
                 ) : status.isIn ? (
                     <div style={{ display: "grid", gap: 12 }}>
                         <Banner tone="ok">
-                            You’re checked in{status.location ? ` at ${status.location}` : ""}.&nbsp;
-                            On site: <strong>{fmtSince(status.since)}{tick ? "" : ""}</strong>
+                            You’re checked in at {displayName}&nbsp;<br />
+                            For <strong>{fmtSince(status.since)}{tick ? "" : ""}</strong>
                         </Banner>
                         <Button variant="danger" onClick={checkOut} busy={loading}>Check Out</Button>
                         <p style={{ fontSize: 12, color: "var(--muted)", margin: 0 }}>
-                            Leaving soon? Don’t forget to check out so your hours are accurate.
+                            Leaving soon? Don’t forget to check out!
                         </p>
                     </div>
                 ) : (
                     <div style={{ display: "grid", gap: 12 }}>
                         <Banner tone="info">
                             You’re currently not checked in.
-                            {!loc && (
-                                <div style={{ display: "grid", gap: 10 }}>
-                                    <p style={{ margin: "6px 0 2px", color: "var(--muted)" }}>
-                                        Choose a location:
-                                    </p>
 
-                                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: 10 }}>
-                                        {locationsList.length === 0 ? (
-                                            <div style={{ color: "var(--muted)" }}>Loading locations…</div>
-                                        ) : (
-                                            locationsList.map(l => (
-                                                <button
-                                                    key={l.id}
-                                                    onClick={() => selectLocation(l.id)}
-                                                    style={{
-                                                        padding: "12px 10px",
-                                                        borderRadius: 12,
-                                                        border: "1px solid rgba(0,0,0,.08)",
-                                                        background: "#fff",
-                                                        boxShadow: "0 1px 2px rgba(0,0,0,.04)",
-                                                        textAlign: "left",
-                                                        fontWeight: 600
-                                                    }}
-                                                    aria-label={`Select ${l.name}`}
-                                                >
-                                                    <div style={{ fontSize: 14 }}>{l.name || l.id}</div>
-                                                </button>
-                                            ))
-                                        )}
-                                    </div>
+                            <div style={{ display: "grid", gap: 10 }}>
+                                <p style={{ margin: "6px 0 2px", color: "var(--muted)" }}>
+                                    Choose a location:
+                                </p>
 
-                                    <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>
-                                        Tip: you can also use <code>/presence?loc=&lt;id&gt;</code>.
-                                    </p>
+                                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: 10 }}>
+                                    {locationsList.length === 0 ? (
+                                        <div style={{ color: "var(--muted)" }}>Loading locations…</div>
+                                    ) : (
+                                        locationsList.map(l => (
+                                            <button
+                                                key={l.id}
+                                                onClick={() => selectLocation(l.id)}
+                                                style={{
+                                                    padding: "12px 10px",
+                                                    borderRadius: 12,
+                                                    border: selectedLocation?.id === l.id ? "1px solid var(--scarlet-700)" : "1px solid rgba(0,0,0,.08)",
+                                                    background: selectedLocation?.id === l.id ? "rgba(186, 12, 47, 0.1)" : "#fff",
+                                                    boxShadow: "0 1px 2px rgba(0,0,0,.04)",
+                                                    textAlign: "center",
+                                                    fontWeight: 600
+                                                }}
+                                                aria-label={`Select ${l.name}`}
+                                            >
+                                                <div style={{ fontSize: 14 }}>{l.name || l.id}</div>
+                                            </button>
+                                        ))
+                                    )}
                                 </div>
-                            )}
+                            </div>
+
                         </Banner>
-                        <Button onClick={checkIn} busy={loading} disabled={!loc}>
-                            {loc ? `Check In to ${loc}` : "Select a location"}
+                        <Button onClick={checkIn} busy={loading} disabled={!selectedLocation}>
+                            {selectedLocation ? `Check In to ${displayName}` : "Select a location"}
                         </Button>
                     </div>
                 )}
