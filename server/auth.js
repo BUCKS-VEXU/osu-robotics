@@ -6,6 +6,14 @@ import { prisma } from "./prisma.js";
 
 const scopes = ["identify"];
 
+
+  function getBaseUrl(req) {
+    // Vite proxy will set these when xfwd: true
+    const proto = (req.headers['x-forwarded-proto'] || req.protocol);
+    const host = (req.headers['x-forwarded-host'] || req.headers['host']);
+    return `${proto}://${host}`;
+  }
+
 export function configureAuth(app) {
   // Behind Heroku/Proxies → trust X-Forwarded-* so secure cookies work
   app.set("trust proxy", 1);
@@ -71,7 +79,8 @@ export function configureAuth(app) {
     }),
     (_req, res) => {
       // Success → bounce back to where we want users to land
-      res.redirect("/presence");
+      const base = getBaseUrl(_req);
+      res.redirect(`${base}/presence`);
     }
   );
 

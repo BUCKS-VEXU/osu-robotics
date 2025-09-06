@@ -28,6 +28,10 @@ const App = () => {
 
 const router = createBrowserRouter([
   {
+    path: "presence",
+    element: <PresencePage />,
+  },
+  {
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
@@ -35,10 +39,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "/presence",
-        element: <PresencePage />,
       },
       {
         path: "history/",

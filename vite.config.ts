@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import { resolve } from 'path';
 import react from '@vitejs/plugin-react'
+import {resolve} from 'path';
+import {defineConfig} from 'vite'
 import viteTsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
@@ -11,7 +11,9 @@ export default defineConfig({
     host: true,  // so LAN/devices can hit it if needed
     port: 5173,
     proxy: {
-      '/api': 'http://localhost:3000',  // your Express server
+      '/api': {target: 'http://localhost:3000', changeOrigin: true, xfwd: true},
+      '/auth':
+          {target: 'http://localhost:3000', changeOrigin: true, xfwd: true},
     },
   },
   resolve: {alias: {$fonts: resolve('./static/fonts')}},
