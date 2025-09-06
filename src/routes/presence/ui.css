@@ -1,0 +1,43 @@
+:root {
+    --scarlet: #BA0C2F;
+    /* OSU scarlet */
+    --scarlet-600: #A10A29;
+    --scarlet-700: #8D0924;
+    --gray: #A7B1B7;
+    /* OSU gray */
+    --ink: #0f172a;
+    /* slate-900 */
+    --muted: #6b7280;
+    /* gray-500 */
+    --bg: #f8fafc;
+    /* slate-50 */
+    --card: #ffffff;
+    --ok: #16a34a;
+    /* green-600 */
+    --warn: #d97706;
+    /* amber-600 */
+    --err: #dc2626;
+    /* red-600 */
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .08);
+}
+* {
+    box-sizing: border-box
+}
+
+html,
+body,
+#root {
+    height: 100%
+}
+
+body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--bg);
+    font-family: ui-sans-serif, system-ui, Segoe UI, Roboto, Arial
+}
+
+button {
+    cursor: pointer
+}
