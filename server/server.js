@@ -4,6 +4,7 @@ import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import routes from './routes.js';
+import { configureAuth } from './auth.js';
 
 dotenv.config();
 
@@ -12,6 +13,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.json());
+
+// 🔐 Auth & session first
+configureAuth(app);
 
 // Use router for api calls
 app.use('/api', routes);

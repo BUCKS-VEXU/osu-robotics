@@ -56,6 +56,30 @@ export default function PresencePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [loc]);
 
+    const [me, setMe] = useState<{ authed: boolean } | null>(null);
+
+    useEffect(() => {
+        fetch("/auth/me").then(r => r.json()).then(setMe).catch(() => setMe({ authed: false }));
+    }, []);
+
+    if (!me) return <p>Loading…</p>;
+    if (!me.authed) {
+        return (
+            <div className="min-h-screen flex items-center justify-center p-4">
+                <div className="max-w-md w-full bg-white rounded-2xl shadow p-6">
+                    <h1 className="text-2xl font-semibold mb-2">Check In</h1>
+                    <p className="text-sm text-gray-600 mb-4">Sign in to continue.</p>
+                    <a
+                        href="/auth/discord"
+                        className="block text-center rounded-xl bg-indigo-600 text-white py-3 font-medium"
+                    >
+                        Continue with Discord
+                    </a>
+                </div>
+            </div>
+        );
+    }
+
     async function checkIn() {
         if (!loc) return setErr("Missing location.");
         setLoading(true);
