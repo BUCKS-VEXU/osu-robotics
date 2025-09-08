@@ -18,6 +18,11 @@
     /* amber-600 */
     --err: #dc2626;
     /* red-600 */
+    --border: #e5e7eb;
+        /* gray-200 */
+        --panel: #f1f5f9;
+        /* slate-100 */
+        --chip: #ffe4e6;
     --radius: 16px;
     --shadow: 0 10px 30px rgba(0, 0, 0, .08);
 }
@@ -40,4 +45,62 @@ body {
 
 button {
     cursor: pointer
+}
+/* Active Sessions board */
+.active-board {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+/* Each location card inside the board */
+.active-card {
+    background: var(--card);
+    /* stays white, but… */
+    border: 1px solid var(--border);
+    /* …outlined so it’s not “white on white” */
+    border-radius: calc(var(--radius) - 4px);
+    padding: 14px 16px;
+}
+
+/* Header row */
+.active-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+}
+
+.active-card__title {
+    margin: 0;
+    font-weight: 700;
+}
+
+/* Count pill */
+.active-card__count {
+    background: var(--chip);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 12px;
+}
+
+/* Person row */
+.active-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-top: 1px solid var(--border);
+}
+
+.active-row:first-child {
+    border-top: 0;
+}
+
+.active-row__meta {
+    color: var(--muted);
+    font-size: 12px;
 }

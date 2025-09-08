@@ -10,7 +10,7 @@ import Footer from './common/Footer';
 
 import Home from './routes/Home/Home';
 import History from './routes/History/History';
-import PresencePage from './routes/presence/Presence'
+import PresencePage from './routes/presence/PresencePage'
 
 import './index.css';
 

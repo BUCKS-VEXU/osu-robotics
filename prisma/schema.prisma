@@ -16,6 +16,7 @@ datasource db {
 model Member {
   id           String   @id // Discord user id
   handle       String
+  avatarUrl    String?
   isExec       Boolean  @default(false)
   createdAt    DateTime @default(now())
   sessions     Session[]
