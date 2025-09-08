@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { Banner, Button, Card } from "./ui";
-import ActiveSessionsBoard from "./ActiveSessionsBoard";
 
 type Status = {
     isIn: boolean;
@@ -122,15 +121,10 @@ export default function PresencePage() {
     return (
         <div style={{ minHeight: "100%", display: "grid", placeItems: "center", padding: "24px" }}>
             <Card>
-
                 <header style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                     <h1 style={{ fontSize: 28, margin: 0 }}>{title}</h1>
                     {me.user?.handle && <span style={{ fontSize: 14, color: "var(--muted)" }}>Signed in as <strong>{me.user.handle}</strong></span>}
                 </header>
-
-                <section style={{ marginTop: 12, marginBottom: 12 }}>
-                    <ActiveSessionsBoard />
-                </section>
 
                 {err && <div style={{ marginBottom: 12 }}><Banner tone="err">{err}</Banner></div>}
 
@@ -195,6 +189,13 @@ export default function PresencePage() {
                     <a href="/auth/logout" onClick={(e) => { e.preventDefault(); fetch("/auth/logout", { method: "POST" }).then(() => location.reload()); }}
                         style={{ fontSize: 13, color: "var(--muted)", textDecoration: "underline" }}>
                         Log out
+                    </a>
+                    <a href="/" style={{
+                        display: "inline-flex", alignItems: "center", gap: 8,
+                        color: "#fff", background: "linear-gradient(135deg, var(--scarlet), var(--scarlet-700))",
+                        padding: "10px 12px", borderRadius: 12, textDecoration: "none", fontWeight: 700
+                    }}>
+                        <span>BUCKS</span>
                     </a>
                 </footer>
             </Card>
