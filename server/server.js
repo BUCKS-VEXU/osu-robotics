@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
-import {fileURLToPath} from 'url';
+import { fileURLToPath } from 'url';
 import routes from './routes.js';
 import { configureAuth } from './auth.js';
 
@@ -19,6 +19,11 @@ configureAuth(app);
 
 // Use router for api calls
 app.use('/api', routes);
+
+// Redirect to merch
+app.get('/merch', (req, res) => {
+  res.redirect('https://bucksrobotics.myshopify.com/collections/all');
+});
 
 // Serve built client
 app.use(express.static(path.join(__dirname, '../dist')));
