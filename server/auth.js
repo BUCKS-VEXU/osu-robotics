@@ -1,34 +1,40 @@
 // auth.js (ESM)
+import pgSimple from 'connect-pg-simple';
 import session from 'express-session';
 import passport from 'passport';
 import {Strategy as DiscordStrategy} from 'passport-discord';
+import pg from 'pg';
 
 import {prisma} from './prisma.js';
 
-const scopes = ['identify'];
-
 function getBaseUrl(req) {
-  // Vite proxy will set these when xfwd: true
   const proto = (req.headers['x-forwarded-proto'] || req.protocol);
   const host = (req.headers['x-forwarded-host'] || req.headers['host']);
   return `${proto}://${host}`;
 }
 
-export function configureAuth(app) {
-  // Behind Heroku/Proxies → trust X-Forwarded-* so secure cookies work
-  app.set('trust proxy', 1);
+const pool = new pg.Pool({connectionString: process.env.DATABASE_URL});
+const PgStore = pgSimple(session);
 
-  app.use(session({
+function makeSessionMiddleware() {
+  return session({
+    store: new PgStore({pool, tableName: 'Auth_Sessions'}),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
       sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',  // true on prod
-      maxAge: 1000 * 60 * 60 * 24 * 30,               // 30 days
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1000 * 60 * 60 * 24 * 30,
     },
-  }));
+  });
+}
+
+export async function configureAuth(app) {
+  const scopes = ['identify', 'guilds.members.read'];
+  app.set('trust proxy', 1);
+  app.use(makeSessionMiddleware());
 
   passport.use(new DiscordStrategy(
       {

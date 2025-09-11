@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 
 // 🔐 Auth & session first
-configureAuth(app);
+await configureAuth(app);
 
 // Use router for api calls
 app.use('/api', routes);
