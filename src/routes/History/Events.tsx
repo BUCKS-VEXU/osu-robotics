@@ -1,7 +1,7 @@
 /* Noah Klein */
 
-// import { InstagramEmbed } from "react-social-media-embed";
-// import { YouTubeEmbed } from "react-social-media-embed/dist/components/embeds/YouTubeEmbed";
+import { JSX } from "react";
+import { YouTubeEmbed } from "react-social-media-embed/dist/components/embeds/YouTubeEmbed";
 
 interface Event {
     date: string;
@@ -33,15 +33,14 @@ export const events: Array<Event> = [
         date: 'Jan 26th 2025',
         title: 'NUKEtown Qualifier',
         description: 'At the NUKEtown tournament, BUCKS finished 6-1 in qualifications and secured 3rd place overall. We focused more on skills in preparation for this tournament, our second competition as a team. We earned a total skills score of 96. We also received the Judges Award. We realized after these two competitions that, while we had a lot of talented people on our team, BUCKS needed to grow.',
-        // embed:
-        //     <div className="embed-container-youtube">
-        //         <YouTubeEmbed url="https://www.youtube.com/watch?v=84cbX2pEHPM" />
-        //     </div>,
     },
     {
         date: 'May 9th 2025',
         title: '2025 VEX Robotics World Championship',
         description: 'BUCKS wrapped up the first season at the VEXU World Championship with an incredible run, going 9-0 in qualification and finished 2nd in the Technology Division. Although we were eliminated in the division semifinals by TNTN, we had an amazing experience and are proud of BUCKS\'s first year.',
-        embed: <img src=" assets\worlds\Team-Pic.jpg" />,
+        embed:
+            <div className="embed-container-youtube">
+                <YouTubeEmbed url="https://youtu.be/YreDxcPKVq4" />
+            </div>,
     },
 ];
