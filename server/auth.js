@@ -7,6 +7,8 @@ import pg from 'pg';
 
 import {prisma} from './prisma.js';
 
+const BUCKS_GUILD_ID = '1223758397124509768';
+
 function getBaseUrl(req) {
   const proto = (req.headers['x-forwarded-proto'] || req.protocol);
   const host = (req.headers['x-forwarded-host'] || req.headers['host']);
@@ -25,7 +27,8 @@ const PgStore = pgSimple(session);
 
 function makeSessionMiddleware() {
   return session({
-    store: new PgStore({pool, tableName: 'Auth_Sessions'}),
+    store: new PgStore(
+        {pool, tableName: 'Auth_Sessions', createTableIfMissing: false}),
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -48,29 +51,51 @@ export async function configureAuth(app) {
         clientID: process.env.DISCORD_CLIENT_ID,
         clientSecret: process.env.DISCORD_CLIENT_SECRET,
         callbackURL: process.env.DISCORD_CALLBACK_URL,
-        scope: scopes,
+        scope: ['identify', 'guilds.members.read'],
       },
-      // Verify callback: create/upsert Member, then pass minimal user object to
-      // session
-      async (accessToken, refreshToken, profile, done) => {
+      async (accessToken, _refreshToken, profile, done) => {
         try {
-          // Discord profile.id is the stable user id (string)
           const id = profile.id;
-          const handle =
-              profile.global_name || profile.username || `discord_${id}`;
 
+          // Try to fetch the BUCKS guild member object
+          let memberJson = null;
+          let inGuild = false;
+
+          try {
+            const r = await fetch(
+                `https://discord.com/api/users/@me/guilds/${
+                    BUCKS_GUILD_ID}/member`,
+                {headers: {Authorization: `Bearer ${accessToken}`}});
+            if (r.ok) {
+              memberJson = await r.json();
+              inGuild = true;
+            }
+          } catch { /* no-op */
+          }
+
+          if (!inGuild) {
+            // IMPORTANT: finish the flow; let failureRedirect handle the UI
+            return done(null, false, {message: 'not_in_guild'});
+          }
+
+          // Prefer nickname → global_name → username
+          const handle = memberJson?.nick || profile.global_name ||
+              profile.username || `discord_${id}`;
+
+          // Persist only for members in the guild
           await prisma.member.upsert({
             where: {id},
             update: {handle},
             create: {id, handle},
           });
 
-          // Keep the session light
-          done(null, {id, handle});
+          // Keep the session payload minimal
+          return done(null, {id, handle});
         } catch (e) {
-          done(e);
+          return done(e);
         }
       }));
+
 
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser((obj, done) => done(null, obj));
@@ -82,12 +107,11 @@ export async function configureAuth(app) {
   app.get('/auth/discord', passport.authenticate('discord'));
 
   app.get(
-      '/auth/discord/callback', passport.authenticate('discord', {
-        failureRedirect: '/presence?auth=failed',
-      }),
-      (_req, res) => {
-        // Success → bounce back to where we want users to land
-        const base = getBaseUrl(_req);
+      '/auth/discord/callback',
+      passport.authenticate(
+          'discord', {failureRedirect: '/presence?auth=failed'}),
+      (req, res) => {
+        const base = getBaseUrl(req);
         res.redirect(`${base}/presence`);
       });
 
