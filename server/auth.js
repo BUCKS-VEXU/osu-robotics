@@ -56,25 +56,21 @@ export async function configureAuth(app) {
       async (accessToken, _refreshToken, profile, done) => {
         try {
           const id = profile.id;
-
-          // Try to fetch the BUCKS guild member object
           let memberJson = null;
           let inGuild = false;
 
-          try {
-            const r = await fetch(
-                `https://discord.com/api/users/@me/guilds/${
-                    BUCKS_GUILD_ID}/member`,
-                {headers: {Authorization: `Bearer ${accessToken}`}});
-            if (r.ok) {
-              memberJson = await r.json();
-              inGuild = true;
-            }
-          } catch { /* no-op */
+          // Try to fetch the BUCKS guild member object
+          const r = await fetch(
+              `https://discord.com/api/users/@me/guilds/${
+                  BUCKS_GUILD_ID}/member`,
+              {headers: {Authorization: `Bearer ${accessToken}`}});
+
+          if (r.ok) {
+            memberJson = await r.json();
+            inGuild = true;
           }
 
           if (!inGuild) {
-            // IMPORTANT: finish the flow; let failureRedirect handle the UI
             return done(null, false, {message: 'not_in_guild'});
           }
 
@@ -82,15 +78,26 @@ export async function configureAuth(app) {
           const handle = memberJson?.nick || profile.global_name ||
               profile.username || `discord_${id}`;
 
+          // Build avatar URL
+          let avatarUrl;
+          if (profile.avatar) {
+            avatarUrl = `https://cdn.discordapp.com/avatars/${id}/${
+                profile.avatar}.png?size=256`;
+          } else {
+            const defaultIndex = parseInt(id) >> 22 % 6;
+            avatarUrl =
+                `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
+          }
+
           // Persist only for members in the guild
           await prisma.member.upsert({
             where: {id},
-            update: {handle},
-            create: {id, handle},
+            update: {handle, avatarUrl},
+            create: {id, handle, avatarUrl},
           });
 
           // Keep the session payload minimal
-          return done(null, {id, handle});
+          return done(null, {id, handle, avatarUrl});
         } catch (e) {
           return done(e);
         }
