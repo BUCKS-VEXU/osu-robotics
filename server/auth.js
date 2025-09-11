@@ -13,7 +13,14 @@ function getBaseUrl(req) {
   return `${proto}://${host}`;
 }
 
-const pool = new pg.Pool({connectionString: process.env.DATABASE_URL});
+const useSSL = process.env.NODE_ENV === 'production' &&
+    !/sslmode=require/.test(process.env.DATABASE_URL || '');
+
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ...(useSSL ? {ssl: {rejectUnauthorized: false}} : {}),
+});
+
 const PgStore = pgSimple(session);
 
 function makeSessionMiddleware() {
