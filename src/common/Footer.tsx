@@ -18,7 +18,7 @@ const Footer = () => {
 
                 <div className="footer-section centered icons">
                     <h4>Connect</h4>
-                    <a href="https://www.instagram.com/osurobotics/" target='_blank'><FaInstagram size={iconSize} /></a>
+                    <a href="https://www.instagram.com/osu.vexu/" target='_blank'><FaInstagram size={iconSize} /></a>
                     <a href="https://www.linkedin.com/company/osu-vexu-robotics/" target='_blank'> <FaLinkedin size={iconSize} /></a>
                     <a href="https://www.robotevents.com/teams/VURC/BUCKS" target='_blank'> <img src="assets/logos/recf.png" className="custom-icon" draggable="false" /> </a>
                     <a href="https://www.youtube.com/@BUCKSRoboticsVex" target='_blank'> <FaYoutube size={iconSize} /> </a>
