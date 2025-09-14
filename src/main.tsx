@@ -28,11 +28,11 @@ const App = () => {
 
 const router = createBrowserRouter([
   {
-    path: "presence/tap",
+    path: "/presence/tap",
     element: <PresenceTapPage />,
   },
   {
-    path: "presence",
+    path: "/presence",
     element: <PresencePage />,
   },
   {

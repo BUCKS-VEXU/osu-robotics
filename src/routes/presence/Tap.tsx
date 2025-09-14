@@ -16,6 +16,7 @@ export default function PresenceTapPage() {
         authed: false,
     });
 
+    const [err, setErr] = useState<String>("")
     const [status, setStatus] = useState<Status | null>(null);
 
     const q = useQuery();
@@ -35,10 +36,9 @@ export default function PresenceTapPage() {
                     // 2) Then toggle presence
                     await fetch(`/api/presence/tap?loc=${encodeURIComponent(loc)}`)
                         .then(r => r.json()).then(setStatus)
-                        .catch(() => console.error("Tap failed"));
                 }
-            } catch (e) {
-                console.error(e);
+            } catch (e: any) {
+                setErr(e?.message || "Tap failed");
                 setMe({ authed: false });
             }
         }
@@ -58,6 +58,12 @@ export default function PresenceTapPage() {
                     />
                     <h1>You're Checked {(status.isIn ? "In" : "Out")}!</h1>
                 </>
+            )}
+            {(err != "") && (
+                <div>
+                    <h1>Something's Wrong</h1>
+                    <h2>{err}</h2>
+                </div>
             )}
         </div>
     );
