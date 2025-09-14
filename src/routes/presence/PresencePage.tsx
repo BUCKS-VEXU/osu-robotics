@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Banner, Button, Card } from "./ui";
 import ActiveSessionsBoard from "./ActiveSessionsBoard";
+import useQuery from "./useQuery";
 
 type Status = {
     isIn: boolean;
@@ -11,11 +12,6 @@ type Status = {
 };
 
 type LocationRow = { id: string; name: string; active: boolean };
-
-function useQuery() {
-    const { search } = useLocation();
-    return useMemo(() => new URLSearchParams(search), [search]);
-}
 
 function fmtSince(iso?: string | null) {
     if (!iso) return "";
@@ -51,15 +47,16 @@ export default function PresencePage() {
     const displayName = selectedLocation?.name ?? selectedLocation?.id ?? "";
 
     useEffect(() => {
-        fetch("/api/locations")
+        fetch("/auth/me").then(r => r.json()).then(setMe).catch(() => setMe({ authed: false }));
+    }, []);
+
+    useEffect(() => {
+        fetch("/api/presence/locations")
             .then(r => r.json())
             .then(j => setLocationsList(j.locations ?? []))
             .catch(() => setLocationsList([]));
     }, []);
 
-    useEffect(() => {
-        fetch("/auth/me").then(r => r.json()).then(setMe).catch(() => setMe({ authed: false }));
-    }, []);
     useEffect(() => { const id = setInterval(() => setTick(x => x + 1), 30_000); return () => clearInterval(id); }, []);
 
     async function refresh() { const r = await fetch("/api/status"); setStatus(await r.json()); }

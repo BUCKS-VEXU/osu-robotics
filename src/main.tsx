@@ -12,6 +12,7 @@ import History from './routes/History/History';
 import PresencePage from './routes/presence/PresencePage'
 
 import './index.css';
+import PresenceTapPage from './routes/presence/Tap';
 
 const App = () => {
   return (
@@ -26,6 +27,10 @@ const App = () => {
 };
 
 const router = createBrowserRouter([
+  {
+    path: "presence/tap",
+    element: <PresenceTapPage />,
+  },
   {
     path: "presence",
     element: <PresencePage />,
