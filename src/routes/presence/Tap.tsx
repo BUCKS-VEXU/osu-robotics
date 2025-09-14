@@ -23,10 +23,6 @@ export default function PresenceTapPage() {
     const loc = (q.get("loc") || "").trim();
 
     useEffect(() => {
-        function timeout(delay: number) {
-            return new Promise(res => setTimeout(res, delay));
-        }
-
         async function init() {
             try {
                 if (loc) {
@@ -45,6 +41,18 @@ export default function PresenceTapPage() {
 
         init();
     }, [loc]);
+
+    // Redirect to main presence page
+    useEffect(() => {
+        if (status?.user) {
+            const t = setTimeout(() => {
+                const inStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+                if (inStandalone) window.close();
+                else window.location.replace('/presence');
+            }, 2000);
+            return () => clearTimeout(t);
+        }
+    }, [status]);
 
     return (
         <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
