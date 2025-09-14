@@ -1,35 +1,41 @@
 import { useEffect, useState } from "react";
 import useQuery from "./useQuery";
-import { useParams } from "react-router-dom";
+import Lottie from 'react-lottie-player/dist/LottiePlayerLight'
+import SuccessCheck from './SuccessCheck.json'
+
+type Status = {
+    isIn: boolean;
+    location: string | null;
+    since: string | null;
+    user?: { id: string; handle?: string };
+};
+
 
 export default function PresenceTapPage() {
     const [me, setMe] = useState<{ authed: boolean;[key: string]: any }>({
         authed: false,
     });
 
-    const q = useQuery();
+    const [status, setStatus] = useState<Status | null>(null);
 
-    const { loc: locParam } = useParams<{ loc: string }>();
-    const loc = (q.get("loc") || locParam || "").trim();
+    const q = useQuery();
+    const loc = (q.get("loc") || "").trim();
 
     useEffect(() => {
+        function timeout(delay: number) {
+            return new Promise(res => setTimeout(res, delay));
+        }
+
         async function init() {
             try {
-                // 1) Always resolve user info first
-                const meResp = await fetch("/auth/me");
-                if (!meResp.ok) throw new Error("Auth failed");
-                const meJson = await meResp.json();
-                setMe({ ...meJson, authed: true });
-
-                // 2) Then toggle presence
                 if (loc) {
-                    const tapResp = await fetch(`/api/presence/tap?loc=${encodeURIComponent(loc)}`);
-                    // you can choose whether to ignore the result or display confirm page inline
-                    if (!tapResp.ok) {
-                        console.error("Tap failed", await tapResp.text());
-                    }
+                    // 1) Always resolve user info first
+                    await fetch("/auth/me").then(r => r.json()).then(setMe).catch(() => setMe({ authed: false }));
 
-                    console.log(await tapResp.text());
+                    // 2) Then toggle presence
+                    await fetch(`/api/presence/tap?loc=${encodeURIComponent(loc)}`)
+                        .then(r => r.json()).then(setStatus)
+                        .catch(() => console.error("Tap failed"));
                 }
             } catch (e) {
                 console.error(e);
@@ -41,11 +47,17 @@ export default function PresenceTapPage() {
     }, [loc]);
 
     return (
-        <div>
-            {me.authed ? (
-                <p>Hello {me.handle ?? "member"}!</p>
-            ) : (
-                <p>Please log in</p>
+        <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+            {status?.user && (
+                <>
+                    <Lottie
+                        animationData={SuccessCheck}
+                        play
+                        loop={false}
+                        style={{ width: "80svw", height: "80svh" }}
+                    />
+                    <h1>You're Checked {(status.isIn ? "In" : "Out")}!</h1>
+                </>
             )}
         </div>
     );

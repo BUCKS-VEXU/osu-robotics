@@ -64,10 +64,7 @@ router.get("/presence/tap", async (req, res) => {
   const locStr = parsed.success ? parsed.data.loc : undefined;
 
   if (!locStr) {
-    // TODO probably shouldn't be a 404
-    return res
-      .status(404)
-      .send(confirmPage({ state: "error", message: `No location provided` }));
+    return res.status(404);
   }
 
   let location =
@@ -77,9 +74,7 @@ router.get("/presence/tap", async (req, res) => {
     }));
 
   if (!location) {
-    return res
-      .status(404)
-      .send(confirmPage({ state: "error", message: `Unknown location: ${locStr}` }));
+    return res.status(404);
   }
 
 
@@ -104,22 +99,17 @@ router.get("/presence/tap", async (req, res) => {
   // Debounce
   if (lastEvent && now.getTime() - lastEvent.getTime() < DEBOUNCE_MS) {
     const locName = open?.location?.name ?? location?.name ?? "Unknown";
-    return res
-      .status(200)
-      .send(confirmPage({ state: open ? "in" : "out", location: locName, debounced: true }));
+    return res.status(200);
   }
 
   // 4) Toggle
   if (open) {
     // --- CHECK OUT ---
     const closed = await prisma.session.update({
-      where: { id: open.id },
-      data: { checkOutAt: now },
-      select: { id: true, location: { select: { name: true } } },
+      where: {id: open.id},
+      data: {checkOutAt: now},
+      select: {id: true, location: {select: {name: true}}},
     });
-    return res
-      .status(200)
-      .send(confirmPage({ state: "out", location: closed.location?.name || "Unknown" }));
   } else {
     // --- CHECK IN ---
     await prisma.session.create({
@@ -129,8 +119,14 @@ router.get("/presence/tap", async (req, res) => {
         // notes: optional
       },
     });
-    return res.status(200).send(confirmPage({ state: "in", location: loc.name }));
   }
+
+  res.json({
+    isIn: !open,
+    location: location,
+    since: Date.now(),
+    user: {id: userId},
+  });
 });
 
 

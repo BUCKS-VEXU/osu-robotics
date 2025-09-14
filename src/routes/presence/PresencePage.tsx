@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Banner, Button, Card } from "./ui";
 import ActiveSessionsBoard from "./ActiveSessionsBoard";
 import useQuery from "./useQuery";
@@ -31,8 +31,7 @@ export default function PresencePage() {
     const [err, setErr] = useState<string | null>(null);
     const [tick, setTick] = useState(0);
 
-    const { loc: locParam } = useParams<{ loc: string }>();
-    const locId = (q.get("loc") || locParam || "").trim();
+    const locId = (q.get("loc") || "").trim();
 
     const currentLocationId = useMemo(() => {
         const s = status?.location?.trim();
