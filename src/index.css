@@ -2,14 +2,14 @@
 
 :root {
   --deep-black: #151515;
-  --buckeye-scarlet: #BA0C2F;
+  --buckeye-scarlet: #ba0c2f;
   --anchor-orange: #da621d;
-  --deep-rose: #C73659;
-  --buckeye-silver: #EEEEEE;
+  --deep-rose: #c73659;
+  --buckeye-silver: #eeeeee;
   --buckeye-gray: #a7b1b7;
 
-  --dark-pastel-green: #4CB944;
-  --orange-web: #F3A712;
+  --dark-pastel-green: #4cb944;
+  --orange-web: #f3a712;
 }
 
 body {
@@ -42,6 +42,7 @@ body {
 
 @font-face {
   font-family: 'buckeye-sans';
-  src: local("BuckeyeSans2-Black"),
+  src:
+    local('BuckeyeSans2-Black'),
     url('$fonts/BuckeyeSans2-Black.woff2') format('woff2');
 }

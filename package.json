@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix",
+    "format": "prettier \"**/*.{ts,tsx,js,jsx,css,json,md}\" --write",
     "dev": "concurrently -k -n api,web -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
     "dev:server": "npm run prisma:generate && node ./server/server.js",
     "dev:client": "vite --host",
@@ -49,8 +51,10 @@
     "@vitejs/plugin-react": "^5.0.2",
     "concurrently": "^9.2.1",
     "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^6.0.0",
     "eslint-plugin-react-refresh": "^0.4.20",
+    "prettier": "^3.6.2",
     "prisma": "^6.16.1",
     "typescript": "^5.9.2",
     "vite": "^7.1.5"

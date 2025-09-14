@@ -2,14 +2,14 @@
 
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 
-import ErrorPage from "./ErrorPage";
+import ErrorPage from './ErrorPage';
 import Footer from './common/Footer';
 
 import Home from './routes/Home/Home';
 import History from './routes/History/History';
-import PresencePage from './routes/presence/PresencePage'
+import PresencePage from './routes/presence/PresencePage';
 
 import './index.css';
 import PresenceTapPage from './routes/presence/Tap';
@@ -18,9 +18,9 @@ const App = () => {
   return (
     <>
       {/* <NavBar /> */}
-      <div id="content" >
+      <div id="content">
         <Outlet />
-      </div >
+      </div>
       <Footer />
     </>
   );
@@ -28,35 +28,34 @@ const App = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/presence/tap",
+    path: '/presence/tap',
     element: <PresenceTapPage />,
   },
   {
-    path: "/presence",
+    path: '/presence',
     element: <PresencePage />,
   },
   {
-    path: "/",
+    path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Home />,
       },
       {
-        path: "history/",
+        path: 'history/',
         element: <History />,
-      }
+      },
     ],
   },
 ]);
 
-
 // The ! tells TS not to worry about NULL here
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   // Strict mode makes events fire twice to check for side effects
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>
+  </StrictMode>,
 );

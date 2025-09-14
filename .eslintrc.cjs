@@ -6,6 +6,8 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:react-refresh/recommended',
+    'prettier'
   ],
   ignorePatterns: [ 'dist', '.eslintrc.cjs' ],
   parser: '@typescript-eslint/parser',
@@ -17,4 +19,8 @@ module.exports = {
       {allowConstantExport: true},
     ],
   },
+  settings:
+  {
+    react: { version: 'detect' }
+  }
 }

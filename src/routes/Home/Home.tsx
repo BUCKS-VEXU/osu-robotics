@@ -10,16 +10,16 @@ import CallToAction from './CallToAction';
 import './Home.css';
 
 const Home = () => {
-    return (
-        <div className="Home">
-            <Header />
-            <NavBar />
-            <AboutUs />
-            <TeamMembers />
-            <Sponsors />
-            <CallToAction />
-        </div>
-    );
+  return (
+    <div className="Home">
+      <Header />
+      <NavBar />
+      <AboutUs />
+      <TeamMembers />
+      <Sponsors />
+      <CallToAction />
+    </div>
+  );
 };
 
 export default Home;

@@ -1,43 +1,43 @@
 /* Noah Klein */
 
 .Sponsors {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .Sponsors .container {
-    padding: 3rem;
+  padding: 3rem;
 
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    margin: 2rem;
-    gap: 2.5rem;
-    width: fit-content;
-    max-width: 65rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
+  background-color: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+  gap: 2.5rem;
+  width: fit-content;
+  max-width: 65rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .Sponsors a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Sponsors img {
-    width: 100%;
-    height: 100%;
-    max-width: 275px;
-    max-height: 150px;
-    object-fit: contain;
-    transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  max-width: 275px;
+  max-height: 150px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
 .Sponsors img:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }

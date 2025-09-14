@@ -2,30 +2,37 @@
 
 import './Sponsors.css';
 
-
 const Sponsors = () => {
-    const sponsors = [
-        { name: 'Polymaker', logo: 'assets/sponsors/Polymaker-logo.png', href: 'https://polymaker.com/' },
-        { name: 'Joseph and Joseph', logo: 'assets/sponsors/joseph-joseph-logo-transparent.png', href: 'https://josephcpas.com/' },
-        { name: 'Digital Sports Solutions', logo: 'assets/sponsors/DSS_CombinationMark_FullColor.svg', href: 'https://www.digitalsportssolutions.com/' },
-    ];
+  const sponsors = [
+    {
+      name: 'Polymaker',
+      logo: 'assets/sponsors/Polymaker-logo.png',
+      href: 'https://polymaker.com/',
+    },
+    {
+      name: 'Joseph and Joseph',
+      logo: 'assets/sponsors/joseph-joseph-logo-transparent.png',
+      href: 'https://josephcpas.com/',
+    },
+    {
+      name: 'Digital Sports Solutions',
+      logo: 'assets/sponsors/DSS_CombinationMark_FullColor.svg',
+      href: 'https://www.digitalsportssolutions.com/',
+    },
+  ];
 
-    return (
-        <section className='Sponsors'>
-            <h2>Our Sponsors</h2>
-            <div className='container'>
-                {sponsors.map((sponsor, index) => (
-                    <a href={sponsor.href} target="_blank">
-                        <img
-                            key={index}
-                            src={sponsor.logo}
-                            alt={sponsor.name}
-                        />
-                    </a>
-                ))}
-            </div>
-        </section >
-    )
-}
+  return (
+    <section className="Sponsors">
+      <h2>Our Sponsors</h2>
+      <div className="container">
+        {sponsors.map((sponsor, index) => (
+          <a href={sponsor.href} target="_blank">
+            <img key={index} src={sponsor.logo} alt={sponsor.name} />
+          </a>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default Sponsors;

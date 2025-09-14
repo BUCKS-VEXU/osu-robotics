@@ -1,73 +1,70 @@
 /* Noah Klein */
 
 .TeamRoller {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: clamp(275px, 65vw, 400px);
-    margin: auto;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: clamp(275px, 65vw, 400px);
+  margin: auto;
 
-    border-radius: 12px;
-    background-color: rgba(228, 151, 151, 0.459);
-    padding: 20px;
+  border-radius: 12px;
+  background-color: rgba(228, 151, 151, 0.459);
+  padding: 20px;
 }
 
 .TeamRoller .list {
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: calc(clamp(275px, 65vw, 400px)/25);
-
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: calc(clamp(275px, 65vw, 400px) / 25);
 }
 
 .TeamRoller .list-item {
-    padding: 5px 10px;
-    cursor: pointer;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .TeamRoller .team-name {
-    font-size: 200%;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center;
+  font-size: 200%;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .TeamRoller .awards {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
 }
 
 .TeamRoller .award-item {
-    margin-bottom: 5px;
-    font-size: 100%;
+  margin-bottom: 5px;
+  font-size: 100%;
 }
 
-
-
 @keyframes inAnimation {
-    0% {
-        max-width: 0;
-    }
+  0% {
+    max-width: 0;
+  }
 
-    100% {
-        max-width: 100%;
-    }
+  100% {
+    max-width: 100%;
+  }
 }
 
 @keyframes outAnimation {
-    0% {
-        max-width: 100%;
-    }
+  0% {
+    max-width: 100%;
+  }
 
-    100% {
-        max-width: 0;
-    }
+  100% {
+    max-width: 0;
+  }
 }

@@ -22,7 +22,7 @@ export default {
     project: ['./tsconfig.json', './tsconfig.node.json'],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
@@ -32,10 +32,12 @@ export default {
 # Future
 
 ## Blog page
+
 - [ ] Riverbots entry
 
 ## Application page
 
 # Misc thoughts
+
 - Organization history for different members
-- 
+-

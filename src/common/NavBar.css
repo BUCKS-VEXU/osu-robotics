@@ -1,70 +1,70 @@
 /* Noah Klein */
 
 .NavBar {
-    position: sticky;
-    top: 0;
+  position: sticky;
+  top: 0;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 
-    background-color: var(--buckeye-scarlet);
+  background-color: var(--buckeye-scarlet);
 
-    padding: 0 clamp(0px, 5vw, 75px);
-    /* Ensure padding is included in total width */
-    box-sizing: border-box;
+  padding: 0 clamp(0px, 5vw, 75px);
+  /* Ensure padding is included in total width */
+  box-sizing: border-box;
 
-    z-index: 20;
+  z-index: 20;
 }
 
 .NavBar.NavBar a {
-    padding: 17px clamp(5px, 2vw, 15px);
-    color: var(--buckeye-silver);
-    text-decoration: none;
-    transition: color 0.3s ease-in-out;
+  padding: 17px clamp(5px, 2vw, 15px);
+  color: var(--buckeye-silver);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
 }
 
 .NavBar a.selected.selected {
-    color: var(--deep-black);
-    animation: none;
+  color: var(--deep-black);
+  animation: none;
 }
 
 .NavBar a.flashing {
-    color: inherit;
-    animation: flash 5s infinite ease-in-out;
+  color: inherit;
+  animation: flash 5s infinite ease-in-out;
 }
 
 @keyframes flash {
-    0% {
-        color: var(--orange-web);
-    }
+  0% {
+    color: var(--orange-web);
+  }
 
-    20% {
-        color: inherit;
-    }
+  20% {
+    color: inherit;
+  }
 
-    40% {
-        color: var(--orange-web);
-    }
+  40% {
+    color: var(--orange-web);
+  }
 
-    100% {
-        color: var(--orange-web);
-    }
+  100% {
+    color: var(--orange-web);
+  }
 }
 
 .NavBar img {
-    height: 40px;
-    filter: drop-shadow(0px 0px 1rem var(--deep-rose));
-    padding-right: 1rem;
+  height: 40px;
+  filter: drop-shadow(0px 0px 1rem var(--deep-rose));
+  padding-right: 1rem;
 }
 
 .NavBar a:hover {
-    color: var(--deep-black);
+  color: var(--deep-black);
 }
 
 .NavBar a.flashing:hover {
-    animation: none;
-    color: var(--deep-black);
+  animation: none;
+  color: var(--deep-black);
 }
