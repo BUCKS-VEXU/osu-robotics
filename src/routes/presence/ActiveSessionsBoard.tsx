@@ -14,22 +14,44 @@ export default function ActiveSessionsBoard() {
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
-    let alive = true;
+    let closed = false;
+
     const load = async () => {
       try {
         const r = await fetch('/api/presence/active');
         if (!r.ok) throw new Error(await r.text());
         const j = (await r.json()) as { active: ActiveSession[] };
-        if (alive) setData(j.active);
+        if (!closed) setData(j.active);
       } catch (e: any) {
-        if (alive) setErr(e.message || 'Failed to load');
+        if (!closed) setErr(e.message || 'Failed to load');
       }
     };
     load();
-    const id = setInterval(load, 15000);
+
+    // 1) try SSE
+    const es = new EventSource('/api/presence/stream', { withCredentials: true });
+    es.onmessage = (e) => {
+      if (closed) return;
+      const j = JSON.parse(e.data) as { active: ActiveSession[] };
+      console.log(j);
+      setData(j.active);
+      setErr(null);
+    };
+    es.onerror = () => {
+      es.close();
+      startPolling();
+    };
+
+    function startPolling() {
+      let id: any;
+      load();
+      id = setInterval(load, 1000 * 60 * 15);
+      return () => clearInterval(id);
+    }
+
     return () => {
-      alive = false;
-      clearInterval(id);
+      closed = true;
+      es.close();
     };
   }, []);
 

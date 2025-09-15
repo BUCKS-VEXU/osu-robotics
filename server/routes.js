@@ -5,6 +5,30 @@ import { z } from 'zod';
 import { requireAuth } from './auth.js';
 import { prisma } from './prisma.js';
 
+const clients = new Set();
+
+async function getActiveSessions() {
+  const rows = await prisma.session.findMany({
+    where: {
+      checkOutAt: null,
+      location: { active: true },
+    },
+    orderBy: { checkInAt: 'desc' },
+    include: {
+      member: { select: { id: true, handle: true, avatarUrl: true, isExec: true } },
+      location: { select: { id: true, name: true } },
+    },
+  });
+
+  return rows.map((s) => ({
+    id: s.id,
+    since: s.checkInAt.toISOString(),
+    note: s.notes ?? null,
+    member: s.member,
+    location: s.location,
+  }));
+}
+
 const router = Router();
 
 // Everything below requires a logged-in Discord user
@@ -18,29 +42,32 @@ router.get('/presence/locations', async (_req, res) => {
   res.json({ locations });
 });
 
-router.get('/presence/active', async (_req, res) => {
-  try {
-    const rows = await prisma.session.findMany({
-      where: {
-        checkOutAt: null,
-        location: { active: true },
-      },
-      orderBy: { checkInAt: 'desc' },
-      include: {
-        member: { select: { id: true, handle: true, avatarUrl: true, isExec: true } },
-        location: { select: { id: true, name: true } },
-      },
-    });
+async function broadcastActive() {
+  const active = await getActiveSessions();
+  const payload = `data: ${JSON.stringify({ active })}\n\n`;
+  for (const res of clients) res.write(payload);
+}
 
-    res.json({
-      active: rows.map((s) => ({
-        id: s.id,
-        since: s.checkInAt.toISOString(),
-        note: s.notes ?? null,
-        member: s.member, // { id, handle, isExec }
-        location: s.location, // { id, name }
-      })),
-    });
+// Active member stream
+router.get('/presence/stream', async (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache, no-transform');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders?.();
+
+  const ping = setInterval(() => res.write(': ping\n\n'), 25000);
+  clients.add(res);
+
+  req.on('close', () => {
+    clearInterval(ping);
+    clients.delete(res);
+  });
+});
+
+router.get('/presence/active', async (req, res) => {
+  try {
+    const active = await getActiveSessions();
+    res.json({ active });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to load active sessions' });
@@ -133,6 +160,8 @@ router.get('/presence/tap', async (req, res) => {
     since: Date.now(),
     user: { id: userId },
   });
+
+  await broadcastActive();
 });
 
 router.post('/presence/checkin', async (req, res) => {
@@ -154,6 +183,7 @@ router.post('/presence/checkin', async (req, res) => {
   // caught inside
   // void refreshDiscordProfile(memberId);
 
+  await broadcastActive();
   res.json({ ok: true, session });
 });
 
@@ -169,6 +199,7 @@ router.post('/presence/checkout', async (req, res) => {
     data: { checkOutAt: new Date() },
   });
 
+  await broadcastActive();
   res.json(closed);
 });
 
