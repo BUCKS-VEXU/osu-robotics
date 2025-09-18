@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Banner, Button, Card } from './ui';
 import ActiveSessionsBoard from './ActiveSessionsBoard';
 import useQuery from './useQuery';
+import { fmtSince } from './format';
 
 type Status = {
   isIn: boolean;
@@ -13,15 +14,6 @@ type Status = {
 
 type LocationRow = { id: string; name: string; active: boolean };
 
-function fmtSince(iso?: string | null) {
-  if (!iso) return '';
-  const start = new Date(iso).getTime();
-  const mins = Math.max(0, Math.floor((Date.now() - start) / 60000));
-  const h = Math.floor(mins / 60);
-  const m = mins % 60;
-  return h ? `${h}h ${m}m` : `${m}m`;
-}
-
 export default function PresencePage() {
   const q = useQuery();
 
@@ -29,7 +21,13 @@ export default function PresencePage() {
   const [status, setStatus] = useState<Status | null>(null);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [tick, setTick] = useState(0);
+
+  /* Refresh every 15 seconds */
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => t + 1), 15_000);
+    return () => clearInterval(id);
+  }, []);
 
   const locId = (q.get('loc') || '').trim();
 
@@ -57,11 +55,6 @@ export default function PresencePage() {
       .then((r) => r.json())
       .then((j) => setLocationsList(j.locations ?? []))
       .catch(() => setLocationsList([]));
-  }, []);
-
-  useEffect(() => {
-    const id = setInterval(() => setTick((x) => x + 1), 30_000);
-    return () => clearInterval(id);
   }, []);
 
   async function refresh() {
@@ -172,11 +165,7 @@ export default function PresencePage() {
             <Banner tone="ok">
               You’re checked in at {displayName}&nbsp;
               <br />
-              For{' '}
-              <strong>
-                {fmtSince(status.since)}
-                {tick ? '' : ''}
-              </strong>
+              For <strong>{fmtSince(status.since)}</strong>
             </Banner>
             <Button variant="danger" onClick={checkOut} busy={loading}>
               Check Out

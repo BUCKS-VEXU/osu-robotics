@@ -1,5 +1,6 @@
 // src/components/ActiveSessionsBoard.tsx
 import React, { useEffect, useMemo, useState } from 'react';
+import { fmtSince } from './format';
 
 type ActiveSession = {
   id: string;
@@ -13,22 +14,16 @@ export default function ActiveSessionsBoard() {
   const [data, setData] = useState<ActiveSession[] | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
+  /* Update times every 15 seconds */
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => t + 1), 30_000);
+    return () => clearInterval(id);
+  }, []);
+
   useEffect(() => {
     let closed = false;
 
-    const load = async () => {
-      try {
-        const r = await fetch('/api/presence/active');
-        if (!r.ok) throw new Error(await r.text());
-        const j = (await r.json()) as { active: ActiveSession[] };
-        if (!closed) setData(j.active);
-      } catch (e: any) {
-        if (!closed) setErr(e.message || 'Failed to load');
-      }
-    };
-    load();
-
-    // 1) try SSE
     const es = new EventSource('/api/presence/stream', { withCredentials: true });
     es.onmessage = (e) => {
       if (closed) return;
@@ -39,15 +34,7 @@ export default function ActiveSessionsBoard() {
     };
     es.onerror = () => {
       es.close();
-      startPolling();
     };
-
-    function startPolling() {
-      let id: any;
-      load();
-      id = setInterval(load, 1000 * 60 * 15);
-      return () => clearInterval(id);
-    }
 
     return () => {
       closed = true;
@@ -116,7 +103,7 @@ export default function ActiveSessionsBoard() {
                         className="active-row__meta"
                         title={new Date(ci.since).toLocaleString()}
                       >
-                        {rel(new Date(ci.since))}
+                        {fmtSince(ci.since)}
                       </span>
                     </div>
                     {ci.note && (
@@ -140,17 +127,6 @@ export default function ActiveSessionsBoard() {
       ))}
     </div>
   );
-}
-
-function rel(d: Date) {
-  const sec = Math.floor((Date.now() - d.getTime()) / 1000);
-  if (sec < 60) return `${sec}s`;
-  const min = Math.floor(sec / 60);
-  if (min < 60) return `${min}m`;
-  const hr = Math.floor(min / 60);
-  if (hr < 24) return `${hr}h`;
-  const day = Math.floor(hr / 24);
-  return `${day}d`;
 }
 
 function Card({ children }: { children: React.ReactNode }) {
