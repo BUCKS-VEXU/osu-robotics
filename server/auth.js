@@ -158,7 +158,5 @@ export async function configureAuth(app) {
 // Reusable guard
 export function requireAuth(req, res, next) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-  // match your prior code that used req.userId
-  req.userId = req.user.id;
   next();
 }

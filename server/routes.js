@@ -96,7 +96,7 @@ const TapQuery = z.object({
 const DEBOUNCE_MS = 3000;
 
 router.get('/presence/tap', async (req, res) => {
-  const userId = req.userId;
+  const userId = req.user.id;
   const now = new Date();
 
   // 1) Resolve location
@@ -165,7 +165,7 @@ router.get('/presence/tap', async (req, res) => {
 });
 
 router.post('/presence/checkin', async (req, res) => {
-  const memberId = req.userId;
+  const memberId = req.user.id;
   const { locationId, notes } = req.body;
   if (!memberId || !locationId)
     return res.status(400).json({ error: 'memberId/locationId required' });
@@ -182,7 +182,7 @@ router.post('/presence/checkin', async (req, res) => {
 });
 
 router.post('/presence/checkout', async (req, res) => {
-  const userId = req.userId;
+  const userId = req.user.id;
   const open = await prisma.session.findFirst({
     where: { memberId: userId, checkOutAt: null },
   });
@@ -200,7 +200,7 @@ router.post('/presence/checkout', async (req, res) => {
 });
 
 router.get('/status', async (req, res) => {
-  const userId = req.userId;
+  const userId = req.user.id;
   const open = await prisma.session.findFirst({
     where: { memberId: userId, checkOutAt: null },
     include: { location: true },
