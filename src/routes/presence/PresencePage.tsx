@@ -115,13 +115,11 @@ export default function PresencePage() {
     return (
       <div style={{ minHeight: '100%', display: 'grid', placeItems: 'center', padding: '24px' }}>
         <Card>
-          <h1 style={{ fontSize: 28, margin: '0 0 6px' }}>
-            Check In{selectedLocation ? ` · ${displayName}` : ''}
-          </h1>
+          <h1 style={{ fontSize: 28, margin: '0 0 6px' }}>BUCKS Presence</h1>
           <p style={{ color: 'var(--muted)', margin: '0 0 16px' }}>
             Sign in with Discord to continue.
           </p>
-          <a href="/auth/discord">
+          <a href={`/auth/discord?returnTo=${encodeURIComponent('/presence')}`}>
             <Button>Continue with Discord</Button>
           </a>
         </Card>

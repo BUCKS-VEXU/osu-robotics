@@ -109,15 +109,36 @@ export async function configureAuth(app) {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  function sanitizeReturnTo(v) {
+    return typeof v === 'string' && v.startsWith('/') ? v : null;
+  }
+  const toState = (s) => Buffer.from(s, 'utf8').toString('base64url');
+  const fromState = (s) => Buffer.from(s, 'base64url').toString('utf8');
+
   // Routes
-  app.get('/auth/discord', passport.authenticate('discord'));
+  app.get('/auth/discord', (req, res, next) => {
+    const returnTo = sanitizeReturnTo(req.query.returnTo);
+    if (!returnTo)
+      return res.status(400).send('Missing or invalid ?returnTo (must start with "/")');
+    // Kick off OAuth with the destination encoded into `state`
+    passport.authenticate('discord', { state: toState(returnTo) })(req, res, next);
+  });
 
   app.get(
     '/auth/discord/callback',
     passport.authenticate('discord', { failureRedirect: '/presence?auth=failed' }),
     (req, res) => {
       const base = getBaseUrl(req);
-      res.redirect(`${base}/presence`);
+      const state = typeof req.query.state === 'string' ? req.query.state : '';
+      let returnTo;
+      try {
+        returnTo = sanitizeReturnTo(fromState(state));
+      } catch {
+        returnTo = null;
+      }
+      if (!returnTo)
+        return res.status(400).send('Missing or invalid OAuth state return destination.');
+      res.redirect(`${base}${returnTo}`);
     },
   );
 

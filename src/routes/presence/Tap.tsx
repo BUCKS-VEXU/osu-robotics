@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Button, Card } from './ui';
 import useQuery from './useQuery';
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight';
 import SuccessCheck from './SuccessCheck.json';
@@ -58,6 +59,22 @@ export default function PresenceTapPage() {
       return () => clearTimeout(t);
     }
   }, [status]);
+
+  if (!me.authed) {
+    return (
+      <div style={{ minHeight: '100%', display: 'grid', placeItems: 'center', padding: '24px' }}>
+        <Card>
+          <h1 style={{ fontSize: 28, margin: '0 0 6px' }}>BUCKS Presence</h1>
+          <p style={{ color: 'var(--muted)', margin: '0 0 16px' }}>
+            Sign in with Discord to continue.
+          </p>
+          <a href={`/auth/discord?returnTo=${encodeURIComponent(`/presence/tap?loc=${loc}`)}`}>
+            <Button>Continue with Discord</Button>
+          </a>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div
