@@ -7,8 +7,7 @@ export function fmtSince(iso?: string | null) {
   const min = Math.floor(sec / 60);
   if (min < 60) return `${min}m`;
   const hr = Math.floor(min / 60);
-  if (hr < 24) return `${hr}h ${min}m`;
+  if (hr < 24) return `${hr}h ${min % 60}m`;
   const day = Math.floor(hr / 24);
-  return `${day}d ${hr}h ${min}m`;
+  return `${day}d ${hr % 24}h ${min % 60}m`;
 }
-
