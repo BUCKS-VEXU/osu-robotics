@@ -2,7 +2,7 @@
 
 import './AboutUs.css';
 import SeasonRecord from './SeasonRecord';
-import GoFundMeEmbed from '../../common/GoFundMeEmbed';
+import GoFundMeEmbed from '../common/GoFundMeEmbed';
 import { YouTubeEmbed } from 'react-social-media-embed';
 
 const AboutUs = () => {

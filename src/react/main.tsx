@@ -6,14 +6,14 @@ import { Outlet, BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './index.css';
 
-import ErrorPage from './react/ErrorPage';
-import Footer from './react/common/Footer';
+import ErrorPage from './ErrorPage';
+import Footer from './common/Footer';
 
-import Home from './routes/Home/Home';
-import History from './routes/History/History';
-import PresencePage from './routes/presence/PresencePage';
-import PresenceTapPage from './routes/presence/Tap';
-import AdminPanel from './routes/presence/AdminPanel';
+import Home from './Home/Home';
+import History from './History/History';
+import PresencePage from './Presence/PresencePage';
+import PresenceTapPage from './Presence/Tap';
+import AdminPanel from './Presence/AdminPanel';
 
 const App = () => {
   return (

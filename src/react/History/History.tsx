@@ -1,6 +1,6 @@
 /* Noah Klein */
 
-import NavBar from '../../common/NavBar';
+import NavBar from '../common/NavBar';
 
 import './History.css';
 import Timeline from './Timeline';
