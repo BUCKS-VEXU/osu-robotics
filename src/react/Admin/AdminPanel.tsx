@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Banner } from './ui';
+import { Card, Button, Banner } from '../common/ui';
 
 type Member = { id: string; handle?: string };
 type Loc = { id: string; name?: string };
@@ -337,4 +337,3 @@ function FormRow({ label, children }: any) {
     </label>
   );
 }
-

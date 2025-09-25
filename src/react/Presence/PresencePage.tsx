@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Banner, Button, Card } from './ui';
+import { Banner, Button, Card } from '../common/ui';
 import ActiveSessionsBoard from './ActiveSessionsBoard';
-import useQuery from './useQuery';
-import { fmtSince } from './format';
+import useQuery from './useQuery.js';
+import { fmtSince } from './format.js';
 
 type Status = {
   isIn: boolean;

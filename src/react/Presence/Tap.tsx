@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Card } from './ui';
+import { Button, Card } from '../common/ui';
 import useQuery from './useQuery';
 import Lottie from 'react-lottie-player/dist/LottiePlayerLight';
 import SuccessCheck from './SuccessCheck.json';

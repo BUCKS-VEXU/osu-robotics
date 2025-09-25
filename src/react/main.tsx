@@ -13,7 +13,7 @@ import Home from './Home/Home';
 import History from './History/History';
 import PresencePage from './Presence/PresencePage';
 import PresenceTapPage from './Presence/Tap';
-import AdminPanel from './Presence/AdminPanel';
+import AdminPanel from './Admin/AdminPanel';
 
 const App = () => {
   return (
