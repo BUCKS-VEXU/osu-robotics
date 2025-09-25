@@ -1,0 +1,22 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2022",
+        "rootDir": "src",
+        "outDir": "dist",
+        "noEmit": false,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "types": [
+            "node",
+            "express",
+            "express-session",
+            "passport"
+        ]
+    },
+    "include": [
+        "src/server/**/*"
+    ]
+}

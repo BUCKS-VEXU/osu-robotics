@@ -4,6 +4,7 @@ import passport from 'passport';
 import { Strategy as DiscordStrategy, type Profile } from 'passport-discord';
 import pg from 'pg';
 import type { Express, Request, Response, NextFunction } from 'express';
+
 import { prisma } from './prisma.js';
 
 declare global {

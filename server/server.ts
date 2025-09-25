@@ -3,9 +3,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-import routes from './routes.js';
-import { configureAuth } from './auth.js';
+import routes from './routes';
+import { configureAuth } from './auth';
 
 dotenv.config();
 
@@ -23,9 +22,9 @@ app.get('/merch', (_req, res) => {
   res.redirect('https://bucksrobotics.myshopify.com/collections/all');
 });
 
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(path.join(__dirname, '../dist')));
 app.get(/^\/(?!api\/).*/, (_req, res) => {
-  res.sendFile(path.join(__dirname, '../', 'index.html'));
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
