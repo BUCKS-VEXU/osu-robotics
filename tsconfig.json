@@ -4,9 +4,13 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
-    "skipLibCheck": true, // Set to true to combine both configurations
+    "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -20,10 +24,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true // Merged from tsconfig.node.json
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "node",
+      "express",
+      "express-session"
+    ]
   },
   "include": [
     "src",
-    "vite.config.ts" // Merged from tsconfig.node.json
-  ]
+    "vite.config.ts"
+, "src/server"  ]
 }

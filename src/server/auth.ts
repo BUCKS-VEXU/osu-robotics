@@ -1,15 +1,25 @@
-// auth.js (ESM)
 import pgSimple from 'connect-pg-simple';
 import session from 'express-session';
 import passport from 'passport';
-import { Strategy as DiscordStrategy } from 'passport-discord';
+import { Strategy as DiscordStrategy, type Profile } from 'passport-discord';
 import pg from 'pg';
-
+import type { Express, Request, Response, NextFunction } from 'express';
 import { prisma } from './prisma.js';
+
+declare global {
+  namespace Express {
+    interface User {
+      id: string;
+      handle: string;
+      avatarUrl: string;
+      isExec: boolean;
+    }
+  }
+}
 
 const BUCKS_GUILD_ID = '1223758397124509768';
 
-function getBaseUrl(req) {
+function getBaseUrl(req: Request) {
   const proto = req.headers['x-forwarded-proto'] || req.protocol;
   const host = req.headers['x-forwarded-host'] || req.headers['host'];
   return `${proto}://${host}`;
@@ -28,7 +38,7 @@ const PgStore = pgSimple(session);
 function makeSessionMiddleware() {
   return session({
     store: new PgStore({ pool, tableName: 'Auth_Sessions', createTableIfMissing: false }),
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -40,22 +50,29 @@ function makeSessionMiddleware() {
   });
 }
 
-export async function configureAuth(app) {
-  const scopes = ['identify', 'guilds.members.read'];
+export async function configureAuth(app: Express) {
+  // const scopes = ['identify', 'guilds.members.read'];
   app.set('trust proxy', 1);
   app.use(makeSessionMiddleware());
+
+  const discordClientID = process.env.DISCORD_CLIENT_ID;
+  const discordClientSecret = process.env.DISCORD_CLIENT_SECRET;
+  const discordCallbackURL = process.env.DISCORD_CALLBACK_URL;
+  if (!discordClientID || !discordClientSecret || !discordCallbackURL) {
+    throw new Error('Missing required Discord environment variables');
+  }
 
   passport.use(
     new DiscordStrategy(
       {
-        clientID: process.env.DISCORD_CLIENT_ID,
-        clientSecret: process.env.DISCORD_CLIENT_SECRET,
-        callbackURL: process.env.DISCORD_CALLBACK_URL,
+        clientID: discordClientID,
+        clientSecret: discordClientSecret,
+        callbackURL: discordCallbackURL,
         scope: ['identify', 'guilds.members.read'],
       },
-      async (accessToken, _refreshToken, profile, done) => {
+      async (accessToken, _refreshToken, discordProfile: Profile, done) => {
         try {
-          const id = profile.id;
+          const discordId = discordProfile.id;
           let memberJson = null;
           let inGuild = false;
 
@@ -76,26 +93,29 @@ export async function configureAuth(app) {
 
           // Prefer nickname → global_name → username
           const handle =
-            memberJson?.nick || profile.global_name || profile.username || `discord_${id}`;
+            memberJson?.nick ||
+            discordProfile.global_name ||
+            discordProfile.username ||
+            `discord_${discordId}`;
 
           // Build avatar URL
           let avatarUrl;
-          if (profile.avatar) {
-            avatarUrl = `https://cdn.discordapp.com/avatars/${id}/${profile.avatar}.png?size=256`;
+          if (discordProfile.avatar) {
+            avatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${discordProfile.avatar}.png?size=256`;
           } else {
-            const defaultIndex = parseInt(id) >> 22 % 6;
+            const defaultIndex = parseInt(discordId) >> 22 % 6;
             avatarUrl = `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
           }
 
           // Persist only for members in the guild
           await prisma.member.upsert({
-            where: { id },
+            where: { id: discordId },
             update: { handle, avatarUrl },
-            create: { id, handle, avatarUrl },
+            create: { id: discordId, handle, avatarUrl },
           });
 
           // Keep the session payload minimal
-          return done(null, { id, handle, avatarUrl });
+          return done(null, { id: discordId, handle, avatarUrl, isExec: false });
         } catch (e) {
           return done(e);
         }
@@ -104,30 +124,30 @@ export async function configureAuth(app) {
   );
 
   passport.serializeUser((user, done) => done(null, user));
-  passport.deserializeUser((obj, done) => done(null, obj));
+  passport.deserializeUser((obj, done) => done(null, obj as Express.User | null));
 
   app.use(passport.initialize());
   app.use(passport.session());
 
-  function sanitizeReturnTo(v) {
-    return typeof v === 'string' && v.startsWith('/') ? v : null;
+  function sanitizeReturnTo(returnTo: string) {
+    return returnTo.startsWith('/') ? returnTo : null;
   }
-  const toState = (s) => Buffer.from(s, 'utf8').toString('base64url');
-  const fromState = (s) => Buffer.from(s, 'base64url').toString('utf8');
+  const toState = (s: string) => Buffer.from(s, 'utf8').toString('base64url');
+  const fromState = (s: string) => Buffer.from(s, 'base64url').toString('utf8');
 
   // Routes
-  app.get('/auth/discord', (req, res, next) => {
-    const returnTo = sanitizeReturnTo(req.query.returnTo);
+  app.get('/auth/discord', (req: Request, res: Response, next: NextFunction) => {
+    const rawReturnTo = req.query.returnTo;
+    const returnTo = typeof rawReturnTo === 'string' ? sanitizeReturnTo(rawReturnTo) : null;
     if (!returnTo)
       return res.status(400).send('Missing or invalid ?returnTo (must start with "/")');
-    // Kick off OAuth with the destination encoded into `state`
     passport.authenticate('discord', { state: toState(returnTo) })(req, res, next);
   });
 
   app.get(
     '/auth/discord/callback',
     passport.authenticate('discord', { failureRedirect: '/presence?auth=failed' }),
-    (req, res) => {
+    (req: Request, res: Response) => {
       const base = getBaseUrl(req);
       const state = typeof req.query.state === 'string' ? req.query.state : '';
       let returnTo;
@@ -142,21 +162,21 @@ export async function configureAuth(app) {
     },
   );
 
-  app.post('/auth/logout', (req, res) => {
+  app.post('/auth/logout', (req: Request, res: Response) => {
     req.logout(() => {
       req.session.destroy(() => res.status(204).end());
     });
   });
 
   // Small helper endpoints
-  app.get('/auth/me', (req, res) => {
+  app.get('/auth/me', (req: Request, res: Response) => {
     if (!req.user) return res.json({ authed: false });
     res.json({ authed: true, user: req.user });
   });
 }
 
 // Reusable guard
-export function requireAuth(req, res, next) {
+export function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   next();
 }

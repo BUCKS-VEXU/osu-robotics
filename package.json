@@ -7,10 +7,10 @@
     "lint:fix": "eslint \"src/**/*.{ts,tsx,js,jsx}\" --fix",
     "format": "prettier \"**/*.{ts,tsx,js,jsx,css,json,md}\" --write",
     "dev": "concurrently -k -n api,web -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
-    "dev:server": "npm run prisma:generate && node ./server/server.js",
+    "dev:server": "npm run prisma:generate && tsx watch src/server/server.ts",
     "dev:client": "vite --host",
     "build": "vite build && prisma generate",
-    "start": "node ./server/server.js",
+    "start": "node src/server/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"
   },
@@ -40,10 +40,15 @@
     "react-social-media-embed": "^2.5.18",
     "use-window-focus": "^1.4.3",
     "vite-tsconfig-paths": "^4.3.2",
-    "zod": "^4.1.8"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@types/node": "^24.3.1",
+    "@types/express": "^5.0.3",
+    "@types/express-session": "^1.18.2",
+    "@types/node": "^24.5.2",
+    "@types/passport": "^1.0.17",
+    "@types/passport-discord": "^0.1.14",
+    "@types/pg": "^8.15.5",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "@typescript-eslint/eslint-plugin": "^8.43.0",
@@ -56,6 +61,7 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "prettier": "^3.6.2",
     "prisma": "^6.16.1",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "vite": "^7.1.5"
   }

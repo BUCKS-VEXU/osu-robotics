@@ -1,13 +1,30 @@
 // routes.js (ESM)
 import { Router } from 'express';
 import { z } from 'zod';
+import type { Request, Response } from 'express';
 
 import { requireAuth } from './auth.js';
 import { prisma } from './prisma.js';
 
-const clients = new Set();
+interface Session {
+  id: string;
+  since: string;
+  note: string | null;
+  member: {
+    id: string;
+    handle: string;
+    avatarUrl: string | null;
+    isExec: boolean;
+  };
+  location: {
+    id: string;
+    name: string;
+  };
+}
 
-let activeCache = [];
+const clients = new Set<Response>();
+
+let activeCache: Session[] = [];
 let activeCacheReady = false;
 
 async function refreshActiveCache() {
@@ -15,7 +32,7 @@ async function refreshActiveCache() {
   activeCacheReady = true;
 }
 
-async function getActiveSessions() {
+async function getActiveSessions(): Promise<Session[]> {
   const rows = await prisma.session.findMany({
     where: {
       checkOutAt: null,
@@ -47,7 +64,7 @@ const router = Router();
 // Everything below requires a logged-in Discord user
 router.use(requireAuth);
 
-router.get('/presence/locations', async (_req, res) => {
+router.get('/presence/locations', async (_, res: Response) => {
   const locations = await prisma.location.findMany({
     where: { active: true },
     orderBy: { name: 'asc' },
@@ -61,7 +78,7 @@ function broadcastActive() {
 }
 
 // Active member stream
-router.get('/presence/stream', async (req, res) => {
+router.get('/presence/stream', async (req: Request, res: Response) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache, no-transform');
   res.setHeader('Connection', 'keep-alive');
@@ -79,7 +96,7 @@ router.get('/presence/stream', async (req, res) => {
   });
 });
 
-router.get('/presence/active', async (_req, res) => {
+router.get('/presence/active', async (_, res: Response) => {
   try {
     if (!activeCacheReady) await refreshActiveCache();
     res.json({ active: activeCache });
@@ -95,7 +112,11 @@ const TapQuery = z.object({
 
 const DEBOUNCE_MS = 3000;
 
-router.get('/presence/tap', async (req, res) => {
+router.get('/presence/tap', async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  }
+
   const userId = req.user.id;
   const now = new Date();
 
@@ -164,7 +185,11 @@ router.get('/presence/tap', async (req, res) => {
   });
 });
 
-router.post('/presence/checkin', async (req, res) => {
+router.post('/presence/checkin', async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  }
+
   const memberId = req.user.id;
   const { locationId, notes } = req.body;
   if (!memberId || !locationId)
@@ -181,7 +206,11 @@ router.post('/presence/checkin', async (req, res) => {
   res.json({ ok: true, session });
 });
 
-router.post('/presence/checkout', async (req, res) => {
+router.post('/presence/checkout', async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  }
+
   const userId = req.user.id;
   const open = await prisma.session.findFirst({
     where: { memberId: userId, checkOutAt: null },
@@ -199,7 +228,11 @@ router.post('/presence/checkout', async (req, res) => {
   res.json(closed);
 });
 
-router.get('/status', async (req, res) => {
+router.get('/status', async (req: Request, res: Response) => {
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  }
+
   const userId = req.user.id;
   const open = await prisma.session.findFirst({
     where: { memberId: userId, checkOutAt: null },
