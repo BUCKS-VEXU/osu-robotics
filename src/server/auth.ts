@@ -1,3 +1,4 @@
+// auth.ts (ESM)
 import pgSimple from 'connect-pg-simple';
 import session from 'express-session';
 import passport from 'passport';
@@ -52,7 +53,7 @@ function makeSessionMiddleware() {
 }
 
 export async function configureAuth(app: Express) {
-  // const scopes = ['identify', 'guilds.members.read'];
+  const scope = ['identify', 'guilds.members.read'];
   app.set('trust proxy', 1);
   app.use(makeSessionMiddleware());
 
@@ -69,7 +70,7 @@ export async function configureAuth(app: Express) {
         clientID: discordClientID,
         clientSecret: discordClientSecret,
         callbackURL: discordCallbackURL,
-        scope: ['identify', 'guilds.members.read'],
+        scope: scope,
       },
       async (accessToken, _refreshToken, discordProfile: Profile, done) => {
         try {
@@ -109,14 +110,14 @@ export async function configureAuth(app: Express) {
           }
 
           // Persist only for members in the guild
-          await prisma.member.upsert({
+          const member = await prisma.member.upsert({
             where: { id: discordId },
             update: { handle, avatarUrl },
             create: { id: discordId, handle, avatarUrl },
+            select: { isExec: true },
           });
 
-          // Keep the session payload minimal
-          return done(null, { id: discordId, handle, avatarUrl, isExec: false });
+          return done(null, { id: discordId, handle, avatarUrl, isExec: member.isExec });
         } catch (e) {
           return done(e);
         }

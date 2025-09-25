@@ -58,7 +58,7 @@ export default function PresencePage() {
   }, []);
 
   async function refresh() {
-    const r = await fetch('/api/status');
+    const r = await fetch('/api/presence/status');
     setStatus(await r.json());
   }
   useEffect(() => {

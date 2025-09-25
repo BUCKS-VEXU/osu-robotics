@@ -8,12 +8,13 @@ datasource db {
 }
 
 model Member {
-  id        String    @id
-  handle    String
-  isExec    Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  avatarUrl String?
-  sessions  Session[]
+  id             String           @id
+  handle         String
+  isExec         Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  avatarUrl      String?
+  sessions       Session[]
+  SessionEditLog SessionEditLog[]
 }
 
 model Location {
@@ -25,17 +26,42 @@ model Location {
 }
 
 model Session {
-  id         String    @id @default(cuid())
-  memberId   String
-  locationId String
-  checkInAt  DateTime  @default(now())
-  checkOutAt DateTime?
-  notes      String?
-  location   Location  @relation(fields: [locationId], references: [id])
-  member     Member    @relation(fields: [memberId], references: [id])
+  id             String           @id @default(cuid())
+  memberId       String
+  locationId     String
+  checkInAt      DateTime         @default(now())
+  checkOutAt     DateTime?
+  notes          String?
+  location       Location         @relation(fields: [locationId], references: [id])
+  member         Member           @relation(fields: [memberId], references: [id])
+  SessionEditLog SessionEditLog[]
 
   @@index([memberId, checkInAt])
   @@index([locationId, checkInAt])
+}
+
+model SessionEditLog {
+  id        String    @id @default(cuid())
+  sessionId String
+  editorId  String // Member.id of the admin who edited
+  beforeIn  DateTime?
+  beforeOut DateTime?
+  afterIn   DateTime?
+  afterOut  DateTime?
+  at        DateTime  @default(now())
+  reason    String?
+
+  session Session @relation(fields: [sessionId], references: [id])
+  editor  Member  @relation(fields: [editorId], references: [id])
+
+  @@index([sessionId, at])
+  @@index([editorId, at])
+}
+
+model Settings {
+  key      String  @id
+  valueInt Int?
+  valueStr String?
 }
 
 model Auth_Sessions {

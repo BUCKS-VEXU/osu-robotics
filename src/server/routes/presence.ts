@@ -1,10 +1,10 @@
-// routes.js (ESM)
+// presence.ts (ESM)
 import { Router } from 'express';
 import { z } from 'zod';
 import type { Request, Response } from 'express';
 
-import { requireAuth } from './auth.js';
-import { prisma } from './prisma.js';
+import { requireAuth } from '../auth.js';
+import { prisma } from '../prisma.js';
 
 interface Session {
   id: string;
@@ -59,12 +59,12 @@ await refreshActiveCache().catch((e) => {
   console.error('Failed to hydrate activeCache on startup:', e);
 });
 
-const router = Router();
+const presence = Router();
 
 // Everything below requires a logged-in Discord user
-router.use(requireAuth);
+presence.use(requireAuth);
 
-router.get('/presence/locations', async (_, res: Response) => {
+presence.get('/locations', async (_, res: Response) => {
   const locations = await prisma.location.findMany({
     where: { active: true },
     orderBy: { name: 'asc' },
@@ -78,7 +78,7 @@ function broadcastActive() {
 }
 
 // Active member stream
-router.get('/presence/stream', async (req: Request, res: Response) => {
+presence.get('/stream', async (req: Request, res: Response) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache, no-transform');
   res.setHeader('Connection', 'keep-alive');
@@ -96,7 +96,7 @@ router.get('/presence/stream', async (req: Request, res: Response) => {
   });
 });
 
-router.get('/presence/active', async (_, res: Response) => {
+presence.get('/active', async (_, res: Response) => {
   try {
     if (!activeCacheReady) await refreshActiveCache();
     res.json({ active: activeCache });
@@ -112,7 +112,7 @@ const TapQuery = z.object({
 
 const DEBOUNCE_MS = 3000;
 
-router.get('/presence/tap', async (req: Request, res: Response) => {
+presence.get('/tap', async (req: Request, res: Response) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Unauthorized: user not found' });
   }
@@ -185,7 +185,7 @@ router.get('/presence/tap', async (req: Request, res: Response) => {
   });
 });
 
-router.post('/presence/checkin', async (req: Request, res: Response) => {
+presence.post('/checkin', async (req: Request, res: Response) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Unauthorized: user not found' });
   }
@@ -206,7 +206,7 @@ router.post('/presence/checkin', async (req: Request, res: Response) => {
   res.json({ ok: true, session });
 });
 
-router.post('/presence/checkout', async (req: Request, res: Response) => {
+presence.post('/checkout', async (req: Request, res: Response) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Unauthorized: user not found' });
   }
@@ -228,7 +228,7 @@ router.post('/presence/checkout', async (req: Request, res: Response) => {
   res.json(closed);
 });
 
-router.get('/status', async (req: Request, res: Response) => {
+presence.get('/status', async (req: Request, res: Response) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Unauthorized: user not found' });
   }
@@ -247,4 +247,5 @@ router.get('/status', async (req: Request, res: Response) => {
   });
 });
 
-export default router;
+export default presence;
+

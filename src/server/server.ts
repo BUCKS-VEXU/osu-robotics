@@ -1,10 +1,10 @@
-// server.ts (ESM/TS)
+// server.ts (ESM)
 import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import routes from './routes.js';
+import router from './routes/router.js';
 import { configureAuth } from './auth.js';
 
 dotenv.config();
@@ -17,7 +17,7 @@ app.use(express.json());
 
 await configureAuth(app);
 
-app.use('/api', routes);
+app.use('/api', router);
 
 app.get('/merch', (_req, res) => {
   res.redirect('https://bucksrobotics.myshopify.com/collections/all');
