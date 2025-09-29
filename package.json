@@ -60,7 +60,7 @@
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^6.0.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
+    "eslint-plugin-react-refresh": "^0.4.22",
     "prettier": "^3.6.2",
     "prisma": "^6.16.1",
     "tsx": "^4.20.5",
