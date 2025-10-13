@@ -228,7 +228,7 @@ export async function requireAuth(req: Request, res: Response, next: NextFunctio
       return next();
     }
 
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Not Authorized ' + providedSecret });
   } catch (error) {
     next(error);
   }
