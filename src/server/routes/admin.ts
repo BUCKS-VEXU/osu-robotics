@@ -103,13 +103,8 @@ function upsertActiveCache(s: any) {
 // ---------- Optional: lightweight config cache ----------
 let autokickMinutes = 60; // fallback default
 async function loadAutokickFromDB() {
-  try {
-    // If you add a Settings table (see schema suggestions below), read it here.
-    const s = await prisma.settings.findUnique({ where: { key: 'autokickMinutes' } });
-    if (s?.valueInt != null) autokickMinutes = s.valueInt;
-  } catch {
-    // table may not exist yet
-  }
+  const s = await prisma.settings.findUnique({ where: { key: 'autokickMinutes' } });
+  if (s?.valueInt != null) autokickMinutes = s.valueInt;
 }
 
 // ---------- Router ----------

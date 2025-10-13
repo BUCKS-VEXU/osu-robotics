@@ -21,6 +21,46 @@ declare global {
 
 const BUCKS_GUILD_ID = '1223758397124509768';
 
+const BOT_SECRET_HEADER = 'x-bot-secret';
+
+function pickSecretValue(value: unknown): string | null {
+  if (typeof value === 'string') {
+    const trimmed = value.trim();
+    return trimmed ? trimmed : null;
+  }
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const normalized = pickSecretValue(item);
+      if (normalized) return normalized;
+    }
+  }
+  return null;
+}
+
+function extractBotSecret(req: Request): string | null {
+  const headerSecret = pickSecretValue(req.get(BOT_SECRET_HEADER));
+  if (headerSecret) return headerSecret;
+
+  const bodySecret = pickSecretValue((req.body as Record<string, unknown> | undefined)?.bot_secret);
+  if (bodySecret) return bodySecret;
+
+  const querySecret = pickSecretValue(
+    (req.query as Record<string, unknown> | undefined)?.bot_secret,
+  );
+  if (querySecret) return querySecret;
+
+  return null;
+}
+
+function getPresenceBotUser(): Express.User {
+  return {
+    id: 'presence-bot',
+    handle: 'Presence Bot',
+    avatarUrl: '',
+    isExec: true,
+  };
+}
+
 function getBaseUrl(req: Request) {
   const proto = req.headers['x-forwarded-proto'] || req.protocol;
   const host = req.headers['x-forwarded-host'] || req.headers['host'];
@@ -178,7 +218,18 @@ export async function configureAuth(app: Express) {
 }
 
 // Reusable guard
-export function requireAuth(req: Request, res: Response, next: NextFunction) {
-  if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
-  next();
+export async function requireAuth(req: Request, res: Response, next: NextFunction) {
+  try {
+    if (req.user) return next();
+
+    const providedSecret = extractBotSecret(req);
+    if (providedSecret && providedSecret == process.env.PRESENCE_BOT_SECRETS) {
+      (req as any).user = getPresenceBotUser();
+      return next();
+    }
+
+    return res.status(401).json({ error: 'Unauthorized' });
+  } catch (error) {
+    next(error);
+  }
 }
