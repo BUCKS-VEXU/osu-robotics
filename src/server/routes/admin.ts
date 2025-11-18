@@ -9,6 +9,7 @@ import { ensureAutokickLoaded, getAutokickMinutes, setAutokickMinutes } from '..
 import {
   ensureActiveSessionsHydrated,
   getActiveSessionsSnapshot,
+  refreshActiveSessionsCache,
 } from '../activeSessionsCache.js';
 import { pushPresenceActiveUpdate } from './presence.js';
 
@@ -74,8 +75,12 @@ admin.get('/locations', requireAuth, requireExec, async (_req, res) => {
 });
 
 // ---------- Active sessions ----------
-admin.get('/sessions/active', requireAuth, requireExec, async (_req, res) => {
-  await ensureActiveSessionsHydrated();
+admin.get('/sessions/active', requireAuth, requireExec, async (req, res) => {
+  if (req.query?.source === 'prisma') {
+    await refreshActiveSessionsCache();
+  } else {
+    await ensureActiveSessionsHydrated();
+  }
   const sessions = getActiveSessionsSnapshot().map(dtoSession);
   res.json({ sessions, cached: true });
 });

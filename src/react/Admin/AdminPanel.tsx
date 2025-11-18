@@ -361,16 +361,28 @@ export default function AdminPanel() {
             <div>
               <h2 className="admin-card__title">Live Sessions</h2>
               <p className="admin-card__muted">
-                Live feed directly from Prisma. End or edit time with one click.
+                Live feed from the cached presence watcher. Force a Prisma refresh if
+                something feels stale.
               </p>
             </div>
-            <Button
-              variant="ghost"
-              style={{ width: 'auto' }}
-              onClick={() => j('api/admin/sessions/active').then((r: any) => setActive(r.sessions))}
-            >
-              Refresh
-            </Button>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <Button
+                variant="ghost"
+                style={{ width: 'auto' }}
+                onClick={() => j('api/admin/sessions/active').then((r: any) => setActive(r.sessions))}
+              >
+                Refresh
+              </Button>
+              <Button
+                variant="ghost"
+                style={{ width: 'auto' }}
+                onClick={() =>
+                  j('api/admin/sessions/active?source=prisma').then((r: any) => setActive(r.sessions))
+                }
+              >
+                Force Reload
+              </Button>
+            </div>
           </div>
 
           {activeEnriched.length === 0 ? (
