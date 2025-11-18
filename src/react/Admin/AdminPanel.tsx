@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Banner } from '../common/ui';
+import { Button, Banner } from '../common/ui';
+import './AdminPanel.css';
 
 // ——— Types mirrored from server ———
 type Member = { id: string; handle?: string | null; avatarUrl?: string | null; isExec?: boolean };
@@ -310,147 +311,164 @@ export default function AdminPanel() {
     );
   }
 
-  return (
-    <div style={{ padding: 16, display: 'grid', gap: 16 }}>
-      <h1 style={{ margin: 0 }}>Admin Panel</h1>
 
-      {/* Config */}
-      <Card>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            gap: 12,
-            alignItems: 'center',
-          }}
-        >
-          <div>
-            <div style={{ fontWeight: 600 }}>Presence Settings</div>
-            <div style={{ fontSize: 12, color: 'var(--muted)' }}>
-              Configure automatic checkout (“autokick”) for idle sessions.
-            </div>
+  return (
+    <div className="admin-page">
+      <header className="admin-hero">
+        <div>
+          <span className="admin-tag">Presence Ops</span>
+          <h1>Admin Panel</h1>
+          <p>Monitor check-ins, keep the leaderboard honest, and close out idle sessions.</p>
+        </div>
+        <div className="admin-metrics">
+          <div className="admin-metric">
+            <span>Active now</span>
+            <strong>{activeEnriched.length}</strong>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>Autokick Minutes</span>
+          <div className="admin-metric">
+            <span>Autokick (min)</span>
+            <strong>{autokick}</strong>
+          </div>
+        </div>
+      </header>
+
+      <div className="admin-grid">
+        <section className="admin-card">
+          <div>
+            <h2 className="admin-card__title">Presence Settings</h2>
+            <p className="admin-card__muted">
+              Decide how long someone can stay checked in before the system checks them out.
+            </p>
+          </div>
+          <div className="admin-controls">
+            <label>
+              <span>Autokick Minutes</span>
               <input
                 type="number"
                 min={0}
                 value={autokick}
                 onChange={(e) => setAutokick(Number(e.target.value))}
-                style={{ width: 120 }}
               />
             </label>
-            <Button onClick={saveConfig} disabled={savingCfg}>
+            <Button onClick={saveConfig} disabled={savingCfg} style={{ width: 'auto', minWidth: 120 }}>
               {savingCfg ? 'Saving…' : 'Save'}
             </Button>
           </div>
-        </div>
-      </Card>
+        </section>
 
-      {/* Active sessions */}
-      <Card>
-        <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ fontWeight: 600 }}>Active Sessions</div>
-            <div style={{ fontSize: 12, color: 'var(--muted)' }}>
-              Live list (server-cached). End sessions or adjust times.
+        <section className="admin-card admin-card--wide">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h2 className="admin-card__title">Live Sessions</h2>
+              <p className="admin-card__muted">
+                Live feed directly from Prisma. End or edit time with one click.
+              </p>
             </div>
-          </div>
-          <Button
-            onClick={() => j('api/admin/sessions/active').then((r: any) => setActive(r.sessions))}
-          >
-            Refresh
-          </Button>
-        </div>
-
-        {activeEnriched.length === 0 ? (
-          <div style={{ padding: 8, color: 'var(--muted)' }}>No active sessions.</div>
-        ) : (
-          <div className="table" style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr>
-                  <Th>Member</Th>
-                  <Th>Location</Th>
-                  <Th>Check-in</Th>
-                  <Th>Duration</Th>
-                  <Th>Notes</Th>
-                  <Th right>Actions</Th>
-                </tr>
-              </thead>
-              <tbody>
-                {activeEnriched.map((s) => (
-                  <tr key={s.id}>
-                    <Td>{s.memberLabel}</Td>
-                    <Td>{s.locLabel}</Td>
-                    <Td mono>{s.checkInAt ? new Date(s.checkInAt).toLocaleString() : '—'}</Td>
-                    <Td>{fmtDuration(s.durMs)}</Td>
-                    <Td>{s.notes ?? '—'}</Td>
-                    <Td right>
-                      <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-                        <Button onClick={() => openEdit(s)} variant="primary">
-                          Edit
-                        </Button>
-                        <Button onClick={() => endSession(s.id)}>End</Button>
-                      </div>
-                    </Td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Card>
-
-      <Card>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <div style={{ fontWeight: 600 }}>Hours & Leaderboard</div>
-            <div style={{ fontSize: 12, color: 'var(--muted)' }}>
-              Compute total hours for a member or show a leaderboard over a date range.
-            </div>
-          </div>
-        </div>
-
-        <div style={{ display: 'grid', gap: 12, marginTop: 12 }}>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'end' }}>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>Member</span>
-              <select
-                value={hoursMemberId}
-                onChange={(e) => setHoursMemberId(e.target.value)}
-                style={{ minWidth: 200 }}
-              >
-                <option value="">Select member…</option>
-                {members.map((m) => (
-                  <option key={m.id} value={m.id}>
-                    {m.handle || m.id}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>From</span>
-              <input type="date" value={hoursFrom} onChange={(e) => setHoursFrom(e.target.value)} />
-            </label>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>To</span>
-              <input type="date" value={hoursTo} onChange={(e) => setHoursTo(e.target.value)} />
-            </label>
-            <Button onClick={computeMemberHours} disabled={!hoursMemberId}>
-              Compute
+            <Button
+              variant="ghost"
+              style={{ width: 'auto' }}
+              onClick={() => j('api/admin/sessions/active').then((r: any) => setActive(r.sessions))}
+            >
+              Refresh
             </Button>
+          </div>
+
+          {activeEnriched.length === 0 ? (
+            <div style={{ padding: 8, color: 'var(--muted)' }}>No active sessions.</div>
+          ) : (
+            <div style={{ overflowX: 'auto' }}>
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Member</th>
+                    <th>Location</th>
+                    <th>Check-in</th>
+                    <th>Duration</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {activeEnriched.map((s) => (
+                    <tr key={s.id}>
+                      <td>{s.memberLabel}</td>
+                      <td>{s.locLabel}</td>
+                      <td>{s.checkInAt ? new Date(s.checkInAt).toLocaleString() : '—'}</td>
+                      <td>{fmtDuration(s.durMs)}</td>
+                      <td>{s.notes ?? '—'}</td>
+                      <td>
+                        <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                          <Button
+                            onClick={() => openEdit(s)}
+                            variant="primary"
+                            style={{ width: 'auto' }}
+                          >
+                            Edit
+                          </Button>
+                          <Button onClick={() => endSession(s.id)} style={{ width: 'auto' }}>
+                            End
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+
+        <section className="admin-card">
+          <div>
+            <h2 className="admin-card__title">Hours & Leaderboard</h2>
+            <p className="admin-card__muted">
+              Pull a member’s totals or show the top performers over any window.
+            </p>
+          </div>
+
+          <div className="admin-spacer">
+            <div className="admin-controls">
+              <label>
+                <span>Member</span>
+                <select value={hoursMemberId} onChange={(e) => setHoursMemberId(e.target.value)}>
+                  <option value="">Select member…</option>
+                  {members.map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.handle || m.id}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                <span>From</span>
+                <input type="date" value={hoursFrom} onChange={(e) => setHoursFrom(e.target.value)} />
+              </label>
+              <label>
+                <span>To</span>
+                <input type="date" value={hoursTo} onChange={(e) => setHoursTo(e.target.value)} />
+              </label>
+              <Button
+                onClick={computeMemberHours}
+                disabled={!hoursMemberId}
+                style={{ width: 'auto' }}
+              >
+                Compute
+              </Button>
+            </div>
             {memberHours && (
-              <div style={{ marginLeft: 8, fontFamily: 'ui-monospace,Menlo,Consolas,monospace' }}>
-                Total: <b>{memberHours.hours.toFixed(2)}h</b>
-              </div>
+              <Banner tone="info">
+                Total time for{' '}
+                <strong>
+                  {members.find((m) => m.id === memberHours.memberId)?.handle || memberHours.memberId}
+                </strong>{' '}
+                is <strong>{memberHours.hours.toFixed(2)}h</strong>.
+              </Banner>
             )}
           </div>
 
-          <div style={{ display: 'flex', gap: 12, alignItems: 'end' }}>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>Top N</span>
+          <div className="admin-controls">
+            <label>
+              <span>Top N</span>
               <select value={lbLimit} onChange={(e) => setLbLimit(Number(e.target.value))}>
                 {[5, 10, 15, 20, 50].map((n) => (
                   <option key={n} value={n}>
@@ -459,55 +477,59 @@ export default function AdminPanel() {
                 ))}
               </select>
             </label>
-            <Button onClick={loadLeaderboard}>Load Leaderboard</Button>
+            <Button onClick={loadLeaderboard} style={{ width: 'auto' }}>
+              Load Leaderboard
+            </Button>
           </div>
 
           {leaderboard.length > 0 && (
-            <div className="table" style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <div style={{ overflowX: 'auto' }}>
+              <table className="admin-table">
                 <thead>
                   <tr>
-                    <Th>#</Th>
-                    <Th>Member</Th>
-                    <Th right>Sessions</Th>
-                    <Th right>Hours</Th>
+                    <th>#</th>
+                    <th>Member</th>
+                    <th>Sessions</th>
+                    <th>Hours</th>
                   </tr>
                 </thead>
                 <tbody>
                   {leaderboard.map((r, i) => (
                     <tr key={r.memberId}>
-                      <Td>{i + 1}</Td>
-                      <Td>{r.handle ?? r.memberId}</Td>
-                      <Td right>{r.sessions}</Td>
-                      <Td right>{r.hours.toFixed(2)}</Td>
+                      <td>{i + 1}</td>
+                      <td>{r.handle ?? r.memberId}</td>
+                      <td style={{ textAlign: 'right' }}>{r.sessions}</td>
+                      <td style={{ textAlign: 'right' }}>{r.hours.toFixed(2)}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           )}
-        </div>
-      </Card>
+        </section>
 
-      {/* Past sessions */}
-      <Card>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            gap: 12,
-            alignItems: 'center',
-          }}
-        >
-          <div>
-            <div style={{ fontWeight: 600 }}>Past Sessions</div>
-            <div style={{ fontSize: 12, color: 'var(--muted)' }}>
-              History with filters & pagination.
+        <section className="admin-card admin-card--wide">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <h2 className="admin-card__title">Past Sessions</h2>
+              <p className="admin-card__muted">
+                Filter historical data, fix mistakes, or export to CSV.
+              </p>
             </div>
+            <Button onClick={() => reloadPast(true)} style={{ width: 'auto' }}>
+              Clear Filters
+            </Button>
           </div>
-          <div style={{ display: 'flex', gap: 8, alignItems: 'end' }}>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>Member</span>
+
+          <div
+            style={{
+              display: 'grid',
+              gap: 12,
+              gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+            }}
+          >
+            <label>
+              <span>Member</span>
               <select value={memberId} onChange={(e) => setMemberId(e.target.value)}>
                 <option value="">All</option>
                 {members.map((m) => (
@@ -517,8 +539,8 @@ export default function AdminPanel() {
                 ))}
               </select>
             </label>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>Location</span>
+            <label>
+              <span>Location</span>
               <select value={locationId} onChange={(e) => setLocationId(e.target.value)}>
                 <option value="">All</option>
                 {locations.map((l) => (
@@ -528,16 +550,16 @@ export default function AdminPanel() {
                 ))}
               </select>
             </label>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>From</span>
+            <label>
+              <span>From</span>
               <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
             </label>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>To</span>
+            <label>
+              <span>To</span>
               <input type="date" value={to} onChange={(e) => setTo(e.target.value)} />
             </label>
-            <label style={{ display: 'grid', gap: 4 }}>
-              <span style={{ fontSize: 12, color: 'var(--muted)' }}>Page size</span>
+            <label>
+              <span>Page size</span>
               <select
                 value={pageSize}
                 onChange={(e) => {
@@ -552,75 +574,83 @@ export default function AdminPanel() {
                 ))}
               </select>
             </label>
-            <Button onClick={() => reloadPast(true)} variant="primary">
+            <Button onClick={() => reloadPast(true)} variant="primary" style={{ width: 'auto' }}>
               Apply
             </Button>
           </div>
-        </div>
 
-        <div className="table" style={{ overflowX: 'auto', marginTop: 10 }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr>
-                <Th>Member</Th>
-                <Th>Location</Th>
-                <Th>Check-in</Th>
-                <Th>Check-out</Th>
-                <Th>Duration</Th>
-                <Th>Notes</Th>
-                <Th right>Actions</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {past.map((s) => {
-                const dur = fmtDuration(durationMs(s.checkInAt, s.checkOutAt));
-                return (
-                  <tr key={s.id}>
-                    <Td>{s.member?.handle ?? s.memberId}</Td>
-                    <Td>{s.location?.name ?? '—'}</Td>
-                    <Td mono>{s.checkInAt ? new Date(s.checkInAt).toLocaleString() : '—'}</Td>
-                    <Td mono>{s.checkOutAt ? new Date(s.checkOutAt).toLocaleString() : '—'}</Td>
-                    <Td>{dur}</Td>
-                    <Td>{s.notes ?? '—'}</Td>
-                    <Td right>
-                      <Button onClick={() => openEdit(s)} variant="primary">
-                        Edit
-                      </Button>
-                    </Td>
-                  </tr>
-                );
-              })}
-              {past.length === 0 && (
+          <div style={{ overflowX: 'auto' }}>
+            <table className="admin-table">
+              <thead>
                 <tr>
-                  <Td colSpan={7} style={{ color: 'var(--muted)' }}>
-                    No sessions found.
-                  </Td>
+                  <th>Member</th>
+                  <th>Location</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Duration</th>
+                  <th>Notes</th>
+                  <th>Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {past.map((s) => {
+                  const dur = fmtDuration(durationMs(s.checkInAt, s.checkOutAt));
+                  return (
+                    <tr key={s.id}>
+                      <td>{s.member?.handle ?? s.memberId}</td>
+                      <td>{s.location?.name ?? '—'}</td>
+                      <td>{s.checkInAt ? new Date(s.checkInAt).toLocaleString() : '—'}</td>
+                      <td>{s.checkOutAt ? new Date(s.checkOutAt).toLocaleString() : '—'}</td>
+                      <td>{dur}</td>
+                      <td>{s.notes ?? '—'}</td>
+                      <td>
+                        <Button onClick={() => openEdit(s)} variant="primary" style={{ width: 'auto' }}>
+                          Edit
+                        </Button>
+                      </td>
+                    </tr>
+                  );
+                })}
+                {past.length === 0 && (
+                  <tr>
+                    <td colSpan={7} style={{ color: 'var(--muted)' }}>
+                      No sessions found.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
 
-        {/* pagination */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10 }}>
-          <div style={{ fontSize: 12, color: 'var(--muted)' }}>
-            {totalPast === 0
-              ? '0 results'
-              : `Showing ${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, totalPast)} of ${totalPast}`}
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 12 }}>
+            <div style={{ fontSize: 13, color: '#6b7280' }}>
+              {totalPast === 0
+                ? '0 results'
+                : `Showing ${(page - 1) * pageSize + 1}–${Math.min(page * pageSize, totalPast)} of ${totalPast}`}
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <Button
+                disabled={page <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                style={{ width: 'auto' }}
+              >
+                Prev
+              </Button>
+              <Button
+                disabled={page * pageSize >= totalPast}
+                onClick={() => setPage((p) => p + 1)}
+                style={{ width: 'auto' }}
+              >
+                Next
+              </Button>
+              <Button onClick={() => reloadPast(false)} variant="primary" style={{ width: 'auto' }}>
+                Reload
+              </Button>
+            </div>
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <Button disabled={page <= 1} onClick={() => setPage((p) => Math.max(1, p - 1))}>
-              Prev
-            </Button>
-            <Button disabled={page * pageSize >= totalPast} onClick={() => setPage((p) => p + 1)}>
-              Next
-            </Button>
-            <Button onClick={() => reloadPast(false)} variant="primary">
-              Reload
-            </Button>
-          </div>
-        </div>
-      </Card>
+        </section>
+      </div>
+
 
       {/* Edit Modal */}
       {editOpen && (
@@ -667,42 +697,6 @@ export default function AdminPanel() {
         </Modal>
       )}
     </div>
-  );
-}
-
-// ——— Small presentational helpers ———
-function Th({ children, right = false }: any) {
-  return (
-    <th
-      style={{
-        textAlign: right ? 'right' : 'left',
-        fontSize: 12,
-        color: 'var(--muted)',
-        fontWeight: 600,
-        padding: '8px 6px',
-        borderBottom: '1px solid var(--hairline)',
-        whiteSpace: 'nowrap',
-      }}
-    >
-      {children}
-    </th>
-  );
-}
-function Td({ children, right = false, mono = false, colSpan, style }: any) {
-  return (
-    <td
-      colSpan={colSpan}
-      style={{
-        textAlign: right ? 'right' : 'left',
-        fontFamily: mono ? 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace' : undefined,
-        padding: '8px 6px',
-        borderBottom: '1px solid var(--hairline)',
-        verticalAlign: 'top',
-        ...style,
-      }}
-    >
-      {children}
-    </td>
   );
 }
 
@@ -762,3 +756,4 @@ function FormRow({ label, children }: any) {
     </label>
   );
 }
+

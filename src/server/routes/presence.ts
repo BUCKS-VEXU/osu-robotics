@@ -5,6 +5,14 @@ import type { Request, Response } from 'express';
 
 import { requireAuth } from '../auth.js';
 import { prisma } from '../prisma.js';
+import type { ActiveSessionRecord } from '../activeSessionsCache.js';
+import {
+  ensureActiveSessionsHydrated,
+  getActiveSessionsSnapshot,
+  refreshActiveSessionsCache,
+  upsertActiveSessionRecord,
+} from '../activeSessionsCache.js';
+import { startAutokickLoop, sweepAutokickedSessions } from '../autokick.js';
 
 interface Session {
   id: string;
@@ -24,39 +32,89 @@ interface Session {
 
 const clients = new Set<Response>();
 
-let activeCache: Session[] = [];
-let activeCacheReady = false;
+const memberSelect = { id: true, handle: true, avatarUrl: true, isExec: true } as const;
+const locationSelect = { id: true, name: true } as const;
 
-async function refreshActiveCache() {
-  activeCache = await getActiveSessions();
-  activeCacheReady = true;
+type ActAsResult = { id: string };
+async function resolveActingMember(req: Request): Promise<ActAsResult> {
+  const authed = req.user as Express.User | undefined;
+  if (authed && authed.id && authed.id !== 'presence-bot') return { id: authed.id };
+
+  const fromHeader = (req.get('x-member-id') || '').trim();
+  const fromBody =
+    typeof (req.body as any)?.memberId === 'string' ? (req.body as any).memberId.trim() : '';
+  const fromQuery =
+    typeof (req.query as any)?.memberId === 'string' ? (req.query as any).memberId.trim() : '';
+  const memberId = fromHeader || fromBody || fromQuery;
+  if (!memberId) {
+    const err: any = new Error('memberId required for bot access');
+    err.status = 400;
+    throw err;
+  }
+  const exists = await prisma.member.findUnique({ where: { id: memberId }, select: { id: true } });
+  if (!exists) {
+    const err: any = new Error('member not found');
+    err.status = 404;
+    throw err;
+  }
+  return { id: memberId };
 }
 
-async function getActiveSessions(): Promise<Session[]> {
-  const rows = await prisma.session.findMany({
-    where: {
-      checkOutAt: null,
-      location: { active: true },
-    },
-    orderBy: { checkInAt: 'desc' },
-    include: {
-      member: { select: { id: true, handle: true, avatarUrl: true, isExec: true } },
-      location: { select: { id: true, name: true } },
-    },
-  });
+function mapRecordToPresence(row: ActiveSessionRecord): Session {
+  return {
+    id: row.id,
+    since: row.checkInAt.toISOString(),
+    note: row.notes,
+    member: row.member
+      ? {
+          id: row.member.id,
+          handle: row.member.handle ?? row.member.id,
+          avatarUrl: row.member.avatarUrl ?? null,
+          isExec: row.member.isExec ?? false,
+        }
+      : {
+          id: row.memberId,
+          handle: row.memberId,
+          avatarUrl: null,
+          isExec: false,
+        },
+    location: row.location
+      ? {
+          id: row.location.id,
+          name: row.location.name ?? row.location.id,
+        }
+      : {
+          id: row.locationId,
+          name: row.locationId,
+        },
+  };
+}
 
-  return rows.map((s) => ({
-    id: s.id,
-    since: s.checkInAt.toISOString(),
-    note: s.notes ?? null,
-    member: s.member,
-    location: s.location,
-  }));
+function currentPresenceSessions(): Session[] {
+  return getActiveSessionsSnapshot()
+    .filter((rec) => rec.location?.active !== false)
+    .map(mapRecordToPresence);
 }
 
 // Hydrate cache on server startup
-await refreshActiveCache().catch((e) => {
+await ensureActiveSessionsHydrated().catch((e) => {
   console.error('Failed to hydrate activeCache on startup:', e);
+});
+// Run an initial autokick sweep on boot, then keep sweeping every minute.
+await sweepAutokickedSessions()
+  .then(({ closed }) => {
+    if (closed) {
+      pushPresenceActiveUpdate().catch(() => {
+        /* ignore */
+      });
+    }
+  })
+  .catch((e) => console.error('Autokick sweep failed during boot:', e));
+
+startAutokickLoop(async (sessions) => {
+  if (sessions.length === 0) return;
+  console.info(`[autokick] Closed ${sessions.length} idle sessions.`);
+  await pushPresenceActiveUpdate();
 });
 
 const presence = Router();
@@ -73,19 +131,26 @@ presence.get('/locations', async (_, res: Response) => {
 });
 
 function broadcastActive() {
-  const payload = `data: ${JSON.stringify({ active: activeCache })}\n\n`;
+  const payload = `data: ${JSON.stringify({ active: currentPresenceSessions() })}\n\n`;
   for (const res of clients) res.write(payload);
+}
+
+export async function pushPresenceActiveUpdate(session?: any) {
+  if (session) upsertActiveSessionRecord(session);
+  else await refreshActiveSessionsCache();
+  broadcastActive();
 }
 
 // Active member stream
 presence.get('/stream', async (req: Request, res: Response) => {
+  await ensureActiveSessionsHydrated();
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache, no-transform');
   res.setHeader('Connection', 'keep-alive');
   res.flushHeaders?.();
 
   // Immediately send current state so clients render instantly
-  res.write(`data: ${JSON.stringify({ active: activeCache })}\n\n`);
+  res.write(`data: ${JSON.stringify({ active: currentPresenceSessions() })}\n\n`);
 
   const ping = setInterval(() => res.write(': ping\n\n'), 25000);
   clients.add(res);
@@ -98,8 +163,8 @@ presence.get('/stream', async (req: Request, res: Response) => {
 
 presence.get('/active', async (_, res: Response) => {
   try {
-    if (!activeCacheReady) await refreshActiveCache();
-    res.json({ active: activeCache });
+    await ensureActiveSessionsHydrated();
+    res.json({ active: currentPresenceSessions() });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Failed to load active sessions' });
@@ -113,11 +178,13 @@ const TapQuery = z.object({
 const DEBOUNCE_MS = 3000;
 
 presence.get('/tap', async (req: Request, res: Response) => {
-  if (!req.user) {
-    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  let actor: ActAsResult;
+  try {
+    actor = await resolveActingMember(req);
+  } catch (err: any) {
+    return res.status(err.status || 400).json({ error: err.message || 'member resolution failed' });
   }
-
-  const userId = req.user.id;
+  const userId = actor.id;
   const now = new Date();
 
   // 1) Resolve location
@@ -135,7 +202,10 @@ presence.get('/tap', async (req: Request, res: Response) => {
   const open = await prisma.session.findFirst({
     where: { memberId: userId, checkOutAt: null },
     orderBy: { checkInAt: 'desc' },
-    include: { location: { select: { id: true, name: true } } },
+    include: {
+      location: { select: locationSelect },
+      member: { select: memberSelect },
+    },
   });
 
   // 3) Debounce
@@ -160,21 +230,27 @@ presence.get('/tap', async (req: Request, res: Response) => {
   }
 
   // 4) Toggle
+  let updatedSession: any;
   if (open) {
-    await prisma.session.update({
+    updatedSession = await prisma.session.update({
       where: { id: open.id },
       data: { checkOutAt: now },
-      select: { id: true },
+      include: {
+        member: { select: memberSelect },
+        location: { select: locationSelect },
+      },
     });
   } else {
-    await prisma.session.create({
+    updatedSession = await prisma.session.create({
       data: { memberId: userId, locationId: location.id },
+      include: {
+        member: { select: memberSelect },
+        location: { select: locationSelect },
+      },
     });
   }
 
-  // Update cache once, then broadcast
-  await refreshActiveCache();
-  broadcastActive();
+  await pushPresenceActiveUpdate(updatedSession);
 
   res.json({
     debounced: false,
@@ -186,32 +262,37 @@ presence.get('/tap', async (req: Request, res: Response) => {
 });
 
 presence.post('/checkin', async (req: Request, res: Response) => {
-  if (!req.user) {
-    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  let actor: ActAsResult;
+  try {
+    actor = await resolveActingMember(req);
+  } catch (err: any) {
+    return res.status(err.status || 400).json({ error: err.message || 'member resolution failed' });
   }
 
-  const memberId = req.user.id;
+  const memberId = actor.id;
   const { locationId, notes } = req.body;
   if (!memberId || !locationId)
     return res.status(400).json({ error: 'memberId/locationId required' });
 
   const session = await prisma.session.create({
     data: { memberId, locationId, notes: notes ?? null },
-    select: { id: true, checkInAt: true },
+    include: { member: { select: memberSelect }, location: { select: locationSelect } },
   });
 
-  await refreshActiveCache();
-  broadcastActive();
+  await pushPresenceActiveUpdate(session);
 
-  res.json({ ok: true, session });
+  res.json({ ok: true, session: { id: session.id, checkInAt: session.checkInAt } });
 });
 
 presence.post('/checkout', async (req: Request, res: Response) => {
-  if (!req.user) {
-    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  let actor: ActAsResult;
+  try {
+    actor = await resolveActingMember(req);
+  } catch (err: any) {
+    return res.status(err.status || 400).json({ error: err.message || 'member resolution failed' });
   }
 
-  const userId = req.user.id;
+  const userId = actor.id;
   const open = await prisma.session.findFirst({
     where: { memberId: userId, checkOutAt: null },
   });
@@ -220,20 +301,23 @@ presence.post('/checkout', async (req: Request, res: Response) => {
   const closed = await prisma.session.update({
     where: { id: open.id },
     data: { checkOutAt: new Date() },
+    include: { member: { select: memberSelect }, location: { select: locationSelect } },
   });
 
-  await refreshActiveCache();
-  broadcastActive();
+  await pushPresenceActiveUpdate(closed);
 
   res.json(closed);
 });
 
 presence.get('/status', async (req: Request, res: Response) => {
-  if (!req.user) {
-    return res.status(401).json({ error: 'Unauthorized: user not found' });
+  let actor: ActAsResult;
+  try {
+    actor = await resolveActingMember(req);
+  } catch (err: any) {
+    return res.status(err.status || 400).json({ error: err.message || 'member resolution failed' });
   }
 
-  const userId = req.user.id;
+  const userId = actor.id;
   const open = await prisma.session.findFirst({
     where: { memberId: userId, checkOutAt: null },
     include: { location: true },
@@ -248,4 +332,3 @@ presence.get('/status', async (req: Request, res: Response) => {
 });
 
 export default presence;
-

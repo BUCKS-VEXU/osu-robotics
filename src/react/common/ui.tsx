@@ -39,7 +39,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   busy?: boolean;
 };
 
-export function Button({ variant = 'primary', busy, children, ...rest }: ButtonProps) {
+export function Button({ variant = 'primary', busy, children, style, ...rest }: ButtonProps) {
   const base = {
     primary: { bg: 'var(--scarlet)', hover: 'var(--scarlet-600)', color: '#fff' },
     danger: { bg: 'var(--err)', hover: '#b91c1c', color: '#fff' },
@@ -60,6 +60,7 @@ export function Button({ variant = 'primary', busy, children, ...rest }: ButtonP
         fontWeight: 600,
         transition: 'background .15s ease, transform .04s ease',
         transform: busy ? 'scale(.99)' : 'none',
+        ...(style || {}),
       }}
       onMouseDown={(e) => {
         (e.currentTarget as HTMLButtonElement).style.transform = 'scale(.98)';
