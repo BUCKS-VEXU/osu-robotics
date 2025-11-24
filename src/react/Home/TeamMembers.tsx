@@ -76,7 +76,7 @@ const teamMembers: Member[] = [
   {
     name: 'John',
     majorIndex: Major.MechEng,
-    roles: '',
+    roles: 'John',
   },
   {
     name: 'Lysander LeCourse',
@@ -114,12 +114,11 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-  { value: 5, color: ' #048BA8', label: 'Mechanical Engineering' },
-  { value: 4, color: ' #16DB93', label: 'Computer Science Engineering' },
-  { value: 2, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
+  { value: 6, color: ' #048BA8', label: 'Mechanical Engineering' },
+  { value: 2, color: ' #16DB93', label: 'Computer Science Engineering' },
+  { value: 3, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
   { value: 1, color: ' #F29E4C', label: 'Engineering Physics' },
   { value: 1, color: ' #C1666B', label: 'Math & English' },
-  { value: 2, color: ' #8E7DBE', label: 'Psychology' },
 ];
 
 const series: PieSeriesType<PieValueType>[] = [
