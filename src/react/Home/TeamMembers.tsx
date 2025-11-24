@@ -101,7 +101,7 @@ const teamMembers: Member[] = [
     roles: 'Designer, Builder'
   },
   {
-    name: 'Airy',
+    name: 'Airy (Jiazhuo) Li',
     majorIndex: Major.ECE,
     roles: 'Builder'
   },
