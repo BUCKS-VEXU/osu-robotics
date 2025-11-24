@@ -81,7 +81,7 @@ const teamMembers: Member[] = [
   {
     name: 'Lysander LeCourse',
     majorIndex: Major.ECE,
-    roles: 'Electronics Specialist, Justin Timberlake Impersonator',
+    roles: 'Electronics Specialist',
   },
   {
     name: 'Robert Ashley',
@@ -94,6 +94,16 @@ const teamMembers: Member[] = [
     majorIndex: Major.CSE,
     href: 'https://www.linkedin.com/in/camden-burgess-203b94290/',
     roles: 'Notebooker',
+  },
+  {
+    name: 'Eli Kosobud',
+    majorIndex: Major.MechEng,
+    roles: 'Designer, Builder'
+  },
+  {
+    name: 'Airy',
+    majorIndex: Major.ECE,
+    roles: 'Builder'
   },
   { name: 'Ryan Joseph',
     majorIndex: Major.MechEng,
@@ -114,9 +124,9 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-  { value: 6, color: ' #048BA8', label: 'Mechanical Engineering' },
+  { value: 7, color: ' #048BA8', label: 'Mechanical Engineering' },
   { value: 2, color: ' #16DB93', label: 'Computer Science Engineering' },
-  { value: 3, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
+  { value: 4, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
   { value: 1, color: ' #F29E4C', label: 'Engineering Physics' },
   { value: 1, color: ' #C1666B', label: 'Math & English' },
 ];
