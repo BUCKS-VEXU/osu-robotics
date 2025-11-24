@@ -40,7 +40,7 @@
     "react-router-dom": "^7.9.1",
     "react-social-media-embed": "^2.5.18",
     "use-window-focus": "^1.4.3",
-    "vite-tsconfig-paths": "^4.3.2",
+    "vite-tsconfig-paths": "^5.1.4",
     "zod": "^4.1.11"
   },
   "devDependencies": {
