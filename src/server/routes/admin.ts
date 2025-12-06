@@ -5,6 +5,13 @@ import type { Request, Response, NextFunction } from 'express';
 
 import { requireAuth } from '../auth.js';
 import { prisma } from '../prisma.js';
+import { ensureAutokickLoaded, getAutokickMinutes, setAutokickMinutes } from '../autokick.js';
+import {
+  ensureActiveSessionsHydrated,
+  getActiveSessionsSnapshot,
+  refreshActiveSessionsCache,
+} from '../activeSessionsCache.js';
+import { pushPresenceActiveUpdate } from './presence.js';
 
 // ---------- Types (mirrored to AdminPanel needs) ----------
 type MemberLite = { id: string; handle?: string | null };
@@ -41,77 +48,6 @@ function dtoSession(s: any): SessionDTO {
   };
 }
 
-// ---------- Presence-style cache for ACTIVE sessions ----------
-type ActiveCacheEntry = {
-  id: string;
-  memberId: string;
-  locationId: string;
-  checkInAt: Date;
-  notes: string | null;
-  // denormalized for quick admin panel list:
-  member?: { id: string; handle: string; avatarUrl: string | null };
-  location?: { id: string; name: string | null };
-};
-
-const activeCache = new Map<string, ActiveCacheEntry>(); // key = session.id
-let activeCacheHydrated = false;
-
-async function hydrateActiveCache() {
-  const open = await prisma.session.findMany({
-    where: { checkOutAt: null },
-    include: { member: true, location: true },
-  });
-  activeCache.clear();
-  for (const s of open) {
-    activeCache.set(s.id, {
-      id: s.id,
-      memberId: s.memberId,
-      locationId: s.locationId,
-      checkInAt: s.checkInAt,
-      notes: s.notes ?? null,
-      member: s.member
-        ? { id: s.member.id, handle: s.member.handle, avatarUrl: s.member.avatarUrl ?? null }
-        : undefined,
-      location: s.location ? { id: s.location.id, name: s.location.name ?? null } : undefined,
-    });
-  }
-  activeCacheHydrated = true;
-}
-
-async function ensureActiveCache() {
-  if (!activeCacheHydrated) await hydrateActiveCache();
-}
-
-function upsertActiveCache(s: any) {
-  if (s.checkOutAt) {
-    activeCache.delete(s.id);
-    return;
-  }
-  activeCache.set(s.id, {
-    id: s.id,
-    memberId: s.memberId,
-    locationId: s.locationId,
-    checkInAt: s.checkInAt,
-    notes: s.notes ?? null,
-    member: s.member
-      ? { id: s.member.id, handle: s.member.handle, avatarUrl: s.member.avatarUrl ?? null }
-      : undefined,
-    location: s.location ? { id: s.location.id, name: s.location.name ?? null } : undefined,
-  });
-}
-
-// ---------- Optional: lightweight config cache ----------
-let autokickMinutes = 60; // fallback default
-async function loadAutokickFromDB() {
-  try {
-    // If you add a Settings table (see schema suggestions below), read it here.
-    const s = await prisma.settings.findUnique({ where: { key: 'autokickMinutes' } });
-    if (s?.valueInt != null) autokickMinutes = s.valueInt;
-  } catch {
-    // table may not exist yet
-  }
-}
-
 // ---------- Router ----------
 const admin = Router();
 
@@ -138,21 +74,15 @@ admin.get('/locations', requireAuth, requireExec, async (_req, res) => {
   res.json({ locations });
 });
 
-// ---------- Active sessions (cached) ----------
-admin.get('/sessions/active', requireAuth, requireExec, async (_req, res) => {
-  await ensureActiveCache();
-  const list: SessionDTO[] = Array.from(activeCache.values())
-    .sort((a, b) => b.checkInAt.getTime() - a.checkInAt.getTime())
-    .map((s) =>
-      dtoSession({
-        ...s,
-        // adapt for dtoSession
-        location: s.location,
-        member: s.member,
-        checkOutAt: null,
-      }),
-    );
-  res.json({ sessions: list, cached: true });
+// ---------- Active sessions ----------
+admin.get('/sessions/active', requireAuth, requireExec, async (req, res) => {
+  if (req.query?.source === 'prisma') {
+    await refreshActiveSessionsCache();
+  } else {
+    await ensureActiveSessionsHydrated();
+  }
+  const sessions = getActiveSessionsSnapshot().map(dtoSession);
+  res.json({ sessions, cached: true });
 });
 
 // ---------- End a session (checkout now) ----------
@@ -171,7 +101,9 @@ admin.post(
       include: { member: true, location: true },
     });
 
-    upsertActiveCache(updated); // removes from cache because now closed
+    pushPresenceActiveUpdate(updated).catch(() => {
+      /* best-effort */
+    });
     res.json({ ok: true, session: dtoSession(updated) });
   },
 );
@@ -201,7 +133,9 @@ admin.patch('/sessions/:id/time', requireAuth, requireExec, async (req, res) => 
     include: { member: true, location: true },
   });
 
-  upsertActiveCache(updated); // update/remove cache entry appropriately
+  pushPresenceActiveUpdate(updated).catch(() => {
+    /* ignore */
+  });
   res.json({ ok: true, session: dtoSession(updated) });
 });
 
@@ -269,7 +203,9 @@ admin.post('/sessions', requireAuth, requireExec, async (req, res) => {
     include: { member: true, location: true },
   });
 
-  upsertActiveCache(created);
+  pushPresenceActiveUpdate(created).catch(() => {
+    /* ignore */
+  });
   res.status(201).json({ ok: true, session: dtoSession(created) });
 });
 
@@ -277,26 +213,16 @@ admin.post('/sessions', requireAuth, requireExec, async (req, res) => {
 const cfgSchema = z.object({ autokickMinutes: z.coerce.number().int().min(0) });
 
 admin.get('/config', requireAuth, requireExec, async (_req, res) => {
-  await loadAutokickFromDB(); // best effort
-  res.json({ config: { autokickMinutes } });
+  await ensureAutokickLoaded();
+  res.json({ config: { autokickMinutes: getAutokickMinutes() } });
 });
 
 admin.post('/config', requireAuth, requireExec, async (req, res) => {
   const parsed = cfgSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
 
-  autokickMinutes = parsed.data.autokickMinutes;
-  try {
-    // If you add Settings table:
-    await prisma.settings.upsert({
-      where: { key: 'autokickMinutes' },
-      update: { valueInt: autokickMinutes },
-      create: { key: 'autokickMinutes', valueInt: autokickMinutes },
-    });
-  } catch {
-    // table may not exist yet; we still keep memory value
-  }
-  res.json({ ok: true, config: { autokickMinutes } });
+  const minutes = await setAutokickMinutes(parsed.data.autokickMinutes);
+  res.json({ ok: true, config: { autokickMinutes: minutes } });
 });
 
 // ---------- Hours: single member ----------
@@ -383,10 +309,9 @@ admin.get('/stats/leaderboard', requireAuth, requireExec, async (req, res) => {
 
 // ---------- Boot-time hydration ----------
 (async () => {
-  await Promise.all([hydrateActiveCache(), loadAutokickFromDB()]);
+  await ensureAutokickLoaded();
 })().catch(() => {
   /* ignore on boot */
 });
 
 export default admin;
-

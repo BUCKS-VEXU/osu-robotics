@@ -33,49 +33,55 @@ const teamMembers: Member[] = [
     name: 'Noah Klein',
     majorIndex: Major.CSE,
     href: 'https://www.noahkleinportfolio.org/',
-    roles: 'Co-President, Programmer, Builder, Driver',
+    roles: 'President, Programmer, Builder',
   },
   {
-    name: 'Ryan Joseph',
-    majorIndex: Major.MechEng,
-    href: 'https://www.linkedin.com/in/ryanjoseph1/',
-    roles: 'Co-President, Builder, Drive Team',
+    name: 'Christopher Hawthorne',
+    majorIndex: Major.EngPhysics,
+    roles: 'Vice President, Designer, Builder',
   },
   {
     name: 'Sage Waehler',
     majorIndex: Major.MathEng,
     href: 'https://www.linkedin.com/in/sage-waehler-9413582aa/',
-    roles: 'Treasurer, Notebooker, Drive Team',
+    roles: 'Treasurer, Notebooker',
+  },
+  {
+    name: 'William Jackson',
+    majorIndex: Major.MechEng,
+    roles: 'Secretary, Builder',
+  },
+  {
+    name: 'Beth Maloof',
+    majorIndex: Major.MechEng,
+    roles: 'Lead, Designer, Builder',
+  },
+  {
+    name: 'Zach Nehez',
+    majorIndex: Major.MechEng,
+    href: 'https://www.linkedin.com/in/zach-nehez/',
+    roles: 'Lead, Designer',
   },
   {
     name: 'Nathan Trybus',
-    majorIndex: Major.MechEng,
     href: 'https://www.linkedin.com/in/nathan-trybus-981819243/',
     roles: 'Builder, Driver',
   },
   {
-    name: 'Alex Flis',
-    majorIndex: Major.Psych,
-    href: 'https://www.linkedin.com/in/alexander-flis-0a8225327/',
-    roles: 'Builder, Drive Team',
+    name: 'Matthew Allen',
+    majorIndex: Major.MechEng,
+    href: 'https://www.linkedin.com/in/matthew-luis-allen/',
+    roles: '3D Printing Wizard',
   },
   {
-    name: 'Camden Burgess',
-    majorIndex: Major.CSE,
-    href: 'https://www.linkedin.com/in/camden-burgess-203b94290/',
-    roles: 'Notebooker, Drive Team',
+    name: 'John',
+    majorIndex: Major.MechEng,
+    roles: 'John',
   },
   {
-    name: 'Cassidy Klodnick',
-    majorIndex: Major.Psych,
-    href: 'https://www.linkedin.com/in/cassidy-klodnick/',
-    roles: 'Strategist, Drive Team',
-  },
-  {
-    name: 'Andrew Flis',
+    name: 'Lysander LeCourse',
     majorIndex: Major.ECE,
-    href: 'https://www.linkedin.com/in/andrew-flis-12b665159/',
-    roles: 'Designer, Head of Filmography',
+    roles: 'Electronics Specialist',
   },
   {
     name: 'Robert Ashley',
@@ -84,30 +90,31 @@ const teamMembers: Member[] = [
     roles: 'Builder',
   },
   {
-    name: 'Zach Nehez',
-    majorIndex: Major.MechEng,
-    href: 'https://www.linkedin.com/in/zach-nehez/',
-    roles: 'Designer',
-  },
-  { name: 'John Cruz', majorIndex: Major.MechEng, roles: 'Builder' },
-  { name: 'Christopher Hawthorne', majorIndex: Major.EngPhysics, roles: 'Designer' },
-  {
-    name: 'Matthew Allen',
-    majorIndex: Major.MechEng,
-    href: 'https://www.linkedin.com/in/matthew-luis-allen/',
-    roles: 'Designer, 3D Printing Wizard',
-  },
-  {
-    name: 'Vighnesh Prabhu',
+    name: 'Camden Burgess',
     majorIndex: Major.CSE,
-    href: 'https://www.linkedin.com/in/vighnesh-prabhu-profile/',
-    roles: 'Programmer, Sponsorship Lead',
+    href: 'https://www.linkedin.com/in/camden-burgess-203b94290/',
+    roles: 'Notebooker',
   },
   {
-    name: 'Jayhue Gabriel',
-    majorIndex: Major.CSE,
-    href: 'https://www.linkedin.com/in/jayhue-gabriel-8a765333a/',
-    roles: 'Programmer',
+    name: 'Eli Kosobud',
+    majorIndex: Major.MechEng,
+    roles: 'Designer, Builder'
+  },
+  {
+    name: 'Airy (Jiazhuo) Li',
+    majorIndex: Major.ECE,
+    roles: 'Builder'
+  },
+  { name: 'Ryan Joseph',
+    majorIndex: Major.MechEng,
+    href: 'https://www.linkedin.com/in/ryanjoseph1/',
+    roles: 'Financial Advisor'
+  },
+  {
+    name: 'Andrew Flis',
+    majorIndex: Major.ECE,
+    href: 'https://www.linkedin.com/in/andrew-flis-12b665159/',
+    roles: 'Mentor, Head of Filmography',
   },
   {
     name: 'Drew Phillips',
@@ -117,12 +124,11 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-  { value: 5, color: ' #048BA8', label: 'Mechanical Engineering' },
-  { value: 4, color: ' #16DB93', label: 'Computer Science Engineering' },
-  { value: 2, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
+  { value: 7, color: ' #048BA8', label: 'Mechanical Engineering' },
+  { value: 2, color: ' #16DB93', label: 'Computer Science Engineering' },
+  { value: 4, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
   { value: 1, color: ' #F29E4C', label: 'Engineering Physics' },
   { value: 1, color: ' #C1666B', label: 'Math & English' },
-  { value: 2, color: ' #8E7DBE', label: 'Psychology' },
 ];
 
 const series: PieSeriesType<PieValueType>[] = [
