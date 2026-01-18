@@ -183,7 +183,7 @@ const TeamMembers = () => {
           <table>
             <thead>
               <tr>
-                <th>Name & Major</th>
+                <th>Name</th>
                 <th>Role</th>
               </tr>
             </thead>
