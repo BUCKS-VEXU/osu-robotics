@@ -15,6 +15,7 @@ import {
 enum Major {
   MechEng = 0,
   CSE,
+  CIS,
   ECE,
   EngPhysics,
   MathEng,
@@ -60,7 +61,18 @@ const teamMembers: Member[] = [
     name: 'Zach Nehez',
     majorIndex: Major.MechEng,
     href: 'https://www.linkedin.com/in/zach-nehez/',
-    roles: 'Lead, Designer',
+    roles: 'Lead, Driver, Designer',
+  },
+  {
+    name: 'Tyler Ing',
+    majorIndex: Major.CIS,
+    href: 'https://www.linkedin.com/in/tyler-ing/',
+    roles: 'Coder, Web Developer, Builder',
+  },
+  {
+    name: 'John',
+    majorIndex: Major.MechEng,
+    roles: 'John',
   },
   {
     name: 'Nathan Trybus',
@@ -72,11 +84,6 @@ const teamMembers: Member[] = [
     majorIndex: Major.MechEng,
     href: 'https://www.linkedin.com/in/matthew-luis-allen/',
     roles: '3D Printing Wizard',
-  },
-  {
-    name: 'John',
-    majorIndex: Major.MechEng,
-    roles: 'John',
   },
   {
     name: 'Lysander LeCourse',
@@ -124,9 +131,10 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-  { value: 7, color: ' #048BA8', label: 'Mechanical Engineering' },
-  { value: 2, color: ' #16DB93', label: 'Computer Science Engineering' },
-  { value: 4, color: ' #EFEA5A', label: 'Electrical & Computer Engineering' },
+  { value: 7, color: ' #702963', label: 'Mechanical Engineering' },
+  { value: 2, color: ' #048BA8', label: 'Computer Science Engineering' },
+  { value: 4, color: ' #16DB93', label: 'Electrical & Computer Engineering' },
+  { value: 1, color: ' #EFEA5A', label: 'Computer & Information Science' }, 
   { value: 1, color: ' #F29E4C', label: 'Engineering Physics' },
   { value: 1, color: ' #C1666B', label: 'Math & English' },
 ];

@@ -52,6 +52,11 @@ const Footer = () => {
             Noah Klein
           </a>
           <br />
+          Website managed and maintained by{' '}
+          <a href="https://www.linkedin.com/in/tyler-ing/" target="_blank">
+           Tyler Ing
+          </a>
+          <br />
         </p>
       </div>
     </footer>
