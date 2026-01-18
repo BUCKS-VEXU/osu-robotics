@@ -189,8 +189,12 @@ const TeamMembers = () => {
             </thead>
             <tbody>
               {teamMembers.map((member, i) => (
+                const isHighlighted =
+                  highlightedItem?.seriesId === 'majors' &&
+                  member.majorIndex === highlightedItem.dataIndex;
                 <tr
                   key={i}
+                  className={isHighlighted ? 'highlighted-row' : undefined}
                   onMouseEnter={() => {
                     if (member.majorIndex == null) return;
                     setHighlightedItem({
@@ -204,10 +208,6 @@ const TeamMembers = () => {
                     <a href={member.href} target="_blank">
                       {member.name}
                     </a>
-
-                    <div className="major">
-                    {member.majorIndex}
-                    </div> 
                   </td>
                   <td>{member.roles}</td>
                 </tr>
