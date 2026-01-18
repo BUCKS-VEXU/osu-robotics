@@ -45,6 +45,22 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.TeamMembers .name-major {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.TeamMembers .name-major a {
+  font-weight: 600;
+}
+
+.TeamMembers .name-major .major {
+  font-size: 0.85rem;
+  color: #555;
+  margin-top: 0.2rem;
+}
+
 .TeamMembers thead {
   background-color: var(--buckeye-scarlet);
   color: var(--buckeye-silver);

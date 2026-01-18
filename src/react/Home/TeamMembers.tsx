@@ -183,7 +183,7 @@ const TeamMembers = () => {
           <table>
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Name & Major</th>
                 <th>Role</th>
               </tr>
             </thead>
@@ -204,6 +204,10 @@ const TeamMembers = () => {
                     <a href={member.href} target="_blank">
                       {member.name}
                     </a>
+
+                    <div className="major">
+                    {member.majorIndex}
+                    </div> 
                   </td>
                   <td>{member.roles}</td>
                 </tr>
