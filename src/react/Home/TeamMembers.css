@@ -78,7 +78,8 @@
 }
 
 .TeamMembers tbody tr.highlighted-row a {
-  text-decoration: underline;
+  color: inherit;
+  text-decoration: none;
 }
 
 /* on narrow viewports, stack them */

@@ -29,6 +29,14 @@ interface Member {
   majorIndex?: Major;
 }
 
+const hexToRgba = (hex: string, alpha: number) => {
+  const cleanHex = hex.replace('#', '');
+  const r = parseInt(cleanHex.substring(0, 2), 16);
+  const g = parseInt(cleanHex.substring(2, 4), 16);
+  const b = parseInt(cleanHex.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 const teamMembers: Member[] = [
   {
     name: 'Noah Klein',
@@ -131,12 +139,12 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-  { value: 7, color: ' #702963', label: 'Mechanical Engineering' },
-  { value: 2, color: ' #048BA8', label: 'Computer Science Engineering' },
-  { value: 4, color: ' #16DB93', label: 'Electrical & Computer Engineering' },
-  { value: 1, color: ' #EFEA5A', label: 'Computer & Information Science' }, 
-  { value: 1, color: ' #F29E4C', label: 'Engineering Physics' },
-  { value: 1, color: ' #C1666B', label: 'Math & English' },
+  { value: 7, color: '#702963', label: 'Mechanical Engineering' },
+  { value: 2, color: '#048BA8', label: 'Computer Science Engineering' },
+  { value: 4, color: '#16DB93', label: 'Electrical & Computer Engineering' },
+  { value: 1, color: '#EFEA5A', label: 'Computer & Information Science' }, 
+  { value: 1, color: '#F29E4C', label: 'Engineering Physics' },
+  { value: 1, color: '#C1666B', label: 'Math & English' },
 ];
 
 const series: PieSeriesType<PieValueType>[] = [
@@ -205,8 +213,10 @@ const TeamMembers = () => {
                     style={
                       isHighlighted
                         ? {
-                            backgroundColor: highlightColor,
-                            color: '#000',
+                            backgroundColor: hexToRgba(
+                              seriesData[highlightedItem.dataIndex].color,
+                              0.25 // ⬅ saturated but transparent
+                            ),
                           }
                         : undefined
                     }
