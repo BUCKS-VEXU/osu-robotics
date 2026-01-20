@@ -235,13 +235,8 @@ const TeamMembers = () => {
             </tbody>
           </table>
         </div>
-
-
-                // const isHighlighted =
-                //   highlightedItem?.seriesId === 'majors' &&
-                //   member.majorIndex === highlightedItem.dataIndex;
-
-                //   className={isHighlighted ? 'highlighted-row' : undefined}
-
-
+      </div>
+    </section>
+  );
+};
 export default TeamMembers;

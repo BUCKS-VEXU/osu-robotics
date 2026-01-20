@@ -46,26 +46,29 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>
-          Website designed and built by{' '}
-          <a href="https://www.linkedin.com/in/noah-klein-5a215a251/" target="_blank">
-            Noah Klein
-          </a>
-          <br />
-          Website managed and maintained by{' '}
-          <a href="https://www.linkedin.com/in/tyler-ing/" target="_blank">
-           Tyler Ing
-          </a>
-          <br />
-        </p>
-        <span className="copyright">
-          © {new Date().getFullYear()} BUCKS Robotics
-        </span>
+        <div className="footer-bottom-left">
+          <p>
+            Website designed and built by{' '}
+            <a href="https://www.linkedin.com/in/noah-klein-5a215a251/" target="_blank">
+              Noah Klein
+            </a>
+            <br />
+            Website managed and maintained by{' '}
+            <a href="https://www.linkedin.com/in/tyler-ing/" target="_blank">
+            Tyler Ing
+            </a>
+            <br />
+          </p>
+        </div>
+
+        <div className="footer-bottom-right">
+          <span className="copyright">
+            © {new Date().getFullYear()} BUCKS Robotics
+          </span>
+        </div>
       </div>
     </footer>
   );
 };
 
 export default Footer;
-
-© 2026 Bucks Robotics
