@@ -1,0 +1,33 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.InstagramFeed {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  padding: 0 2rem; /* edge padding */
+  box-sizing: border-box;
+}
+
+.InstagramFeed h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.instagram-container {
+  max-width: 1200px; /* match site width */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.instagram-media {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .InstagramFeed {
+    padding: 2rem 1rem;
+  }
+}

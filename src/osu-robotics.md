@@ -3,7 +3,7 @@
 ## TODO
 
 - [ ] Add more pictures
-- [ ] Display of majors
+- [x] Display of majors
 - [ ] Docusaurus for Omni wheel & any other future documentation (maybe BUCKSlib)
 - [ ] History
   - [ ] Clip matches & embed the videos

@@ -13,6 +13,7 @@ interface NavBarItem {
 
 const navBarMap: Map<string, NavBarItem> = new Map([
   ['home', { className: 'AboutUs', navText: 'Home' }],
+  ['latest', { className: 'InstagramFeed',  navText: 'Latest Updates'}],
   ['the-team', { className: 'TeamMembers', navText: 'The Team' }],
   ['sponsors', { className: 'Sponsors', navText: 'Sponsors' }],
   ['join', { className: 'CallToAction', navText: 'Join' }],
