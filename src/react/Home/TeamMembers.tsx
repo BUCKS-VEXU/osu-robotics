@@ -15,8 +15,8 @@ import {
 enum Major {
   MechEng = 0,
   CSE,
-  CIS,
   ECE,
+  CIS,
   EngPhysics,
   MathEng,
   Psych,
