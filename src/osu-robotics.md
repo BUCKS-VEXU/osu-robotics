@@ -8,4 +8,4 @@
 - [ ] History
   - [ ] Clip matches & embed the videos
   - [ ] write up for the season, & put it on a page to send to sponsors
-- [ ] Embedded Instagram posts
+- [x] Embedded Instagram posts
