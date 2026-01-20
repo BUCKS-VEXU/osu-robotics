@@ -193,10 +193,23 @@ const TeamMembers = () => {
                   highlightedItem?.seriesId === 'majors' &&
                   member.majorIndex === highlightedItem.dataIndex;
 
+                const highlightColor =
+                  isHighlighted && highlightedItem
+                    ? seriesData[highlightedItem.dataIndex].color
+                    : undefined;
+
                 return (
                   <tr
                     key={i}
                     className={isHighlighted ? 'highlighted-row' : undefined}
+                    style={
+                      isHighlighted
+                        ? {
+                            backgroundColor: highlightColor,
+                            color: '#000',
+                          }
+                        : undefined
+                    }
                     onMouseEnter={() => {
                       if (member.majorIndex == null) return;
                       setHighlightedItem({

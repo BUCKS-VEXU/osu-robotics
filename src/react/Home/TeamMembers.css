@@ -57,6 +57,10 @@
   text-align: left;
 }
 
+.TeamMembers tbody tr {
+  transition: background-color 120ms ease;
+}
+
 .TeamMembers tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
@@ -70,7 +74,6 @@
 }
 
 .TeamMembers tbody tr.highlighted-row {
-  background-color: rgba(112, 41, 99, 0.25); /* matches MechEng purple vibe */
   font-weight: 600;
 }
 
