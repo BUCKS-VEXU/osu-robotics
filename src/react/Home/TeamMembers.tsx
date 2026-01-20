@@ -188,33 +188,40 @@ const TeamMembers = () => {
               </tr>
             </thead>
             <tbody>
-              {teamMembers.map((member, i) => (
-                <tr
-                  key={i}
-                  onMouseEnter={() => {
-                    if (member.majorIndex == null) return;
-                    setHighlightedItem({
-                      seriesId: 'majors',
-                      dataIndex: member.majorIndex,
-                    });
-                  }}
-                  onMouseLeave={() => setHighlightedItem(null)}
-                >
-                  <td>
-                    <a href={member.href} target="_blank">
-                      {member.name}
-                    </a>
-                  </td>
-                  <td>{member.roles}</td>
-                </tr>
-              ))}
+              {teamMembers.map((member, i) => {
+                const isHighlighted =
+                  highlightedItem?.seriesId === 'majors' &&
+                  member.majorIndex === highlightedItem.dataIndex;
+
+                return (
+                  <tr
+                    key={i}
+                    className={isHighlighted ? 'highlighted-row' : undefined}
+                    onMouseEnter={() => {
+                      if (member.majorIndex == null) return;
+                      setHighlightedItem({
+                        seriesId: 'majors',
+                        dataIndex: member.majorIndex,
+                      });
+                    }}
+                    onMouseLeave={() => setHighlightedItem(null)}
+                  >
+                    <td>
+                      {member.href ? (
+                        <a href={member.href} target="_blank" rel="noreferrer">
+                          {member.name}
+                        </a>
+                      ) : (
+                        member.name
+                      )}
+                    </td>
+                    <td>{member.roles}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
-      </div>
-    </section>
-  );
-};
 
 
                 // const isHighlighted =
