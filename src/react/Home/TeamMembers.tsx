@@ -67,7 +67,7 @@ const teamMembers: Member[] = [
     name: 'Tyler Ing',
     majorIndex: Major.CIS,
     href: 'https://www.linkedin.com/in/tyler-ing/',
-    roles: 'Coder, Web Developer, Builder',
+    roles: 'Web Developer, Coder, Builder',
   },
   {
     name: 'John',

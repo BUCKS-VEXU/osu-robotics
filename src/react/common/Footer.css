@@ -105,6 +105,12 @@
   font-size: 13px;
 }
 
+.Footer .footer-bottom .copyright {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
 /* Responsive layout for smaller screens */
 @media (max-width: 768px) {
   .Footer .footer-content {

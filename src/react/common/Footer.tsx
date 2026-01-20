@@ -58,9 +58,14 @@ const Footer = () => {
           </a>
           <br />
         </p>
+        <span className="copyright">
+          © {new Date().getFullYear()} BUCKS Robotics
+        </span>
       </div>
     </footer>
   );
 };
 
 export default Footer;
+
+© 2026 Bucks Robotics
