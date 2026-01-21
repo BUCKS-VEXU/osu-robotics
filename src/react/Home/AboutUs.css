@@ -57,6 +57,16 @@
   border: none;
 }
 
+.season-records {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3rem;
+  justify-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
 @media (max-width: 768px) {
   .AboutUs .row {
     flex-direction: column;
@@ -67,5 +77,9 @@
   .AboutUs .introText {
     padding: 1em var(--horizontal-text-padding);
     max-width: 100%;
+  }
+
+  .season-records {
+    grid-template-columns: 1fr;
   }
 }
