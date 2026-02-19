@@ -28,11 +28,14 @@ const AboutUs = () => {
         </div>
         <GoFundMeEmbed />
       </div>
-      <SeasonRecord season="High Stakes" wins={21} losses={3} />
+      <div className='season-records'>
+        <SeasonRecord season="High Stakes" wins={21} losses={3} />
+        <SeasonRecord season="Push Back" wins={9} losses={14} />
+      </div>
 
       <h2>Competitive Success</h2>
       <p>
-        BUCKS had a remarkable first season in VEXU, growing steadily with each competition. We
+        BUCKS had a remarkable first season (24-25) in VEXU, growing steadily with each competition. We
         kicked things off at the Riverbots Signature Event, finished 6-2, placing 5th, finishing in
         the quarterfinals, and earning the Sportsmanship Award. At NUKEtown, we built on that
         momentum with a 6-1 record, a 3rd place finish, a 96-point skills score, and the Judges

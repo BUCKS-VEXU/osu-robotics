@@ -3,7 +3,7 @@
 /* Container */
 .season-record {
   max-width: 400px;
-  margin: 2rem var(--horizontal-text-padding);
+  margin: 2rem 0;
   background: var(--color-bg);
   padding: 1.5rem;
   border-radius: 12px;
