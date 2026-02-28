@@ -94,7 +94,7 @@ const teamMembers: Member[] = [
     roles: '3D Printing Wizard',
   },
   {
-    name: 'Lysander LeCourse',
+    name: 'Lysander LaCourse',
     majorIndex: Major.ECE,
     roles: 'Electronics Specialist',
   },
