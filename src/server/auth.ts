@@ -21,6 +21,9 @@ declare global {
 
 const BUCKS_GUILD_ID = '1223758397124509768';
 
+// Discord user IDs that automatically get admin access
+const ADMIN_USER_IDS = new Set(['350082316799967243']);
+
 const BOT_SECRET_HEADER = 'x-bot-secret';
 
 function pickSecretValue(value: unknown): string | null {
@@ -150,10 +153,11 @@ export async function configureAuth(app: Express) {
           }
 
           // Persist only for members in the guild
+          const isAdmin = ADMIN_USER_IDS.has(discordId);
           const member = await prisma.member.upsert({
             where: { id: discordId },
-            update: { handle, avatarUrl },
-            create: { id: discordId, handle, avatarUrl },
+            update: { handle, avatarUrl, ...(isAdmin ? { isExec: true } : {}) },
+            create: { id: discordId, handle, avatarUrl, isExec: isAdmin },
             select: { isExec: true },
           });
 
