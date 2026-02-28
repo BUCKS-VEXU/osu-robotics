@@ -30,7 +30,7 @@ const AboutUs = () => {
       </div>
       <div className='season-records'>
         <SeasonRecord season="High Stakes" wins={21} losses={3} />
-        <SeasonRecord season="Push Back" wins={9} losses={14} />
+        <SeasonRecord season="Push Back" wins={15} losses={18} />
       </div>
 
       <h2>Competitive Success</h2>
