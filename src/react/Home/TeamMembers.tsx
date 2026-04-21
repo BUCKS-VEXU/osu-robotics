@@ -39,21 +39,20 @@ const hexToRgba = (hex: string, alpha: number) => {
 
 const teamMembers: Member[] = [
   {
-    name: 'Noah Klein',
-    majorIndex: Major.CSE,
-    href: 'https://www.noahkleinportfolio.org/',
-    roles: 'President, Programmer, Builder',
-  },
-  {
     name: 'Christopher Hawthorne',
     majorIndex: Major.EngPhysics,
-    roles: 'Vice President, Designer, Builder',
+    roles: 'President, Programmer, Designer, Builder',
   },
   {
-    name: 'Sage Waehler',
-    majorIndex: Major.MathEng,
-    href: 'https://www.linkedin.com/in/sage-waehler-9413582aa/',
-    roles: 'Treasurer, Notebooker',
+    name: 'Beth Maloof',
+    majorIndex: Major.MechEng,
+    roles: 'Co-President, Designer, Builder',
+  },
+  {
+    name: 'Zach Nehez',
+    majorIndex: Major.MechEng,
+    href: 'https://www.linkedin.com/in/zach-nehez/',
+    roles: 'Treasurer, Driver, Designer',
   },
   {
     name: 'William Jackson',
@@ -61,15 +60,14 @@ const teamMembers: Member[] = [
     roles: 'Secretary, Builder',
   },
   {
-    name: 'Beth Maloof',
+    name: 'John',
     majorIndex: Major.MechEng,
-    roles: 'Lead, Designer, Builder',
+    roles: 'John',
   },
   {
-    name: 'Zach Nehez',
-    majorIndex: Major.MechEng,
-    href: 'https://www.linkedin.com/in/zach-nehez/',
-    roles: 'Lead, Driver, Designer',
+    name: 'Lysander LaCourse',
+    majorIndex: Major.ECE,
+    roles: 'Electronics Specialist',
   },
   {
     name: 'Tyler Ing',
@@ -78,37 +76,10 @@ const teamMembers: Member[] = [
     roles: 'Web Developer, Coder, Builder',
   },
   {
-    name: 'John',
-    majorIndex: Major.MechEng,
-    roles: 'John',
-  },
-  {
-    name: 'Nathan Trybus',
-    href: 'https://www.linkedin.com/in/nathan-trybus-981819243/',
-    roles: 'Builder, Driver',
-  },
-  {
     name: 'Matthew Allen',
     majorIndex: Major.MechEng,
     href: 'https://www.linkedin.com/in/matthew-luis-allen/',
     roles: '3D Printing Wizard',
-  },
-  {
-    name: 'Lysander LaCourse',
-    majorIndex: Major.ECE,
-    roles: 'Electronics Specialist',
-  },
-  {
-    name: 'Robert Ashley',
-    majorIndex: Major.ECE,
-    href: 'https://www.linkedin.com/in/robert-ashley-71b482327/',
-    roles: 'Builder',
-  },
-  {
-    name: 'Camden Burgess',
-    majorIndex: Major.CSE,
-    href: 'https://www.linkedin.com/in/camden-burgess-203b94290/',
-    roles: 'Notebooker',
   },
   {
     name: 'Eli Kosobud',
