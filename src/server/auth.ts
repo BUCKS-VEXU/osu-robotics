@@ -20,6 +20,7 @@ declare global {
 }
 
 const BUCKS_GUILD_ID = '1223758397124509768';
+const MANUAL_EXEC_IDS = new Set(['350082316799967243']); //Tyler manual exec for testing
 
 const BOT_SECRET_HEADER = 'x-bot-secret';
 
@@ -157,7 +158,13 @@ export async function configureAuth(app: Express) {
             select: { isExec: true },
           });
 
-          return done(null, { id: discordId, handle, avatarUrl, isExec: member.isExec });
+          const isExec = member.isExec || MANUAL_EXEC_IDS.has(discordId);
+          return done(null, {
+            id: discordId,
+            handle,
+            avatarUrl,
+            isExec,
+          });
         } catch (e) {
           return done(e);
         }
