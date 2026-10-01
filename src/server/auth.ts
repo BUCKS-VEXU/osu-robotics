@@ -69,7 +69,7 @@ function getBaseUrl(req: Request) {
 }
 
 const useSSL =
-  process.env.NODE_ENV === 'production' && !/sslmode=require/.test(process.env.DATABASE_URL || '');
+  /sslmode=require/.test(process.env.DATABASE_URL || '');
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
