@@ -19,14 +19,49 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
+          function Run-Command {
+              param(
+                  [string]$Command,
+                  [string[]]$Arguments
+              )
+
+              & $Command @Arguments
+
+              if ($LASTEXITCODE -ne 0) {
+                  throw "$Command failed with exit code $LASTEXITCODE"
+              }
+          }
+
           Set-Location "C:\Data\osu-robotics"
 
-          git fetch origin main
-          git reset --hard origin/main
+          Write-Host "Updating repository..."
+          Run-Command "git.exe" @("fetch", "origin", "main")
+          Run-Command "git.exe" @("reset", "--hard", "origin/main")
 
-          npm ci
-          npm run build
+          Write-Host "Stopping production website..."
+          Stop-Service -Name "OSURobotics" -Force
 
-          Restart-Service -Name "OSURobotics" -Force
+          try {
+              Write-Host "Installing dependencies..."
+              Run-Command "npm.cmd" @("ci")
+
+              Write-Host "Building production..."
+              Run-Command "npm.cmd" @("run", "build")
+          }
+          catch {
+              Write-Error "Deployment failed: $_"
+              throw
+          }
+
+          Write-Host "Starting production website..."
+          Start-Service -Name "OSURobotics"
+
+          Start-Sleep -Seconds 3
+
+          $service = Get-Service -Name "OSURobotics"
+
+          if ($service.Status -ne "Running") {
+              throw "OSURobotics failed to start."
+          }
 
           Write-Host "Production deployment complete."
