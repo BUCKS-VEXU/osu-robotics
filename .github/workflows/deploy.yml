@@ -1,0 +1,32 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, windows, x64]
+
+    steps:
+      - name: Deploy osurobotics.org
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          Set-Location "C:\Data\osu-robotics"
+
+          git fetch origin main
+          git reset --hard origin/main
+
+          npm ci
+          npm run build
+
+          Restart-Service -Name "OSURobotics" -Force
+
+          Write-Host "Production deployment complete."

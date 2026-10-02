@@ -14,11 +14,9 @@ import {
 
 enum Major {
   MechEng = 0,
-  CSE,
   ECE,
   CIS,
   EngPhysics,
-  MathEng,
   Psych,
 }
 
@@ -110,19 +108,17 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-  { value: 7, color: '#702963', label: 'Mechanical Engineering' },
-  { value: 2, color: '#048BA8', label: 'Computer Science Engineering' },
-  { value: 4, color: '#16DB93', label: 'Electrical & Computer Engineering' },
-  { value: 1, color: '#EFEA5A', label: 'Computer & Information Science' }, 
-  { value: 1, color: '#F29E4C', label: 'Engineering Physics' },
-  { value: 1, color: '#C1666B', label: 'Math & English' },
+  { major: Major.MechEng, value: 7, color: '#702963', label: 'Mechanical Engineering' },
+  { major: Major.ECE, value: 3, color: '#16DB93', label: 'Electrical & Computer Engineering' },
+  { major: Major.CIS, value: 1, color: '#EFEA5A', label: 'Computer & Information Science' },
+  { major: Major.EngPhysics, value: 1, color: '#F29E4C', label: 'Engineering Physics' },
 ];
 
 const series: PieSeriesType<PieValueType>[] = [
   {
     type: 'pie',
     id: 'majors',
-    data: seriesData,
+    data: seriesData.map(({ major, ...slice }) => slice),
     highlightScope: {
       fade: 'global',
       highlight: 'item',
@@ -168,34 +164,43 @@ const TeamMembers = () => {
             </thead>
             <tbody>
               {teamMembers.map((member, i) => {
+                const highlightedMajor =
+                  highlightedItem?.dataIndex != null
+                    ? seriesData[highlightedItem.dataIndex]?.major
+                    : undefined;
+
                 const isHighlighted =
                   highlightedItem?.seriesId === 'majors' &&
-                  member.majorIndex === highlightedItem.dataIndex;
-
-                const highlightColor =
-                  isHighlighted && highlightedItem
-                    ? seriesData[highlightedItem.dataIndex].color
-                    : undefined;
+                  member.majorIndex === highlightedMajor;
 
                 return (
                   <tr
                     key={i}
                     className={isHighlighted ? 'highlighted-row' : undefined}
                     style={
-                      isHighlighted
+                      isHighlighted &&
+                      highlightedItem?.dataIndex != null &&
+                      seriesData[highlightedItem.dataIndex]
                         ? {
                             backgroundColor: hexToRgba(
                               seriesData[highlightedItem.dataIndex].color,
-                              0.25 // ⬅ saturated but transparent
+                              0.25
                             ),
                           }
                         : undefined
                     }
                     onMouseEnter={() => {
                       if (member.majorIndex == null) return;
+
+                      const dataIndex = seriesData.findIndex(
+                        (item) => item.major === member.majorIndex
+                      );
+
+                      if (dataIndex === -1) return;
+
                       setHighlightedItem({
                         seriesId: 'majors',
-                        dataIndex: member.majorIndex,
+                        dataIndex,
                       });
                     }}
                     onMouseLeave={() => setHighlightedItem(null)}
