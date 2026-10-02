@@ -129,7 +129,7 @@ const series: PieSeriesType<PieValueType>[] = [
     paddingAngle: 5,
     cornerRadius: 10,
     startAngle: -45,
-    endAngle: 260,
+    endAngle: 270,
     cx: 100,
     cy: 100,
   },
