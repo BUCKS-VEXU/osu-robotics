@@ -16,8 +16,8 @@ enum Major {
   MechEng = 0,
   ECE,
   CIS,
-  EngPhysics,
-  Psych,
+  NuclearEng,
+  HealthSci,
 }
 
 interface Member {
@@ -38,12 +38,14 @@ const hexToRgba = (hex: string, alpha: number) => {
 const teamMembers: Member[] = [
   {
     name: 'Christopher Hawthorne',
-    majorIndex: Major.EngPhysics,
+    majorIndex: Major.NuclearEng,
+    href: 'www.linkedin.com/in/christopher-r-hawthorne',
     roles: 'President, Programmer, Designer, Builder',
   },
   {
     name: 'Beth Maloof',
     majorIndex: Major.MechEng,
+    href: 'www.linkedin.com/in/beth-maloof',
     roles: 'Co-President, Designer, Builder',
   },
   {
@@ -71,47 +73,51 @@ const teamMembers: Member[] = [
     name: 'Tyler Ing',
     majorIndex: Major.CIS,
     href: 'https://www.linkedin.com/in/tyler-ing/',
-    roles: 'Web Developer, Coder, Builder',
+    roles: 'Web Developer, Programmer, Builder',
   },
   {
-    name: 'Matthew Allen',
+    name: 'Derek Patton',
     majorIndex: Major.MechEng,
-    href: 'https://www.linkedin.com/in/matthew-luis-allen/',
-    roles: '3D Printing Wizard',
+    roles: 'Lead Designer, Builder',
   },
   {
-    name: 'Eli Kosobud',
+    name: 'Bryce Horton',
     majorIndex: Major.MechEng,
-    roles: 'Designer, Builder'
+    roles: 'Media Coordinator, Designer, Builder',
   },
   {
-    name: 'Airy (Jiazhuo) Li',
-    majorIndex: Major.ECE,
-    roles: 'Builder'
-  },
-  { name: 'Ryan Joseph',
+    name: 'Lorenz Henry',
     majorIndex: Major.MechEng,
-    href: 'https://www.linkedin.com/in/ryanjoseph1/',
-    roles: 'Financial Advisor'
+    roles: 'Lead Notebooker',
   },
   {
-    name: 'Andrew Flis',
-    majorIndex: Major.ECE,
-    href: 'https://www.linkedin.com/in/andrew-flis-12b665159/',
-    roles: 'Mentor, Head of Filmography',
+    name: 'Nathan Rakestraw',
+    majorIndex: Major.MechEng,
+    roles: 'Designer, Builder, Driver',
   },
   {
-    name: 'Drew Phillips',
-    href: 'https://engineering.osu.edu/people/phillips.1166',
+    name: 'Brett Cunningham',
+    majorIndex: Major.MechEng,
+    roles: 'Sponsorship Lead',
+  },
+  {
+    name: 'Katrina Fegley',
+    majorIndex: Major.HealthSci,
+    roles: 'Notebooker',
+  },
+  {
+    name: 'Position Open',
     roles: 'Advisor',
   },
 ];
 
 const seriesData = [
-  { major: Major.MechEng, value: 7, color: '#702963', label: 'Mechanical Engineering' },
-  { major: Major.ECE, value: 3, color: '#16DB93', label: 'Electrical & Computer Engineering' },
-  { major: Major.CIS, value: 1, color: '#EFEA5A', label: 'Computer & Information Science' },
-  { major: Major.EngPhysics, value: 1, color: '#F29E4C', label: 'Engineering Physics' },
+  { value: 9, color: '#702963', label: 'Mechanical Engineering' },
+  { value: 1, color: '#16DB93', label: 'Electrical & Computer Engineering' },
+  { value: 1, color: '#EFEA5A', label: 'Computer & Information Science' }, 
+  { value: 1, color: '#F29E4C', label: 'Nuclear Engineering' },
+  { value: 1, color: '#C1666B', label: 'Health Science' },
+
 ];
 
 const series: PieSeriesType<PieValueType>[] = [
