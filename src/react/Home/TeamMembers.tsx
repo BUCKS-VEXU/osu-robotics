@@ -112,12 +112,11 @@ const teamMembers: Member[] = [
 ];
 
 const seriesData = [
-  { value: 9, color: '#702963', label: 'Mechanical Engineering' },
-  { value: 1, color: '#16DB93', label: 'Electrical & Computer Engineering' },
-  { value: 1, color: '#EFEA5A', label: 'Computer & Information Science' }, 
-  { value: 1, color: '#F29E4C', label: 'Nuclear Engineering' },
-  { value: 1, color: '#C1666B', label: 'Health Science' },
-
+  {    major: Major.MechEng, value: 9, color: '#702963', label: 'Mechanical Engineering' },
+  {        major: Major.ECE, value: 1, color: '#16DB93', label: 'Electrical & Computer Engineering' },
+  {        major: Major.CIS, value: 1, color: '#EFEA5A', label: 'Computer & Information Science' },
+  { major: Major.NuclearEng, value: 1, color: '#F29E4C', label: 'Engineering Physics' },
+  {  major: Major.HealthSci, value: 1, color: '#C1666B', label: 'Health Sciences'},
 ];
 
 const series: PieSeriesType<PieValueType>[] = [
